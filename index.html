@@ -111,14 +111,15 @@
 
     /* ✅ Logo fixed: true circular mask (no “business card” square) */
     .brand-logo{
-      width:65px;
-      height:65px;
-      border-radius:50%;
-      overflow:hidden;
-      border:3px solid var(--gold);
-      background:rgba(0,0,0,.35);
-      box-shadow:0 0 18px rgba(255,204,0,.28);
-      flex:0 0 auto;
+  width:65px;
+  height:65px;
+  border-radius:50%;
+  overflow:hidden;
+  border:none;          /* ✅ מוריד את העיגול החיצוני */
+  background:transparent; /* ✅ שלא יהיה רקע */
+  box-shadow:none;      /* ✅ שלא יראה כמו עוד טבעת */
+}
+
     }
     .brand-logo img{
       width:100%;
