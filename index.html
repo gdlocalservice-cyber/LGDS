@@ -4,13 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Local Garage Door Service | PA • NJ • DE | Premium Repair</title>
-<!-- FAVICON / TAB ICON -->
-<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+
+  <!-- FAVICON / TAB ICON -->
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 
   <meta name="description" content="Licensed & insured premium garage door service in PA, NJ, DE (100-mile radius from Philadelphia). Springs, openers, repairs, installations. Fast response & free estimates." />
-יקשג
+
   <script>
     document.documentElement.classList.add('js');
   </script>
@@ -107,16 +108,26 @@
     }
 
     .brand{ display:flex; align-items:center; gap:12px; min-width:240px; }
-    .brand img{
-      width:65px; height:65px;
-      object-fit:contain;
-      border:3px solid var(--gold);
+
+    /* ✅ Logo fixed: true circular mask (no “business card” square) */
+    .brand-logo{
+      width:65px;
+      height:65px;
       border-radius:50%;
-      padding:8px;
+      overflow:hidden;
+      border:3px solid var(--gold);
       background:rgba(0,0,0,.35);
       box-shadow:0 0 18px rgba(255,204,0,.28);
       flex:0 0 auto;
     }
+    .brand-logo img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      transform:scale(1.06);
+    }
+
     .brand-text h1{
       font-size:1.05rem;
       margin:0;
@@ -587,7 +598,6 @@
     }
     .trusted-title i{ color:var(--gold); }
 
-    /* looks like “Google creative” logos row */
     .brand-strip{
       display:flex;
       gap:10px;
@@ -952,10 +962,12 @@
 
       .brand{ min-width: 0; }
       .brand-text .tagline{ display:none; }
-      .brand img{ width:56px; height:56px; padding:7px; }
+
+      /* ✅ mobile logo size */
+      .brand-logo{ width:56px; height:56px; }
+
       .brand-text h1{ font-size:.92rem; }
 
-      /* Garage widget bottom-left above floating actions */
       .garage-widget{
         width:150px;
         height:210px;
@@ -1029,22 +1041,21 @@
       html.js .reveal{ opacity:1 !important; transform:none !important; }
     }
   </style>
-</head> 
 
-<!-- Google tag (gtag.js) - GA4 + Google Ads -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-TVGZZ0WFTH"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <!-- Google tag (gtag.js) - GA4 + Google Ads -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TVGZZ0WFTH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-  // GA4
-  gtag('config', 'G-TVGZZ0WFTH');
+    // GA4
+    gtag('config', 'G-TVGZZ0WFTH');
 
-  // Google Ads
-  gtag('config', 'AW-17878825273');
-</script>
-
+    // Google Ads
+    gtag('config', 'AW-17878825273');
+  </script>
+</head>
 
 <body>
   <div class="topbar" id="topbar">
@@ -1060,13 +1071,15 @@
 
   <nav>
     <a class="brand" href="#top">
-      <img
-        src="https://res.cloudinary.com/dixal2c3q/image/upload/f_auto,q_auto/v1768364059/The_logo_hkwgdr.png"
-        alt="Local Garage Door Service Logo"
-        loading="eager"
-        decoding="async"
-        referrerpolicy="no-referrer"
-      >
+      <span class="brand-logo" aria-hidden="true">
+        <img
+          src="apple-touch-icon.png"
+          alt="Local Garage Door Service Logo"
+          loading="eager"
+          decoding="async"
+        />
+      </span>
+
       <div class="brand-text">
         <h1>LOCAL <span>GARAGE DOOR</span> SERVICE</h1>
         <div class="tagline">Premium Service • Fast Response • Trusted Results</div>
@@ -1263,7 +1276,6 @@
   </section>
 
   <footer>
-    <!-- Trusted Brands (Google-like strip) -->
     <div class="trusted-wrap reveal" aria-label="Trusted Brands">
       <div class="trusted-title"><i class="fa-solid fa-shield-halved"></i> Trusted Brands We Service</div>
       <div class="brand-strip" role="list">
@@ -1357,14 +1369,12 @@
       return "";
     }
 
-    // ===== Infinite carousel builder (3x copies) =====
     function createInfiniteCarousel({ trackEl, items, type }){
       trackEl.innerHTML = "";
 
       const total = items.length;
       if(!total) return { setWidth: 0 };
 
-      // Build 3 sets: left / middle / right (same items)
       const makeSlide = (src, realIndex) => {
         const slide = document.createElement("div");
         slide.className = "slide";
@@ -1388,7 +1398,7 @@
         } else {
           const vid = document.createElement("video");
           vid.src = src;
-          vid.muted = true; // required for iOS autoplay
+          vid.muted = true;
           vid.loop = true;
           vid.playsInline = true;
           vid.preload = "metadata";
@@ -1398,7 +1408,6 @@
           const poster = buildPoster(src);
           if(poster) vid.poster = poster;
 
-          // Tap to toggle mute
           vid.addEventListener("click", ()=>{ vid.muted = !vid.muted; });
 
           slide.appendChild(vid);
@@ -1407,24 +1416,19 @@
         return slide;
       };
 
-      // Append 3 copies
       for(let copy=0; copy<3; copy++){
         items.forEach((src, i)=>{
           trackEl.appendChild(makeSlide(src, i));
         });
       }
 
-      // After layout, jump to middle set
       let setWidth = 0;
       function computeAndCenter(){
-        // total scrollWidth is 3 * setWidth
         setWidth = trackEl.scrollWidth / 3;
-        // put us at start of middle set
         trackEl.scrollLeft = setWidth;
         setActiveByCenter(trackEl, type);
       }
 
-      // Active detection + autoplay center video
       function setActiveByCenter(trackEl, type){
         const slides = Array.from(trackEl.querySelectorAll(".slide"));
         const rect = trackEl.getBoundingClientRect();
@@ -1454,10 +1458,8 @@
         }
       }
 
-      // Keep infinite illusion by snapping back to middle range
       let raf = null;
       function onScroll(){
-        // If user reaches near left or right copies, jump by setWidth (no visual change)
         if(setWidth > 0){
           if(trackEl.scrollLeft < setWidth * 0.35){
             trackEl.scrollLeft += setWidth;
@@ -1472,35 +1474,29 @@
 
       trackEl.addEventListener("scroll", onScroll, { passive:true });
 
-      // public API
       function scrollByOne(delta){
         const slides = Array.from(trackEl.querySelectorAll(".slide"));
         const active = slides.findIndex(s => s.classList.contains("is-active"));
         const next = clamp(active + delta, 0, slides.length - 1);
 
-        // Scroll to center of that slide
         const target = slides[next];
         if(!target) return;
         const left = target.offsetLeft - (trackEl.clientWidth/2) + (target.clientWidth/2);
         trackEl.scrollTo({ left, behavior: "smooth" });
       }
 
-      // init
       requestAnimationFrame(()=> {
         computeAndCenter();
-        // also re-center after a short delay (fonts/layout)
         setTimeout(computeAndCenter, 120);
       });
 
       window.addEventListener("resize", ()=> {
-        // recompute setWidth and keep in middle
         setTimeout(computeAndCenter, 60);
       });
 
       return { scrollByOne };
     }
 
-    // ===== Main =====
     window.addEventListener("DOMContentLoaded", () => {
       const topbar = $("#topbar");
       const nav = document.querySelector("nav");
@@ -1519,7 +1515,6 @@
       }
       setHeaderVars();
 
-      // Mobile menu
       const mobilePanel = $("#mobilePanel");
       $("#burger").addEventListener("click", ()=>{
         mobilePanel.style.display = "block";
@@ -1534,7 +1529,6 @@
         document.body.style.overflow = "";
       }));
 
-      // Reveal
       let observer;
       function bindReveal(){
         if (!("IntersectionObserver" in window)) {
@@ -1555,7 +1549,6 @@
       }
       bindReveal();
 
-      // Build infinite carousels
       const photosCarousel = createInfiniteCarousel({
         trackEl: $("#photosTrack"),
         items: photos,
@@ -1572,7 +1565,6 @@
       $("#videosPrev").addEventListener("click", ()=> videosCarousel.scrollByOne(-1));
       $("#videosNext").addEventListener("click", ()=> videosCarousel.scrollByOne(1));
 
-      // Reward popup
       const rewardBackdrop = $("#rewardBackdrop");
       const rewardClose = $("#rewardClose");
       const copyCoupon = $("#copyCoupon");
@@ -1608,7 +1600,6 @@
         }
       });
 
-      // Garage door scroll progress
       const door = $("#door");
       const doorBar = $("#doorBar");
       const doorPct = $("#doorPct");
@@ -1653,7 +1644,6 @@
         onScroll();
       });
 
-      // Init
       setTimeout(()=>{ setHeaderVars(); updateDoor(); }, 50);
       updateDoor();
     });
