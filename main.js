@@ -386,6 +386,18 @@ window.addEventListener("DOMContentLoaded", () => {
   const copyCoupon = $("#copyCoupon");
   const couponCode = $("#couponCode");
 
+  const dealToast = $("#dealToast");
+  const isMobile = window.matchMedia && window.matchMedia("(max-width: 520px)").matches;
+  let toastShown = false;
+
+  function showDealToast(){
+    if(!dealToast || toastShown) return;
+    dealToast.hidden = false;
+    toastShown = true;
+    // auto-hide after a bit if user ignores it
+    setTimeout(()=>{ if(dealToast && !dealToast.hidden) dealToast.hidden = true; }, 9000);
+  }
+
   function openReward(){
     if(!rewardBackdrop) return;
     rewardBackdrop.style.display = "flex";
@@ -402,7 +414,12 @@ window.addEventListener("DOMContentLoaded", () => {
 
   if(rewardClose) rewardClose.addEventListener("click", closeReward);
   if(rewardBackdrop) rewardBackdrop.addEventListener("click", (e)=>{ if(e.target === rewardBackdrop) closeReward(); });
-);
+
+  if(dealToast){
+    dealToast.addEventListener("click", ()=>{
+      dealToast.hidden = true;
+      openReward();
+    });
   }
 
   if(copyCoupon && couponCode){
@@ -467,7 +484,7 @@ window.addEventListener("DOMContentLoaded", () => {
     ticking = false;
     const p = getScrollProgress();
 
-    if(door) door.style.transform = `translateY(${(-p * 110).toFixed(3)}%)`;
+    if(door) door.style.transform = `translateY(${(-p * 100).toFixed(3)}%)`;
 
     const pct = Math.round(p * 100);
     if(doorPct) doorPct.textContent = `${pct}%`;
@@ -479,7 +496,7 @@ window.addEventListener("DOMContentLoaded", () => {
     try { claimed = localStorage.getItem("lgds_reward_claimed") === "1"; } catch(e){}
     if (atBottom && !claimed){
       if(isMobile){
-        
+        showDealToast();
       }else{
         openReward();
       }

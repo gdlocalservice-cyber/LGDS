@@ -96,33 +96,38 @@
     <a class="btn sticky-btn" href="https://wa.me/12674386494" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
   </div>
 
-  <!-- Garage Door Scroll Widget (Deal Reveal) -->
+  <!-- Garage Door Scroll Widget (LEFT) -->
+    <!-- Deal Reveal (Desktop only, tucked to the left edge) -->
   <aside class="garage-widget" aria-label="Deal reveal">
-    <div class="garage-frame" id="garageFrame">
+    <button class="garage-tab" id="garageTab" type="button" aria-label="Open deal reveal panel" aria-expanded="false">
+      <i class="fa-solid fa-gift" aria-hidden="true"></i>
+      <span>Deal</span>
+    </button>
+
+    <div class="garage-frame" id="garageFrame" aria-hidden="true">
       <div class="garage-caption">
-        <span><i class="fa-solid fa-warehouse" aria-hidden="true"></i> Deal</span>
+        <span><i class="fa-solid fa-warehouse" aria-hidden="true"></i> Reveal</span>
         <span class="pct" id="doorPct">0%</span>
       </div>
 
-      <!-- Inside content lives BEHIND the door -->
       <div class="garage-inside" aria-hidden="true">
         <div>
-          <div class="inside-title">You unlocked a deal</div>
+          <div class="inside-title">Scroll to unlock</div>
           <div class="inside-offer">10% OFF LABOR<br>ON ANY REPAIR</div>
-          <div class="inside-sub">Scroll to reveal</div>
+          <div class="inside-sub">It reveals as you scroll</div>
         </div>
       </div>
 
-      <!-- Door covers the inside and slides up with scroll -->
       <div class="door" id="door" aria-hidden="true">
         <div class="door-windows" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
         </div>
         <div class="door-handle" aria-hidden="true"></div>
+
         <div class="door-label" aria-hidden="true">
-          <i class="fa-solid fa-lock" aria-hidden="true"></i>
-          Hidden Reward <span>Inside</span>
+          <i class="fa-solid fa-lock" aria-hidden="true"></i> Hidden Reward <span>Inside</span>
         </div>
+
         <div class="door-glow" id="doorGlow"></div>
       </div>
 
@@ -292,7 +297,13 @@
     <a href="tel:2674386494" class="action-btn btn-call"><i class="fa-solid fa-phone"></i> Call Now</a>
   </div>
 
-<!-- Accessibility Widget -->
+  <!-- Subtle "Deal unlocked" toast (mobile-friendly) -->
+  <button class="deal-toast" id="dealToast" type="button" aria-label="Deal unlocked. Tap to open reward." hidden>
+    <i class="fa-solid fa-gift" aria-hidden="true"></i>
+    <span><strong>Deal unlocked</strong> — Tap to claim</span>
+  </button>
+
+  <!-- Accessibility Widget -->
   <button class="a11y-fab" id="a11yFab" type="button" aria-label="Accessibility options" aria-haspopup="dialog" aria-expanded="false">
     <i class="fa-solid fa-universal-access" aria-hidden="true"></i>
   </button>
