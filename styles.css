@@ -251,12 +251,16 @@ footer{ text-align:center; padding:44px 5% 110px; color:rgba(255,255,255,.60); b
   display:block;
   pointer-events:none;
 }
-.garage-widget .gift-tab,
+.garage-widget .gift-tab{
+  z-index:30;
+  margin-left:0;
+  margin-right:0;
+  pointer-events:auto;
+}
 .garage-widget .garage-frame{
   z-index:20;
   margin-left:66px;
   margin-right:0;
-
   pointer-events:auto;
 }
 
@@ -549,7 +553,7 @@ footer{ text-align:center; padding:44px 5% 110px; color:rgba(255,255,255,.60); b
 /* Widget collapse */
 .garage-widget.is-collapsed .garage-frame{
   z-index:20;
-  transform: translateX(calc(-100% - 86px));
+  transform: translateX(calc(-100% - 72px));
   opacity:0;
   pointer-events:none;
 }
@@ -669,7 +673,26 @@ footer{ text-align:center; padding:44px 5% 110px; color:rgba(255,255,255,.60); b
 
 /* On very small screens keep FAB above mobile sticky bar */
 @media (max-width:560px){
+  /* Keep A11Y button above any bottom bars */
   .a11y-fab{
     bottom: calc(18px + var(--fab-h));
+  }
+
+  /* Mobile deal widget: small side panel, never full-screen */
+  :root{
+    --widget-w: 240px;
+    --widget-h: 320px;
+  }
+  .garage-widget{
+    left:10px;
+    top:72%;
+  }
+  .gift-tab{
+    width:54px;
+    height:74px;
+    border-radius:18px;
+  }
+  .garage-widget .garage-frame{
+    margin-left:60px;
   }
 }

@@ -278,13 +278,12 @@ window.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("keydown", trapFocus);
   $$(".mLink").forEach(a => a.addEventListener("click", closeMenu));
 
-  // Widget toggle persistence
+  // Widget toggle
   const giftTab = $("#giftTab");
   giftTab?.addEventListener("click", toggleWidget);
-  try{
-    const c = localStorage.getItem("lgds_widget_collapsed");
-    if(c === "1") collapseWidget();
-  }catch(e){}
+  // Always start collapsed to avoid accidental popups
+  collapseWidget();
+  try{ localStorage.setItem("lgds_widget_collapsed","1"); }catch(e){}
 
   // Claim button: apply promo + collapse + jump to contact
   $("#claimDealBtn")?.addEventListener("click", ()=>{
@@ -307,14 +306,21 @@ window.addEventListener("DOMContentLoaded", () => {
   function getScrollProgress(){
     const doc = document.documentElement;
     const scrollTop = window.scrollY || doc.scrollTop || 0;
-    const scrollHeight = Math.max(1, doc.scrollHeight - window.innerHeight);
-    return Math.min(1, Math.max(0, scrollTop / scrollHeight));
+    const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+    return Math.min(1, Math.max(0, scrollTop / maxScroll));
+  }
+
+  function isAtBottom(){
+    const doc = document.documentElement;
+    const scrollTop = window.scrollY || doc.scrollTop || 0;
+    return (scrollTop + window.innerHeight) >= (doc.scrollHeight - 2);
   }
 
   function updateDoor(){
     ticking = false;
     const p = getScrollProgress();
-    const pct = Math.round(p * 100);
+    const atBottom = isAtBottom();
+    const pct = atBottom ? 100 : Math.round(p * 100);
 
     // Move door up to reveal content.
     // 0% => fully closed, 100% => fully opened (moved up out of view)
@@ -324,7 +330,7 @@ window.addEventListener("DOMContentLoaded", () => {
     if(doorBar) doorBar.style.width = `${pct}%`;
     if(doorGlow) doorGlow.style.opacity = String(Math.min(1, p));
 
-    const isUnlocked = p >= 0.999;
+    const isUnlocked = atBottom;
 
     if(isUnlocked){
       if(insideUnlocked){ insideUnlocked.hidden = false; }
