@@ -256,13 +256,22 @@ footer{ text-align:center; padding:44px 5% 110px; color:rgba(255,255,255,.60); b
   margin-left:0;
   margin-right:0;
   pointer-events:auto;
+
+  z-index:10010;
+  pointer-events:auto;
 }
+
 .garage-widget .garage-frame{
   z-index:20;
   margin-left:66px;
   margin-right:0;
   pointer-events:auto;
+
+  width:var(--widget-w);
+  height:var(--widget-h);
+  position:relative;
 }
+
 
 .gift-tab{
   position:absolute;
@@ -330,12 +339,19 @@ footer{ text-align:center; padding:44px 5% 110px; color:rgba(255,255,255,.60); b
   overflow:hidden;
   position:absolute;
   inset:52px 0 10px 0;
-  padding:18px 18px 54px;
-  display:grid;
-  place-items:center;
+  padding:18px 18px calc(88px + env(safe-area-inset-bottom));
+  display:block;
   text-align:center;
 }
-.inside-state{ width:100%; height:100%; display:grid; place-items:center; gap:8px; padding:14px 10px 52px; }
+.inside-state{
+  width:100%;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+}
 .inside-title{
   font-weight:900;
   text-transform:uppercase;
@@ -355,7 +371,7 @@ footer{ text-align:center; padding:44px 5% 110px; color:rgba(255,255,255,.60); b
   color:rgba(255,255,255,.60);
 }
 .inside-unlocked{
-  align-content:center;
+  align-content:unset;
 }
 .unlocked-top{
   font-weight:900;
@@ -698,3 +714,17 @@ footer{ text-align:center; padding:44px 5% 110px; color:rgba(255,255,255,.60); b
     margin-left:60px;
   }
 }
+
+
+/* Ensure Claim button is always visible on mobile (not covered by the door or safe-area) */
+.inside-unlocked .unlocked-top{ margin-top:8px; }
+.inside-unlocked .unlocked-main{ margin:8px 0 0; }
+.inside-unlocked .unlocked-sub{ margin:6px 0 0; color:rgba(255,255,255,.70); font-weight:800; }
+.inside-unlocked .claim-btn{
+  margin-top:auto;
+  margin-bottom:14px;
+}
+.unlocked-bar{
+  bottom: max(14px, env(safe-area-inset-bottom));
+}
+
