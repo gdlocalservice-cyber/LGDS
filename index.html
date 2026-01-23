@@ -97,18 +97,24 @@
   </div>
 
   <!-- Garage Door Scroll Widget (LEFT) -->
-  <aside class="garage-widget" aria-label="Garage Door Reward">
-    <div class="garage-frame">
+    <!-- Deal Reveal (Desktop only, tucked to the left edge) -->
+  <aside class="garage-widget" aria-label="Deal reveal">
+    <button class="garage-tab" id="garageTab" type="button" aria-label="Open deal reveal panel" aria-expanded="false">
+      <i class="fa-solid fa-gift" aria-hidden="true"></i>
+      <span>Deal</span>
+    </button>
+
+    <div class="garage-frame" id="garageFrame" aria-hidden="true">
       <div class="garage-caption">
-        <span><i class="fa-solid fa-warehouse"></i> Garage</span>
+        <span><i class="fa-solid fa-warehouse" aria-hidden="true"></i> Reveal</span>
         <span class="pct" id="doorPct">0%</span>
       </div>
 
       <div class="garage-inside" aria-hidden="true">
         <div>
-          <div class="inside-title">You unlocked a deal</div>
+          <div class="inside-title">Scroll to unlock</div>
           <div class="inside-offer">10% OFF LABOR<br>ON ANY REPAIR</div>
-          <div class="inside-sub">Keep scrolling to reveal it</div>
+          <div class="inside-sub">It reveals as you scroll</div>
         </div>
       </div>
 
@@ -119,7 +125,7 @@
         <div class="door-handle" aria-hidden="true"></div>
 
         <div class="door-label" aria-hidden="true">
-          <i class="fa-solid fa-lock"></i> Hidden Reward <span>Inside</span>
+          <i class="fa-solid fa-lock" aria-hidden="true"></i> Hidden Reward <span>Inside</span>
         </div>
 
         <div class="door-glow" id="doorGlow"></div>
@@ -291,6 +297,41 @@
     <a href="tel:2674386494" class="action-btn btn-call"><i class="fa-solid fa-phone"></i> Call Now</a>
   </div>
 
+  <!-- Subtle "Deal unlocked" toast (mobile-friendly) -->
+  <button class="deal-toast" id="dealToast" type="button" aria-label="Deal unlocked. Tap to open reward." hidden>
+    <i class="fa-solid fa-gift" aria-hidden="true"></i>
+    <span><strong>Deal unlocked</strong> — Tap to claim</span>
+  </button>
+
+  <!-- Accessibility Widget -->
+  <button class="a11y-fab" id="a11yFab" type="button" aria-label="Accessibility options" aria-haspopup="dialog" aria-expanded="false">
+    <i class="fa-solid fa-universal-access" aria-hidden="true"></i>
+  </button>
+
+  <div class="a11y-backdrop" id="a11yBackdrop" hidden aria-hidden="true">
+    <div class="a11y-panel" role="dialog" aria-modal="true" aria-label="Accessibility options">
+      <div class="a11y-top">
+        <div class="a11y-title"><i class="fa-solid fa-universal-access" aria-hidden="true"></i> Accessibility</div>
+        <button class="icon-btn" id="a11yClose" type="button" aria-label="Close accessibility panel">
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+        </button>
+      </div>
+
+      <div class="a11y-grid" role="group" aria-label="Accessibility toggles">
+        <button class="a11y-btn" data-a11y="text1" type="button"><i class="fa-solid fa-text-height" aria-hidden="true"></i> Text +</button>
+        <button class="a11y-btn" data-a11y="text2" type="button"><i class="fa-solid fa-text-height" aria-hidden="true"></i> Text ++</button>
+        <button class="a11y-btn" data-a11y="contrast" type="button"><i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i> High contrast</button>
+        <button class="a11y-btn" data-a11y="gray" type="button"><i class="fa-solid fa-droplet-slash" aria-hidden="true"></i> Grayscale</button>
+        <button class="a11y-btn" data-a11y="links" type="button"><i class="fa-solid fa-link" aria-hidden="true"></i> Underline links</button>
+        <button class="a11y-btn" data-a11y="focus" type="button"><i class="fa-solid fa-bullseye" aria-hidden="true"></i> Strong focus</button>
+        <button class="a11y-btn" data-a11y="reduce" type="button"><i class="fa-solid fa-wind" aria-hidden="true"></i> Reduce motion</button>
+        <button class="a11y-btn a11y-reset" data-a11y="reset" type="button"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Reset</button>
+      </div>
+
+      <div class="a11y-note">Settings are saved on this device.</div>
+    </div>
+  </div>
+
   <!-- Reward Popup -->
   <div class="popup-backdrop" id="rewardBackdrop" aria-hidden="true">
     <div class="popup" role="dialog" aria-modal="true" aria-label="Reward Unlocked">
@@ -314,55 +355,6 @@
   </div>
 
   <!-- Main JS -->
-  
-  <!-- Accessibility Widget -->
-  <button class="a11y-fab" id="a11yFab" type="button" aria-label="Accessibility options" aria-controls="a11yPanel" aria-expanded="false">
-    <i class="fa-solid fa-universal-access" aria-hidden="true"></i>
-  </button>
-
-  <div class="a11y-panel" id="a11yPanel" role="dialog" aria-modal="true" aria-label="Accessibility options" aria-hidden="true" hidden>
-    <div class="a11y-card">
-      <div class="a11y-head">
-        <div class="a11y-title"><i class="fa-solid fa-universal-access" aria-hidden="true"></i> Accessibility</div>
-        <button class="icon-btn" id="a11yClose" type="button" aria-label="Close accessibility panel">
-          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
-        </button>
-      </div>
-
-      <div class="a11y-grid" aria-label="Accessibility controls">
-        <button class="a11y-btn" type="button" data-a11y="textUp">
-          <i class="fa-solid fa-text-height" aria-hidden="true"></i> Text +
-        </button>
-        <button class="a11y-btn" type="button" data-a11y="textDown">
-          <i class="fa-solid fa-text-height" aria-hidden="true"></i> Text -
-        </button>
-        <button class="a11y-btn" type="button" data-a11y="contrast">
-          <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i> High Contrast
-        </button>
-        <button class="a11y-btn" type="button" data-a11y="gray">
-          <i class="fa-solid fa-eye" aria-hidden="true"></i> Grayscale
-        </button>
-        <button class="a11y-btn" type="button" data-a11y="underline">
-          <i class="fa-solid fa-link" aria-hidden="true"></i> Underline Links
-        </button>
-        <button class="a11y-btn" type="button" data-a11y="focus">
-          <i class="fa-solid fa-bullseye" aria-hidden="true"></i> Strong Focus
-        </button>
-        <button class="a11y-btn" type="button" data-a11y="reduceMotion">
-          <i class="fa-solid fa-person-walking" aria-hidden="true"></i> Reduce Motion
-        </button>
-        <button class="a11y-btn a11y-reset" type="button" data-a11y="reset">
-          <i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Reset
-        </button>
-      </div>
-
-      <div class="a11y-note" id="a11yNote">
-        Settings are saved on this device.
-      </div>
-    </div>
-  </div>
-
-
   <script src="./main.js" defer></script>
 </body>
 </html>
