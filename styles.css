@@ -282,7 +282,7 @@ footer{ text-align:center; padding:44px 5% 110px; color:rgba(255,255,255,.60); b
   place-items:center;
   gap:6px;
   cursor:pointer;
-  z-index:30;
+  z-index:50;
   transition: transform .22s ease;
 }
 .gift-tab i{ color:var(--gold); font-size:18px; }
@@ -378,6 +378,7 @@ footer{ text-align:center; padding:44px 5% 110px; color:rgba(255,255,255,.60); b
   color:rgba(255,255,255,.62);
 }
 .claim-btn{
+  position:relative;
   margin-top:12px;
   width:min(240px, 88%);
   border:none;
@@ -430,6 +431,7 @@ footer{ text-align:center; padding:44px 5% 110px; color:rgba(255,255,255,.60); b
   will-change:transform;
   z-index:5;
   overflow:hidden;
+  pointer-events:none;
 }
 
 /* Make door look like real panel door */
