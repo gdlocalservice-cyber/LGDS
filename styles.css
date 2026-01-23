@@ -1045,3 +1045,120 @@ footer{
   *{ transition:none !important; animation:none !important; }
   html.js .reveal{ opacity:1 !important; transform:none !important; }
 }
+
+
+/* ===== Accessibility Widget (FAB + Panel) ===== */
+.a11y-fab{
+  position:fixed;
+  left:18px;
+  bottom:18px;
+  z-index:10001;
+  width:56px;
+  height:56px;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(10,10,10,.55);
+  backdrop-filter:blur(14px);
+  box-shadow:0 22px 80px rgba(0,0,0,.60);
+  color:rgba(255,255,255,.92);
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+  transition:transform .18s ease, border-color .18s ease, background .18s ease, color .18s ease;
+}
+.a11y-fab:hover{
+  transform:translateY(-1px);
+  border-color:rgba(255,204,0,.45);
+  background:rgba(255,204,0,.10);
+  color:var(--gold);
+}
+.a11y-fab i{ font-size:1.35rem; }
+
+.a11y-panel{
+  position:fixed;
+  inset:0;
+  z-index:10002;
+  display:none;
+  padding:16px;
+  background:rgba(0,0,0,.72);
+  backdrop-filter:blur(10px);
+}
+.a11y-card{
+  max-width:560px;
+  margin:10vh auto 0;
+  border-radius:22px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(10,10,10,.92);
+  box-shadow:0 22px 90px rgba(0,0,0,.70);
+  padding:16px;
+}
+.a11y-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:6px 6px 14px;
+  border-bottom:1px solid rgba(255,255,255,.10);
+  margin-bottom:12px;
+}
+.a11y-title{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:.8px;
+}
+.a11y-title i{ color:var(--gold); }
+
+.a11y-grid{
+  display:grid;
+  grid-template-columns:repeat(2, 1fr);
+  gap:10px;
+  padding:6px;
+}
+.a11y-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  padding:14px 12px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.05);
+  color:rgba(255,255,255,.92);
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:.6px;
+  font-size:.82rem;
+  cursor:pointer;
+  transition:transform .18s ease, border-color .18s ease, background .18s ease, color .18s ease;
+}
+.a11y-btn:hover{
+  transform:translateY(-1px);
+  border-color:rgba(255,204,0,.45);
+  background:rgba(255,204,0,.10);
+  color:var(--gold);
+}
+.a11y-btn.is-on{
+  border-color:rgba(255,204,0,.70);
+  background:rgba(255,204,0,.12);
+  color:var(--gold);
+}
+.a11y-reset{
+  grid-column:1 / -1;
+  border-style:dashed;
+}
+.a11y-note{
+  margin:10px 6px 0;
+  color:rgba(255,255,255,.62);
+  font-weight:800;
+  font-size:.92rem;
+}
+
+/* On very small screens keep FAB above mobile sticky bar */
+@media (max-width:560px){
+  .a11y-fab{
+    bottom: calc(18px + var(--fab-h));
+  }
+}

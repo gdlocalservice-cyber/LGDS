@@ -10,6 +10,9 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 
+  <meta name="color-scheme" content="dark light" />
+  <meta name="theme-color" content="#070707" />
+
   <meta name="description" content="Privacy Policy for Local Garage Door Service (PA, NJ, DE)." />
 
   <script>document.documentElement.classList.add('js');</script>
@@ -26,6 +29,13 @@
     html{scroll-behavior:smooth;}
     body{margin:0;font-family:'Montserrat',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:radial-gradient(1200px 700px at 15% 10%, rgba(255,204,0,.08), transparent 60%),radial-gradient(900px 600px at 85% 20%, rgba(255,255,255,.05), transparent 65%),var(--dark);color:var(--text);line-height:1.6;overflow-x:hidden;}
     a{color:inherit;text-decoration:none;}
+.skip-link{position:absolute;left:12px;top:12px;padding:10px 14px;border-radius:12px;background:#000;color:#fff;border:2px solid var(--gold);z-index:10000;transform:translateY(-160%);transition:transform .18s ease;}
+.skip-link:focus{transform:translateY(0);}
+.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important;}
+:focus{outline:none;}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px;}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{border-color:rgba(255,204,0,.75);}
+
     .reveal{opacity:1;transform:none;} html.js .reveal{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease;} html.js .reveal.show{opacity:1;transform:translateY(0);}
     .topbar{background:rgba(0,0,0,.65);border-bottom:1px solid rgba(255,255,255,.08);padding:10px 5%;display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:.85rem;color:rgba(255,255,255,.78);position:relative;z-index:1200;flex-wrap:wrap;}
     .pill{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;background:rgba(255,204,0,.10);border:1px solid rgba(255,204,0,.25);color:rgba(255,255,255,.92);font-weight:900;white-space:nowrap;}
@@ -82,6 +92,7 @@
 </head>
 
 <body>
+  <a class="skip-link" href="#main">Skip to main content</a>
   <div class="topbar" id="topbar">
     <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:center;">
       <span class="pill"><i class="fa-solid fa-location-dot"></i> PA • NJ • DE</span>
@@ -93,7 +104,7 @@
     </div>
   </div>
 
-  <nav>
+  <nav aria-label="Primary">
     <a class="brand" href="/index.html#top">
       <span class="brand-logo" aria-hidden="true">
         <img src="/apple-touch-icon.png" alt="Local Garage Door Service Logo" loading="eager" decoding="async" />
@@ -120,17 +131,17 @@
       </a>
     </div>
 
-    <button class="burger" id="burger" aria-label="Open menu">
+    <button class="burger" id="burger" type="button" aria-label="Open menu" aria-controls="mobilePanel" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
   </nav>
 
   <!-- Mobile Menu -->
-  <div class="mobile-panel" id="mobilePanel" aria-hidden="true">
+  <div class="mobile-panel" id="mobilePanel" role="dialog" aria-modal="true" aria-label="Menu" aria-hidden="true" hidden>
     <div class="mobile-card">
       <div class="mobile-row">
         <div style="font-weight:900; text-transform:uppercase; letter-spacing:.7px;">Menu</div>
-        <button class="icon-btn" id="closeMobile" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+        <button class="icon-btn" id="closeMobile" type="button" aria-label="Close menu"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <div class="mobile-links">
         <a class="mLink" href="/index.html#offers">Offers</a>
@@ -245,20 +256,76 @@
         document.documentElement.style.setProperty("--nav-h", navH + "px");
       }
       setHeaderVars();
-
       const mobilePanel = $("#mobilePanel");
-      $("#burger").addEventListener("click", ()=>{
+      const burger = $("#burger");
+      const closeMobile = $("#closeMobile");
+
+      let lastFocused = null;
+
+      function getFocusable(container){
+        if(!container) return [];
+        return Array.from(container.querySelectorAll(
+          'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
+        )).filter(el => !el.hasAttribute("disabled"));
+      }
+
+      function openMenu(){
+        if(!mobilePanel || !burger) return;
+        lastFocused = document.activeElement;
+        mobilePanel.hidden = false;
         mobilePanel.style.display = "block";
+        mobilePanel.setAttribute("aria-hidden","false");
+        burger.setAttribute("aria-expanded","true");
         document.body.style.overflow = "hidden";
-      });
-      $("#closeMobile").addEventListener("click", ()=>{
+        const f = getFocusable(mobilePanel);
+        (f[0] || mobilePanel).focus?.();
+      }
+
+      function closeMenu(){
+        if(!mobilePanel || !burger) return;
         mobilePanel.style.display = "none";
+        mobilePanel.hidden = true;
+        mobilePanel.setAttribute("aria-hidden","true");
+        burger.setAttribute("aria-expanded","false");
         document.body.style.overflow = "";
+        if(lastFocused && typeof lastFocused.focus === "function") lastFocused.focus();
+      }
+
+      if(burger && mobilePanel){
+        burger.addEventListener("click", ()=>{
+          const expanded = burger.getAttribute("aria-expanded") === "true";
+          expanded ? closeMenu() : openMenu();
+        });
+      }
+      if(closeMobile && mobilePanel){
+        closeMobile.addEventListener("click", closeMenu);
+      }
+      $$(".mLink").forEach(a => a.addEventListener("click", closeMenu));
+
+      // Close on backdrop click
+      if(mobilePanel){
+        mobilePanel.addEventListener("mousedown", (e)=>{ if(e.target === mobilePanel) closeMenu(); });
+      }
+
+      // Focus trap + Esc
+      document.addEventListener("keydown", (e)=>{
+        if(!mobilePanel || mobilePanel.hidden) return;
+        if(e.key === "Escape"){ e.preventDefault(); closeMenu(); return; }
+        if(e.key !== "Tab") return;
+
+        const focusables = getFocusable(mobilePanel);
+        if(!focusables.length) return;
+
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+
+        if(e.shiftKey && document.activeElement === first){
+          e.preventDefault(); last.focus();
+        } else if(!e.shiftKey && document.activeElement === last){
+          e.preventDefault(); first.focus();
+        }
       });
-      $$(".mLink").forEach(a => a.addEventListener("click", ()=>{
-        mobilePanel.style.display = "none";
-        document.body.style.overflow = "";
-      }));
+
 
       let observer;
       function bindReveal(){

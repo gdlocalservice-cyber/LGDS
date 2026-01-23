@@ -344,3 +344,192 @@ window.addEventListener("DOMContentLoaded", () => {
   setTimeout(()=>{ setHeaderVars(); updateDoor(); }, 50);
   updateDoor();
 });
+
+
+// ===== Accessibility Widget =====
+(function(){
+  const KEY = "lgds_a11y";
+  const fab = document.getElementById("a11yFab");
+  const panel = document.getElementById("a11yPanel");
+  const closeBtn = document.getElementById("a11yClose");
+
+  if(!fab || !panel) return;
+
+  let state = {
+    font: 0,          // 0,1,2
+    contrast: false,
+    gray: false,
+    underline: false,
+    focus: false,
+    reduceMotion: false
+  };
+
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
+  }
+  function load(){
+    try{
+      const raw = localStorage.getItem(KEY);
+      if(raw) state = { ...state, ...JSON.parse(raw) };
+    }catch(e){}
+  }
+
+  function apply(){
+    const root = document.documentElement;
+
+    // Font scaling (safe)
+    const fontScale = state.font === 0 ? 1 : (state.font === 1 ? 1.07 : 1.14);
+    root.style.fontSize = (16 * fontScale) + "px";
+
+    root.classList.toggle("a11y-contrast", !!state.contrast);
+    root.classList.toggle("a11y-gray", !!state.gray);
+    root.classList.toggle("a11y-underline", !!state.underline);
+    root.classList.toggle("a11y-strong-focus", !!state.focus);
+    root.classList.toggle("a11y-reduce-motion", !!state.reduceMotion);
+
+    // Button toggles UI state
+    const btns = panel.querySelectorAll("[data-a11y]");
+    btns.forEach(b=>{
+      const key = b.getAttribute("data-a11y");
+      const on =
+        (key==="contrast" && state.contrast) ||
+        (key==="gray" && state.gray) ||
+        (key==="underline" && state.underline) ||
+        (key==="focus" && state.focus) ||
+        (key==="reduceMotion" && state.reduceMotion);
+      b.classList.toggle("is-on", on);
+      if(["contrast","gray","underline","focus","reduceMotion"].includes(key)){
+        b.setAttribute("aria-pressed", on ? "true" : "false");
+      }
+    });
+  }
+
+  let lastFocused = null;
+
+  function open(){
+    lastFocused = document.activeElement;
+    panel.hidden = false;
+    panel.style.display = "block";
+    panel.setAttribute("aria-hidden","false");
+    fab.setAttribute("aria-expanded","true");
+    document.body.style.overflow = "hidden";
+
+    // focus first button
+    const first = panel.querySelector("[data-a11y]");
+    first?.focus?.();
+  }
+  function close(){
+    panel.style.display = "none";
+    panel.hidden = true;
+    panel.setAttribute("aria-hidden","true");
+    fab.setAttribute("aria-expanded","false");
+    document.body.style.overflow = "";
+    if(lastFocused && typeof lastFocused.focus === "function") lastFocused.focus();
+  }
+
+  function getFocusable(container){
+    return Array.from(container.querySelectorAll(
+      'button:not([disabled]), [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    ));
+  }
+
+  function trapFocus(e){
+    if(panel.hidden) return;
+    if(e.key === "Escape"){ e.preventDefault(); close(); return; }
+    if(e.key !== "Tab") return;
+
+    const focusables = getFocusable(panel);
+    if(!focusables.length) return;
+
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+
+    if(e.shiftKey && document.activeElement === first){
+      e.preventDefault(); last.focus();
+    } else if(!e.shiftKey && document.activeElement === last){
+      e.preventDefault(); first.focus();
+    }
+  }
+
+  function toggle(key){
+    switch(key){
+      case "textUp":
+        state.font = Math.min(2, state.font + 1);
+        break;
+      case "textDown":
+        state.font = Math.max(0, state.font - 1);
+        break;
+      case "contrast":
+      case "gray":
+      case "underline":
+      case "focus":
+      case "reduceMotion":
+        state[key] = !state[key];
+        break;
+      case "reset":
+        state = { font:0, contrast:false, gray:false, underline:false, focus:false, reduceMotion:false };
+        break;
+      default: break;
+    }
+    save();
+    apply();
+  }
+
+  // extra CSS toggles
+  function injectA11yCss(){
+    if(document.getElementById("a11yCss")) return;
+    const css = document.createElement("style");
+    css.id = "a11yCss";
+    css.textContent = `
+      html.a11y-contrast body{
+        background:#000 !important;
+        color:#fff !important;
+      }
+      html.a11y-contrast .offer-card,
+      html.a11y-contrast .carousel,
+      html.a11y-contrast .contact-info,
+      html.a11y-contrast form,
+      html.a11y-contrast .trusted-wrap,
+      html.a11y-contrast nav,
+      html.a11y-contrast .topbar{
+        border-color: rgba(255,204,0,.85) !important;
+      }
+      html.a11y-gray body{ filter: grayscale(1); }
+      html.a11y-underline a{ text-decoration: underline !important; text-underline-offset: 3px; }
+      html.a11y-strong-focus :focus-visible{
+        outline: 4px solid var(--gold) !important;
+        outline-offset: 4px !important;
+      }
+      html.a11y-reduce-motion *{
+        transition: none !important;
+        animation: none !important;
+        scroll-behavior: auto !important;
+      }
+    `;
+    document.head.appendChild(css);
+  }
+
+  // init
+  injectA11yCss();
+  load();
+  apply();
+
+  fab.addEventListener("click", ()=>{
+    const expanded = fab.getAttribute("aria-expanded") === "true";
+    expanded ? close() : open();
+  });
+  closeBtn?.addEventListener("click", close);
+
+  panel.addEventListener("mousedown", (e)=>{
+    if(e.target === panel) close();
+  });
+
+  panel.addEventListener("click", (e)=>{
+    const btn = e.target.closest("[data-a11y]");
+    if(!btn) return;
+    const key = btn.getAttribute("data-a11y");
+    toggle(key);
+  });
+
+  document.addEventListener("keydown", trapFocus);
+})();
