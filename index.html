@@ -15,17 +15,13 @@
   <meta name="theme-color" content="#070707" />
   <meta name="color-scheme" content="dark light" />
 
-  <script>
-    // Mark JS as available (animations will only enable after main.js initializes)
-    document.documentElement.classList.add('js');
-  </script>
+  <script>document.documentElement.classList.add('js');</script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
-  <!-- Google tag (gtag.js) - GA4 + Google Ads -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-TVGZZ0WFTH"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -40,11 +36,11 @@
   <a class="skip-link" href="#main">Skip to main content</a>
 
   <div class="topbar" id="topbar">
-    <div class="topbar-left">
+    <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:center;">
       <span class="pill"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> PA • NJ • DE</span>
-      <span class="topbar-note">100-mile radius from Philadelphia</span>
+      <span style="font-weight:800;">100-mile radius from Philadelphia</span>
     </div>
-    <div class="topbar-right">
+    <div style="display:flex; gap:14px; flex-wrap:wrap; justify-content:center;">
       <a href="tel:2674386494" aria-label="Call"><i class="fa-solid fa-phone" aria-hidden="true"></i> 267-438-6494</a>
       <a href="#contact" aria-label="Request Service"><i class="fa-solid fa-calendar-check" aria-hidden="true"></i> Request Service</a>
     </div>
@@ -90,48 +86,57 @@
     <a class="btn sticky-btn" href="https://wa.me/12674386494" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> WhatsApp</a>
   </div>
 
-  <!-- Garage Door Widget: Desktop (left) + Mobile (bottom mini) -->
-  <aside class="deal-widget" aria-label="Scroll deal progress">
-    <button class="deal-pill" id="dealPill" type="button" aria-label="Open deal progress">
-      <span class="deal-pill-left"><i class="fa-solid fa-house-chimney" aria-hidden="true"></i> <strong>DEAL</strong></span>
-      <span class="deal-pill-right"><span id="dealPct">0%</span></span>
+  <!-- Garage Door Reward Widget -->
+  <aside class="garage-widget" aria-label="Scroll reward widget">
+    <button class="gift-tab" id="giftTab" type="button" aria-label="Toggle deal widget" aria-expanded="true">
+      <i class="fa-solid fa-gift" aria-hidden="true"></i>
+      <span>DEAL</span>
     </button>
 
-    <div class="deal-pop" id="dealPop" role="dialog" aria-modal="true" aria-label="Deal progress" aria-hidden="true" hidden>
-      <div class="deal-pop-head">
-        <div class="deal-pop-title"><i class="fa-solid fa-gift" aria-hidden="true"></i> Hidden Reward</div>
-        <button class="icon-btn" id="dealPopClose" type="button" aria-label="Close"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+    <div class="garage-frame" id="garageFrame">
+      <div class="garage-caption">
+        <span class="cap-left"><i class="fa-solid fa-warehouse" aria-hidden="true"></i> <span>GARAGE</span></span>
+        <span class="pct" id="doorPct">0%</span>
       </div>
 
-      <div class="garage-frame" aria-hidden="true">
-        <div class="garage-inside">
-          <div>
-            <div class="inside-title">You unlocked a deal</div>
-            <div class="inside-offer">10% OFF LABOR<br>ON ANY REPAIR</div>
-            <div class="inside-sub">Scroll to reveal</div>
-          </div>
+      <div class="garage-inside" id="garageInside" aria-live="polite">
+        <div class="inside-state inside-locked" id="insideLocked">
+          <div class="inside-title">SCROLL TO UNLOCK</div>
+          <div class="inside-offer">10% OFF LABOR<br>ON ANY REPAIR</div>
+          <div class="inside-sub">It reveals as you scroll</div>
         </div>
 
-        <!-- Door covers inside until it opens -->
-        <div class="door" id="door" aria-hidden="true">
+        <div class="inside-state inside-unlocked" id="insideUnlocked" hidden>
+          <div class="unlocked-top">YOU UNLOCKED A DEAL</div>
+          <div class="unlocked-main">10% OFF<br><span>LABOR</span><br>ON ANY<br>REPAIR</div>
+          <div class="unlocked-sub">Tap claim to apply the promo</div>
+          <button class="claim-btn" id="claimDealBtn" type="button">
+            <i class="fa-solid fa-ticket" aria-hidden="true"></i> Claim Deal
+          </button>
+          <div class="unlocked-bar" aria-hidden="true"><div></div></div>
+        </div>
+      </div>
+
+      <div class="door" id="door" aria-hidden="true">
+        <div class="door-top">
           <div class="door-windows" aria-hidden="true">
             <span></span><span></span><span></span><span></span>
           </div>
-          <div class="door-handle" aria-hidden="true"></div>
-          <div class="door-label" aria-hidden="true">
-            <i class="fa-solid fa-lock" aria-hidden="true"></i> Hidden Reward <span>Inside</span>
-          </div>
-          <div class="door-glow" id="doorGlow"></div>
+        </div>
+        <div class="door-panels" aria-hidden="true">
+          <div></div><div></div><div></div>
+        </div>
+        <div class="door-handle" aria-hidden="true"></div>
+
+        <div class="door-label" aria-hidden="true">
+          <i class="fa-solid fa-lock" aria-hidden="true"></i> HIDDEN REWARD <span>INSIDE</span>
         </div>
 
-        <div class="garage-progress">
-          <div id="doorBar"></div>
-        </div>
+        <div class="door-glow" id="doorGlow"></div>
       </div>
 
-      <div class="deal-pop-actions">
-        <a class="btn btn-gold" href="#contact"><i class="fa-solid fa-bolt" aria-hidden="true"></i> Claim Deal</a>
-        <a class="btn" href="#offers"><i class="fa-solid fa-tags" aria-hidden="true"></i> View Offers</a>
+      <div class="garage-progress" aria-hidden="true">
+        <div id="doorBar"></div>
       </div>
     </div>
   </aside>
@@ -140,7 +145,7 @@
   <div class="mobile-panel" id="mobilePanel" role="dialog" aria-modal="true" aria-label="Menu" aria-hidden="true" hidden>
     <div class="mobile-card">
       <div class="mobile-row">
-        <div class="mobile-title">Menu</div>
+        <div style="font-weight:900; text-transform:uppercase; letter-spacing:.7px;">Menu</div>
         <button class="icon-btn" id="closeMobile" type="button" aria-label="Close menu"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
       </div>
       <div class="mobile-links">
@@ -156,127 +161,131 @@
     </div>
   </div>
 
-  <main id="main" tabindex="-1">
-    <header class="hero" id="top">
-      <div class="hero-content reveal">
-        <div class="kicker"><i class="fa-solid fa-crown" aria-hidden="true"></i> Licensed • Insured • 24/7 Ready</div>
-        <h2>WE FIX IT <span>RIGHT</span><br>THE FIRST TIME</h2>
-        <p>Covering PA, NJ, and DE with a 100-mile radius from Philadelphia. Springs, openers, repairs, installs — fast and professional.</p>
-        <div class="hero-actions">
-          <a href="#contact" class="btn btn-gold"><i class="fa-solid fa-bolt" aria-hidden="true"></i> Get Free Estimate</a>
-          <a href="#photos" class="btn"><i class="fa-solid fa-image" aria-hidden="true"></i> See Photos</a>
-        </div>
+<main id="main" tabindex="-1">
+  <header class="hero" id="top">
+    <div class="hero-content reveal">
+      <div class="kicker"><i class="fa-solid fa-crown" aria-hidden="true"></i> Licensed • Insured • 24/7 Ready</div>
+      <h2>WE FIX IT <span>RIGHT</span><br>THE FIRST TIME</h2>
+      <p>Licensed, insured, and ready 24/7. Covering PA, NJ, and DE with a 100-mile radius from Philadelphia.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn btn-gold"><i class="fa-solid fa-bolt" aria-hidden="true"></i> Get Free Estimate</a>
+        <a href="#photos" class="btn"><i class="fa-solid fa-image" aria-hidden="true"></i> See Photos</a>
       </div>
-    </header>
+    </div>
+  </header>
 
-    <section class="offers-container" id="offers">
-      <h2 class="section-title reveal">Exclusive <span>Offers</span></h2>
-      <p class="section-sub reveal">Mention the website offer when you call or submit your request.</p>
+  <section class="offers-container" id="offers">
+    <h2 class="section-title reveal">Exclusive <span>Offers</span></h2>
+    <p class="section-sub reveal">Mention the website offer when you call or submit your request.</p>
 
-      <div class="offers-grid">
-        <div class="offer-card reveal">
-          <div class="badge">Popular</div>
-          <h3>10% OFF</h3>
-          <p>SPRING REPLACEMENT</p>
-          <small>Complete safety inspection included</small>
-        </div>
-
-        <div class="offer-card featured reveal">
-          <div class="badge">Best Value</div>
-          <h3>15% OFF</h3>
-          <p>NEW OPENER INSTALL</p>
-          <small>Applies to LiftMaster & Chamberlain models</small>
-        </div>
-
-        <div class="offer-card reveal">
-          <h3>$20 OFF</h3>
-          <p>TUNE-UP & LUBE</p>
-          <small>Reduce noise & extend door life</small>
-        </div>
+    <div class="offers-grid">
+      <div class="offer-card reveal">
+        <div class="badge">Popular</div>
+        <h3>10% OFF</h3>
+        <p>SPRING REPLACEMENT</p>
+        <small>Complete safety inspection included</small>
       </div>
-    </section>
 
-    <section class="media-container" id="photos">
-      <h2 class="section-title reveal">PHOTO <span>GALLERY</span></h2>
-      <p class="section-sub reveal">Swipe left/right. Use arrow keys when focused.</p>
+      <div class="offer-card featured reveal">
+        <div class="badge">Best Value</div>
+        <h3>15% OFF</h3>
+        <p>NEW OPENER INSTALL</p>
+        <small>Applies to LiftMaster & Chamberlain models</small>
+      </div>
 
-      <div class="carousel-wrap reveal">
-        <button class="car-btn car-prev" id="photosPrev" aria-label="Previous photo" type="button"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
-        <button class="car-btn car-next" id="photosNext" aria-label="Next photo" type="button"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
+      <div class="offer-card reveal">
+        <h3>$20 OFF</h3>
+        <p>TUNE-UP & LUBE</p>
+        <small>Reduce noise & extend door life</small>
+      </div>
+    </div>
+  </section>
 
-        <div class="carousel" role="region" aria-roledescription="carousel" aria-label="Photos carousel" aria-describedby="photosHint" tabindex="0">
-          <div class="track" id="photosTrack"></div>
+  <section class="media-container" id="photos">
+    <h2 class="section-title reveal">PHOTO <span>GALLERY</span></h2>
+    <p class="section-sub reveal">Swipe left/right. You can scroll both directions forever.</p>
+
+    <div class="carousel-wrap reveal">
+      <button class="car-btn car-prev" id="photosPrev" aria-label="Previous photo" type="button"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
+      <button class="car-btn car-next" id="photosNext" aria-label="Next photo" type="button"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
+
+      <div class="carousel" role="region" aria-roledescription="carousel" aria-label="Photos carousel" aria-describedby="photosHint" tabindex="0">
+        <div class="track" id="photosTrack"></div>
+      </div>
+
+      <div class="carousel-hint" id="photosHint">Tip: swipe to browse photos (infinite loop). Use left/right arrow keys when focused.</div>
+    </div>
+  </section>
+
+  <section class="media-container" id="videos" style="padding-top:30px;">
+    <h2 class="section-title reveal">VIDEO <span>GALLERY</span></h2>
+    <p class="section-sub reveal">Center video plays automatically (muted). Swipe both ways forever.</p>
+
+    <div class="carousel-wrap reveal">
+      <button class="car-btn car-prev" id="videosPrev" aria-label="Previous video" type="button"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
+      <button class="car-btn car-next" id="videosNext" aria-label="Next video" type="button"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
+
+      <div class="carousel" role="region" aria-roledescription="carousel" aria-label="Videos carousel" aria-describedby="videosHint" tabindex="0">
+        <div class="track" id="videosTrack"></div>
+      </div>
+
+      <div class="carousel-hint" id="videosHint">Tip: tap the center video to unmute. Use left/right arrow keys when focused.</div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact-section">
+    <h2 class="section-title reveal">REQUEST <span>SERVICE</span></h2>
+
+    <div class="contact-box">
+      <div class="contact-info reveal">
+        <h3>Quick Contact</h3>
+        <p>Fill out the form and a specialist will call you quickly.</p>
+        <div class="check"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Same Day Service</div>
+        <div class="check"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Licensed & Insured</div>
+        <div class="check"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Free Estimates</div>
+      </div>
+
+      <form class="reveal" action="https://formspree.io/f/xpqqzvwo" method="POST" aria-label="Service request form">
+        <div class="form-field">
+          <label class="sr-only" for="name">Your name</label>
+          <input id="name" type="text" name="name" placeholder="Your Name" autocomplete="name" required aria-required="true">
         </div>
 
-        <div class="carousel-hint" id="photosHint">Tip: swipe to browse photos. Use left/right arrow keys when focused.</div>
-      </div>
-    </section>
-
-    <section class="media-container" id="videos" style="padding-top:30px;">
-      <h2 class="section-title reveal">VIDEO <span>GALLERY</span></h2>
-      <p class="section-sub reveal">Center video plays automatically (muted). Tap to unmute.</p>
-
-      <div class="carousel-wrap reveal">
-        <button class="car-btn car-prev" id="videosPrev" aria-label="Previous video" type="button"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
-        <button class="car-btn car-next" id="videosNext" aria-label="Next video" type="button"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
-
-        <div class="carousel" role="region" aria-roledescription="carousel" aria-label="Videos carousel" aria-describedby="videosHint" tabindex="0">
-          <div class="track" id="videosTrack"></div>
+        <div class="form-field">
+          <label class="sr-only" for="phone">Phone number</label>
+          <input id="phone" type="tel" name="phone" placeholder="Phone Number" inputmode="tel" autocomplete="tel" required aria-required="true">
         </div>
 
-        <div class="carousel-hint" id="videosHint">Tip: tap the center video to unmute. Use left/right arrow keys when focused.</div>
-      </div>
-    </section>
-
-    <section id="contact" class="contact-section">
-      <h2 class="section-title reveal">REQUEST <span>SERVICE</span></h2>
-
-      <div class="contact-box">
-        <div class="contact-info reveal">
-          <h3>Quick Contact</h3>
-          <p>Fill out the form and a specialist will call you quickly.</p>
-          <div class="check"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Same Day Service</div>
-          <div class="check"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Licensed & Insured</div>
-          <div class="check"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Free Estimates</div>
+        <div class="form-field">
+          <label class="sr-only" for="service_type">Service type</label>
+          <select id="service_type" name="service_type" aria-label="Service type">
+            <option value="Springs">Spring Replacement</option>
+            <option value="Opener">New Opener Installation</option>
+            <option value="Repair">General Repair</option>
+            <option value="Maintenance">Maintenance Tune-up</option>
+          </select>
         </div>
 
-        <form class="reveal" action="https://formspree.io/f/xpqqzvwo" method="POST" aria-label="Service request form">
-          <div class="form-field">
-            <label class="sr-only" for="name">Your name</label>
-            <input id="name" type="text" name="name" placeholder="Your Name" autocomplete="name" required aria-required="true">
-          </div>
+        <div class="form-field">
+          <label class="sr-only" for="promo_code">Promo code</label>
+          <input id="promo_code" type="text" name="promo_code" placeholder="Promo Code (optional)" autocomplete="off" inputmode="text">
+        </div>
 
-          <div class="form-field">
-            <label class="sr-only" for="phone">Phone number</label>
-            <input id="phone" type="tel" name="phone" placeholder="Phone Number" inputmode="tel" autocomplete="tel" required aria-required="true">
-          </div>
+        <div class="form-field">
+          <label class="sr-only" for="message">Message</label>
+          <textarea id="message" name="message" rows="4" placeholder="How can we help?" autocomplete="off"></textarea>
+        </div>
 
-          <div class="form-field">
-            <label class="sr-only" for="service_type">Service type</label>
-            <select id="service_type" name="service_type" aria-label="Service type">
-              <option value="Labor10">10% OFF Labor (Any Repair)</option>
-              <option value="Springs">Spring Replacement</option>
-              <option value="Opener">New Opener Installation</option>
-              <option value="Repair">General Repair</option>
-              <option value="Maintenance">Maintenance Tune-up</option>
-            </select>
-          </div>
+        <button type="submit" class="btn-submit">
+          <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+          <span>Send Request</span>
+        </button>
 
-          <div class="form-field">
-            <label class="sr-only" for="message">Message</label>
-            <textarea id="message" name="message" rows="4" placeholder="How can we help?" autocomplete="off"></textarea>
-          </div>
-
-          <button type="submit" class="btn-submit">
-            <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
-            <span>Send Request</span>
-          </button>
-
-          <p class="form-note">By submitting, you agree to be contacted by phone/text about this request.</p>
-        </form>
-      </div>
-    </section>
-  </main>
+        <p class="form-note" id="formNote">By submitting, you agree to be contacted by phone/text about this request.</p>
+      </form>
+    </div>
+  </section>
+</main>
 
   <footer>
     <div class="trusted-wrap reveal" aria-label="Trusted Brands">
@@ -293,7 +302,8 @@
       </div>
     </div>
 
-    <div class="footer-copy">© <span id="year"></span> Local Garage Door Service</div>
+    <div style="font-weight:900; text-transform:uppercase; letter-spacing:.6px;">© <span id="year"></span> Local Garage Door Service</div>
+
     <div class="footer-links">
       <a class="footer-link-pill" href="./terms.html"><i class="fa-solid fa-file-contract" aria-hidden="true"></i> Terms</a>
       <a class="footer-link-pill" href="./privacy.html"><i class="fa-solid fa-user-shield" aria-hidden="true"></i> Privacy</a>
@@ -301,29 +311,49 @@
   </footer>
 
   <!-- Accessibility Widget -->
-  <div class="a11y" id="a11y">
-    <button class="a11y-fab" id="a11yFab" type="button" aria-label="Accessibility options" aria-controls="a11yPanel" aria-expanded="false">
-      <i class="fa-solid fa-universal-access" aria-hidden="true"></i>
-    </button>
+  <button class="a11y-fab" id="a11yFab" type="button" aria-label="Accessibility options" aria-controls="a11yPanel" aria-expanded="false">
+    <i class="fa-solid fa-universal-access" aria-hidden="true"></i>
+  </button>
 
-    <div class="a11y-panel" id="a11yPanel" role="dialog" aria-modal="true" aria-label="Accessibility options" aria-hidden="true" hidden>
+  <div class="a11y-panel" id="a11yPanel" role="dialog" aria-modal="true" aria-label="Accessibility options" aria-hidden="true" hidden>
+    <div class="a11y-card">
       <div class="a11y-head">
-        <div class="a11y-title">Accessibility</div>
-        <button class="icon-btn" id="a11yClose" type="button" aria-label="Close accessibility"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+        <div class="a11y-title"><i class="fa-solid fa-universal-access" aria-hidden="true"></i> Accessibility</div>
+        <button class="icon-btn" id="a11yClose" type="button" aria-label="Close accessibility panel">
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+        </button>
       </div>
 
-      <div class="a11y-grid">
-        <button class="a11y-btn" type="button" data-a11y="textPlus"><i class="fa-solid fa-font" aria-hidden="true"></i> Text +</button>
-        <button class="a11y-btn" type="button" data-a11y="textPlus2"><i class="fa-solid fa-font" aria-hidden="true"></i> Text ++</button>
-        <button class="a11y-btn" type="button" data-a11y="contrast"><i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i> High Contrast</button>
-        <button class="a11y-btn" type="button" data-a11y="grayscale"><i class="fa-solid fa-droplet-slash" aria-hidden="true"></i> Grayscale</button>
-        <button class="a11y-btn" type="button" data-a11y="underline"><i class="fa-solid fa-underline" aria-hidden="true"></i> Underline Links</button>
-        <button class="a11y-btn" type="button" data-a11y="focus"><i class="fa-solid fa-bullseye" aria-hidden="true"></i> Strong Focus</button>
-        <button class="a11y-btn" type="button" data-a11y="reduceMotion"><i class="fa-solid fa-person-walking" aria-hidden="true"></i> Reduce Motion</button>
-        <button class="a11y-btn a11y-reset" type="button" data-a11y="reset"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Reset</button>
+      <div class="a11y-grid" aria-label="Accessibility controls">
+        <button class="a11y-btn" type="button" data-a11y="textUp">
+          <i class="fa-solid fa-text-height" aria-hidden="true"></i> Text +
+        </button>
+        <button class="a11y-btn" type="button" data-a11y="textDown">
+          <i class="fa-solid fa-text-height" aria-hidden="true"></i> Text -
+        </button>
+        <button class="a11y-btn" type="button" data-a11y="contrast">
+          <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i> High Contrast
+        </button>
+        <button class="a11y-btn" type="button" data-a11y="gray">
+          <i class="fa-solid fa-eye" aria-hidden="true"></i> Grayscale
+        </button>
+        <button class="a11y-btn" type="button" data-a11y="underline">
+          <i class="fa-solid fa-link" aria-hidden="true"></i> Underline Links
+        </button>
+        <button class="a11y-btn" type="button" data-a11y="focus">
+          <i class="fa-solid fa-bullseye" aria-hidden="true"></i> Strong Focus
+        </button>
+        <button class="a11y-btn" type="button" data-a11y="reduceMotion">
+          <i class="fa-solid fa-person-walking" aria-hidden="true"></i> Reduce Motion
+        </button>
+        <button class="a11y-btn a11y-reset" type="button" data-a11y="reset">
+          <i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Reset
+        </button>
       </div>
 
-      <div class="a11y-note">Your settings are saved on this device.</div>
+      <div class="a11y-note" id="a11yNote">
+        Settings are saved on this device.
+      </div>
     </div>
   </div>
 

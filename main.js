@@ -4,21 +4,21 @@ const photos = [
   "https://res.cloudinary.com/dixal2c3q/image/upload/v1768364089/WhatsApp_Image_2026-01-13_at_10.30.27_PM_1_wwugo0.jpg",
   "https://res.cloudinary.com/dixal2c3q/image/upload/v1768364089/WhatsApp_Image_2026-01-13_at_10.30.28_PM_fan2cw.jpg",
   "https://res.cloudinary.com/dixal2c3q/image/upload/v1768364089/WhatsApp_Image_2026-01-13_at_10.30.28_PM_1_e3gyaj.jpg",
-  "https://res.cloudinary.com/dixal2c3q/image/upload/v1768364089/WhatsApp_Image_2026-01-13_at_10.30.28_PM_2_tgp90s.jpg"
+  "https://res.cloudinary.com/dixal2c3q/image/upload/v1768364089/WhatsApp_Image_2026-01-13_at_10.30.28_PM_2_tgp90s.jpg",
+  "https://res.cloudinary.com/dixal2c3q/image/upload/v1768364086/WhatsApp_Image_2026-01-13_at_10.31.44_PM_zwedzz.jpg",
+  "https://res.cloudinary.com/dixal2c3q/image/upload/v1768364085/WhatsApp_Image_2026-01-13_at_10.31.45_PM_ozczcn.jpg"
 ];
 
 const videos = [
   "https://res.cloudinary.com/dixal2c3q/video/upload/v1768364089/WhatsApp_Video_2026-01-13_at_10.30.28_PM_ohm5aj.mp4",
-  "https://res.cloudinary.com/dixal2c3q/video/upload/v1768364088/WhatsApp_Video_2026-01-13_at_10.30.28_PM_1_vimrwj.mp4",
-  "https://res.cloudinary.com/dixal2c3q/video/upload/v1768364088/WhatsApp_Video_2026-01-13_at_10.30.28_PM_2_ahjxav.mp4"
+  "https://res.cloudinary.com/dixal2c3q/video/upload/v1768364088/WhatsApp_Video_2026-01-13_at_10.30.28_PM_1_vimrwj.mp4"
 ];
 
 const $ = (s)=>document.querySelector(s);
 const $$ = (s)=>Array.from(document.querySelectorAll(s));
 const clamp = (n,a,b)=>Math.max(a,Math.min(b,n));
-const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-function safe(fn){ try{ fn(); }catch(e){ console.error(e); } }
+const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function buildPoster(videoUrl){
   const s = String(videoUrl);
@@ -29,6 +29,7 @@ function buildPoster(videoUrl){
 function createInfiniteCarousel({ trackEl, items, type }){
   if(!trackEl) return { scrollByOne: ()=>{} };
   trackEl.innerHTML = "";
+
   const total = items.length;
   if(!total) return { scrollByOne: ()=>{} };
 
@@ -59,13 +60,17 @@ function createInfiniteCarousel({ trackEl, items, type }){
       const vid = document.createElement("video");
       vid.src = src;
       vid.setAttribute("title", `Garage door service video ${realIndex + 1}`);
+      vid.setAttribute("aria-label", `Garage door service video ${realIndex + 1}`);
       vid.muted = true;
       vid.loop = true;
       vid.playsInline = true;
       vid.preload = "metadata";
       vid.controls = true;
+      vid.setAttribute("playsinline", "");
+      vid.setAttribute("webkit-playsinline", "");
       const poster = buildPoster(src);
       if(poster) vid.poster = poster;
+
       vid.addEventListener("click", ()=>{ vid.muted = !vid.muted; });
       slide.appendChild(vid);
     }
@@ -92,12 +97,7 @@ function createInfiniteCarousel({ trackEl, items, type }){
       if(d < best.dist){ best = { idx, dist: d }; }
     });
 
-    slides.forEach((s, idx)=> {
-      const isActive = idx === best.idx;
-      s.classList.toggle("is-active", isActive);
-      if(isActive){ s.setAttribute("aria-current","true"); }
-      else { s.removeAttribute("aria-current"); }
-    });
+    slides.forEach((s, idx)=> s.classList.toggle("is-active", idx === best.idx));
 
     if(type === "video"){
       slides.forEach((s, idx)=>{
@@ -129,6 +129,7 @@ function createInfiniteCarousel({ trackEl, items, type }){
         trackEl.scrollLeft -= setWidth;
       }
     }
+
     if(raf) cancelAnimationFrame(raf);
     raf = requestAnimationFrame(setActiveByCenter);
   }
@@ -156,31 +157,76 @@ function createInfiniteCarousel({ trackEl, items, type }){
   return { scrollByOne };
 }
 
-window.addEventListener("DOMContentLoaded", () => safe(() => {
-  // ===== SAFE reveal enabling (prevents blank page even if later code fails) =====
-  if(!prefersReducedMotion){
-    document.documentElement.classList.add("reveal-on");
-  }
-  // If anything goes wrong later, show content anyway:
-  const forceShowAll = () => $$(".reveal").forEach(el => el.classList.add("show"));
+// ===== Reward + Promo =====
+const AUTO_PROMO_CODE = "LGDS10OFF";
 
-  // ===== Year =====
+function setPromoCode(code){
+  const promo = $("#promo_code");
+  if(!promo) return;
+  const current = (promo.value || "").trim();
+  if(current && current !== code) return; // respect user-entered code
+  promo.value = code;
+  promo.dispatchEvent(new Event("input", { bubbles:true }));
+  promo.dispatchEvent(new Event("change", { bubbles:true }));
+}
+
+function scrollToContact(){
+  const el = $("#contact");
+  if(el) el.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block:"start" });
+  else window.location.hash = "#contact";
+}
+
+function collapseWidget(){
+  const widget = document.querySelector(".garage-widget");
+  const tab = $("#giftTab");
+  if(widget) widget.classList.add("is-collapsed");
+  if(tab) tab.setAttribute("aria-expanded","false");
+  try{ localStorage.setItem("lgds_widget_collapsed","1"); }catch(e){}
+}
+function expandWidget(){
+  const widget = document.querySelector(".garage-widget");
+  const tab = $("#giftTab");
+  if(widget) widget.classList.remove("is-collapsed");
+  if(tab) tab.setAttribute("aria-expanded","true");
+  try{ localStorage.setItem("lgds_widget_collapsed","0"); }catch(e){}
+}
+function toggleWidget(){
+  const widget = document.querySelector(".garage-widget");
+  if(!widget) return;
+  widget.classList.contains("is-collapsed") ? expandWidget() : collapseWidget();
+}
+
+window.addEventListener("DOMContentLoaded", () => {
   const yearEl = $("#year");
   if(yearEl) yearEl.textContent = String(new Date().getFullYear());
 
-  // ===== Header height vars =====
-  const topbar = $("#topbar");
-  const nav = document.querySelector("nav");
-  function setHeaderVars(){
-    const topbarH = topbar ? topbar.getBoundingClientRect().height : 0;
-    const navH = nav ? nav.getBoundingClientRect().height : 72;
-    document.documentElement.style.setProperty("--topbar-h", topbarH + "px");
-    document.documentElement.style.setProperty("--nav-h", navH + "px");
+  // Reveal
+  if(prefersReducedMotion){
+    $$(".reveal").forEach(el => el.classList.add("show"));
+  } else if ("IntersectionObserver" in window){
+    const observer = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.classList.add("show");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    $$(".reveal").forEach(el => observer.observe(el));
+  } else {
+    $$(".reveal").forEach(el => el.classList.add("show"));
   }
-  setHeaderVars();
-  window.addEventListener("resize", ()=> setTimeout(setHeaderVars, 60));
 
-  // ===== Mobile menu (accessible) =====
+  // Carousels
+  const photosCarousel = createInfiniteCarousel({ trackEl: $("#photosTrack"), items: photos, type: "photo" });
+  const videosCarousel = createInfiniteCarousel({ trackEl: $("#videosTrack"), items: videos, type: "video" });
+
+  $("#photosPrev")?.addEventListener("click", ()=> photosCarousel.scrollByOne(-1));
+  $("#photosNext")?.addEventListener("click", ()=> photosCarousel.scrollByOne(1));
+  $("#videosPrev")?.addEventListener("click", ()=> videosCarousel.scrollByOne(-1));
+  $("#videosNext")?.addEventListener("click", ()=> videosCarousel.scrollByOne(1));
+
+  // Mobile menu
   const mobilePanel = $("#mobilePanel");
   const burger = $("#burger");
   const closeMobile = $("#closeMobile");
@@ -192,7 +238,6 @@ window.addEventListener("DOMContentLoaded", () => safe(() => {
       'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
     ));
   }
-
   function openMenu(){
     if(!mobilePanel || !burger) return;
     lastFocused = document.activeElement;
@@ -204,7 +249,6 @@ window.addEventListener("DOMContentLoaded", () => safe(() => {
     const focusables = getFocusable(mobilePanel);
     (focusables[0] || mobilePanel).focus?.();
   }
-
   function closeMenu(){
     if(!mobilePanel || !burger) return;
     mobilePanel.style.display = "none";
@@ -212,9 +256,8 @@ window.addEventListener("DOMContentLoaded", () => safe(() => {
     mobilePanel.setAttribute("aria-hidden","true");
     burger.setAttribute("aria-expanded","false");
     document.body.style.overflow = "";
-    if(lastFocused && typeof lastFocused.focus === "function") lastFocused.focus();
+    lastFocused?.focus?.();
   }
-
   function trapFocus(e){
     if(!mobilePanel || mobilePanel.hidden) return;
     if(e.key === "Escape"){ e.preventDefault(); closeMenu(); return; }
@@ -226,89 +269,40 @@ window.addEventListener("DOMContentLoaded", () => safe(() => {
     if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
     else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
   }
-
-  if(burger && mobilePanel){
-    burger.addEventListener("click", ()=>{
-      const expanded = burger.getAttribute("aria-expanded") === "true";
-      expanded ? closeMenu() : openMenu();
-    });
-  }
-  if(closeMobile) closeMobile.addEventListener("click", closeMenu);
-  if(mobilePanel){
-    mobilePanel.addEventListener("mousedown", (e)=>{ if(e.target === mobilePanel) closeMenu(); });
-    document.addEventListener("keydown", trapFocus);
-  }
+  burger?.addEventListener("click", ()=>{
+    const expanded = burger.getAttribute("aria-expanded") === "true";
+    expanded ? closeMenu() : openMenu();
+  });
+  closeMobile?.addEventListener("click", closeMenu);
+  mobilePanel?.addEventListener("mousedown", (e)=>{ if(e.target === mobilePanel) closeMenu(); });
+  document.addEventListener("keydown", trapFocus);
   $$(".mLink").forEach(a => a.addEventListener("click", closeMenu));
 
-  // ===== Reveal (IntersectionObserver) =====
-  let observer;
-  function bindReveal(){
-    if(prefersReducedMotion){ forceShowAll(); return; }
-    if (!("IntersectionObserver" in window)) { forceShowAll(); return; }
-    if(observer) observer.disconnect();
-    observer = new IntersectionObserver((entries)=>{
-      entries.forEach(entry=>{
-        if(entry.isIntersecting){
-          entry.target.classList.add("show");
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12 });
-    $$(".reveal").forEach(el => { if(!el.classList.contains("show")) observer.observe(el); });
-  }
-  bindReveal();
+  // Widget toggle persistence
+  const giftTab = $("#giftTab");
+  giftTab?.addEventListener("click", toggleWidget);
+  try{
+    const c = localStorage.getItem("lgds_widget_collapsed");
+    if(c === "1") collapseWidget();
+  }catch(e){}
 
-  // ===== Carousels =====
-  const photosCarousel = createInfiniteCarousel({ trackEl: $("#photosTrack"), items: photos, type: "photo" });
-  const videosCarousel = createInfiniteCarousel({ trackEl: $("#videosTrack"), items: videos, type: "video" });
+  // Claim button: apply promo + collapse + jump to contact
+  $("#claimDealBtn")?.addEventListener("click", ()=>{
+    setPromoCode(AUTO_PROMO_CODE);
+    collapseWidget();
+    scrollToContact();
+  });
 
-  $("#photosPrev")?.addEventListener("click", ()=> photosCarousel.scrollByOne(-1));
-  $("#photosNext")?.addEventListener("click", ()=> photosCarousel.scrollByOne(1));
-  $("#videosPrev")?.addEventListener("click", ()=> videosCarousel.scrollByOne(-1));
-  $("#videosNext")?.addEventListener("click", ()=> videosCarousel.scrollByOne(1));
-
-  function bindCarouselKeys(region, api){
-    if(!region || !api) return;
-    region.addEventListener('keydown', (e)=>{
-      if(e.key === 'ArrowLeft'){ e.preventDefault(); api.scrollByOne(-1); }
-      if(e.key === 'ArrowRight'){ e.preventDefault(); api.scrollByOne(1); }
-    });
-  }
-  bindCarouselKeys(document.querySelector('#photos .carousel'), photosCarousel);
-  bindCarouselKeys(document.querySelector('#videos .carousel'), videosCarousel);
-
-  // ===== Deal widget (door) =====
-  const dealPill = $("#dealPill");
-  const dealPop = $("#dealPop");
-  const dealPopClose = $("#dealPopClose");
+  // ===== Door scroll behavior =====
   const door = $("#door");
   const doorBar = $("#doorBar");
-  const dealPct = $("#dealPct");
+  const doorPct = $("#doorPct");
   const doorGlow = $("#doorGlow");
+  const insideLocked = $("#insideLocked");
+  const insideUnlocked = $("#insideUnlocked");
 
-  function openDeal(){
-    if(!dealPop || !dealPill) return;
-    dealPop.hidden = false;
-    dealPop.setAttribute("aria-hidden","false");
-    dealPill.setAttribute("aria-expanded","true");
-    setTimeout(()=> dealPop.querySelector("a,button")?.focus?.(), 0);
-  }
-  function closeDeal(){
-    if(!dealPop || !dealPill) return;
-    dealPop.hidden = true;
-    dealPop.setAttribute("aria-hidden","true");
-    dealPill.setAttribute("aria-expanded","false");
-    dealPill.focus?.();
-  }
-
-  dealPill?.addEventListener("click", ()=>{
-    const hidden = dealPop?.hidden ?? true;
-    hidden ? openDeal() : closeDeal();
-  });
-  dealPopClose?.addEventListener("click", closeDeal);
-  document.addEventListener("keydown", (e)=>{
-    if(e.key === "Escape" && dealPop && !dealPop.hidden) closeDeal();
-  });
+  let ticking = false;
+  let unlockedOnce = false;
 
   function getScrollProgress(){
     const doc = document.documentElement;
@@ -317,19 +311,36 @@ window.addEventListener("DOMContentLoaded", () => safe(() => {
     return Math.min(1, Math.max(0, scrollTop / scrollHeight));
   }
 
-  let ticking = false;
   function updateDoor(){
     ticking = false;
     const p = getScrollProgress();
     const pct = Math.round(p * 100);
 
-    if(dealPct) dealPct.textContent = `${pct}%`;
+    // Move door up to reveal content.
+    // 0% => fully closed, 100% => fully opened (moved up out of view)
+    if(door) door.style.transform = `translateY(${(-p * 110).toFixed(3)}%)`;
+
+    if(doorPct) doorPct.textContent = `${pct}%`;
     if(doorBar) doorBar.style.width = `${pct}%`;
     if(doorGlow) doorGlow.style.opacity = String(Math.min(1, p));
 
-    // Door covers inside until it opens: translate up from 0% to -100%
-    if(door) door.style.transform = `translateY(${(-p * 100).toFixed(2)}%)`;
+    const isUnlocked = p >= 0.999;
+
+    if(isUnlocked){
+      if(insideUnlocked){ insideUnlocked.hidden = false; }
+      if(insideLocked){ insideLocked.hidden = true; }
+      if(!unlockedOnce){
+        unlockedOnce = true;
+        // Auto-apply promo once user hits 100% (or near-bottom)
+        setPromoCode(AUTO_PROMO_CODE);
+        try{ localStorage.setItem("lgds_auto_promo_applied","1"); }catch(e){}
+      }
+    } else {
+      if(insideUnlocked){ insideUnlocked.hidden = true; }
+      if(insideLocked){ insideLocked.hidden = false; }
+    }
   }
+
   function onScroll(){
     if(!ticking){
       requestAnimationFrame(updateDoor);
@@ -338,103 +349,193 @@ window.addEventListener("DOMContentLoaded", () => safe(() => {
   }
   window.addEventListener("scroll", onScroll, { passive:true });
   updateDoor();
+});
 
-  // ===== Accessibility widget =====
-  const a11yFab = $("#a11yFab");
-  const a11yPanel = $("#a11yPanel");
-  const a11yClose = $("#a11yClose");
-  const a11yButtons = $$("#a11yPanel .a11y-btn");
-  const A11Y_KEY = "lgds_a11y_v1";
 
-  const state = {
-    text: 0,
+// ===== Accessibility Widget =====
+(function(){
+  const KEY = "lgds_a11y";
+  const fab = document.getElementById("a11yFab");
+  const panel = document.getElementById("a11yPanel");
+  const closeBtn = document.getElementById("a11yClose");
+
+  if(!fab || !panel) return;
+
+  let state = {
+    font: 0,          // 0,1,2
     contrast: false,
-    grayscale: false,
+    gray: false,
     underline: false,
     focus: false,
     reduceMotion: false
   };
 
-  function applyState(){
-    const html = document.documentElement;
-    html.classList.toggle("a11y-text1", state.text === 1);
-    html.classList.toggle("a11y-text2", state.text === 2);
-    html.classList.toggle("a11y-contrast", !!state.contrast);
-    html.classList.toggle("a11y-grayscale", !!state.grayscale);
-    html.classList.toggle("a11y-underline", !!state.underline);
-    html.classList.toggle("a11y-focus", !!state.focus);
-    html.classList.toggle("a11y-reduce-motion", !!state.reduceMotion);
-
-    // reflect on UI
-    a11yButtons.forEach(btn=>{
-      const k = btn.dataset.a11y;
-      const on = (
-        (k === "textPlus" && state.text === 1) ||
-        (k === "textPlus2" && state.text === 2) ||
-        (k === "contrast" && state.contrast) ||
-        (k === "grayscale" && state.grayscale) ||
-        (k === "underline" && state.underline) ||
-        (k === "focus" && state.focus) ||
-        (k === "reduceMotion" && state.reduceMotion)
-      );
-      btn.classList.toggle("is-on", !!on);
-      btn.setAttribute("aria-pressed", on ? "true" : "false");
-    });
-
-    try{ localStorage.setItem(A11Y_KEY, JSON.stringify(state)); }catch(e){}
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
   }
-
-  function loadState(){
+  function load(){
     try{
-      const raw = localStorage.getItem(A11Y_KEY);
-      if(!raw) return;
-      const s = JSON.parse(raw);
-      Object.assign(state, s || {});
+      const raw = localStorage.getItem(KEY);
+      if(raw) state = { ...state, ...JSON.parse(raw) };
     }catch(e){}
   }
 
-  function openA11y(){
-    if(!a11yPanel || !a11yFab) return;
-    a11yPanel.hidden = false;
-    a11yPanel.setAttribute("aria-hidden","false");
-    a11yFab.setAttribute("aria-expanded","true");
-    setTimeout(()=> a11yPanel.querySelector("button")?.focus?.(), 0);
-  }
-  function closeA11y(){
-    if(!a11yPanel || !a11yFab) return;
-    a11yPanel.hidden = true;
-    a11yPanel.setAttribute("aria-hidden","true");
-    a11yFab.setAttribute("aria-expanded","false");
-    a11yFab.focus?.();
-  }
+  function apply(){
+    const root = document.documentElement;
 
-  a11yFab?.addEventListener("click", ()=>{
-    const hidden = a11yPanel?.hidden ?? true;
-    hidden ? openA11y() : closeA11y();
-  });
-  a11yClose?.addEventListener("click", closeA11y);
-  document.addEventListener("keydown", (e)=>{
-    if(e.key === "Escape" && a11yPanel && !a11yPanel.hidden) closeA11y();
-  });
+    // Font scaling (safe)
+    const fontScale = state.font === 0 ? 1 : (state.font === 1 ? 1.07 : 1.14);
+    root.style.fontSize = (16 * fontScale) + "px";
 
-  a11yButtons.forEach(btn=>{
-    btn.addEventListener("click", ()=>{
-      const k = btn.dataset.a11y;
-      if(k === "textPlus"){ state.text = (state.text === 1 ? 0 : 1); if(state.text === 1) state.text = 1; }
-      else if(k === "textPlus2"){ state.text = (state.text === 2 ? 0 : 2); }
-      else if(k === "contrast"){ state.contrast = !state.contrast; }
-      else if(k === "grayscale"){ state.grayscale = !state.grayscale; }
-      else if(k === "underline"){ state.underline = !state.underline; }
-      else if(k === "focus"){ state.focus = !state.focus; }
-      else if(k === "reduceMotion"){ state.reduceMotion = !state.reduceMotion; }
-      else if(k === "reset"){
-        state.text = 0; state.contrast = false; state.grayscale = false; state.underline = false; state.focus = false; state.reduceMotion = false;
+    root.classList.toggle("a11y-contrast", !!state.contrast);
+    root.classList.toggle("a11y-gray", !!state.gray);
+    root.classList.toggle("a11y-underline", !!state.underline);
+    root.classList.toggle("a11y-strong-focus", !!state.focus);
+    root.classList.toggle("a11y-reduce-motion", !!state.reduceMotion);
+
+    // Button toggles UI state
+    const btns = panel.querySelectorAll("[data-a11y]");
+    btns.forEach(b=>{
+      const key = b.getAttribute("data-a11y");
+      const on =
+        (key==="contrast" && state.contrast) ||
+        (key==="gray" && state.gray) ||
+        (key==="underline" && state.underline) ||
+        (key==="focus" && state.focus) ||
+        (key==="reduceMotion" && state.reduceMotion);
+      b.classList.toggle("is-on", on);
+      if(["contrast","gray","underline","focus","reduceMotion"].includes(key)){
+        b.setAttribute("aria-pressed", on ? "true" : "false");
       }
-      applyState();
     });
+  }
+
+  let lastFocused = null;
+
+  function open(){
+    lastFocused = document.activeElement;
+    panel.hidden = false;
+    panel.style.display = "block";
+    panel.setAttribute("aria-hidden","false");
+    fab.setAttribute("aria-expanded","true");
+    document.body.style.overflow = "hidden";
+
+    // focus first button
+    const first = panel.querySelector("[data-a11y]");
+    first?.focus?.();
+  }
+  function close(){
+    panel.style.display = "none";
+    panel.hidden = true;
+    panel.setAttribute("aria-hidden","true");
+    fab.setAttribute("aria-expanded","false");
+    document.body.style.overflow = "";
+    if(lastFocused && typeof lastFocused.focus === "function") lastFocused.focus();
+  }
+
+  function getFocusable(container){
+    return Array.from(container.querySelectorAll(
+      'button:not([disabled]), [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    ));
+  }
+
+  function trapFocus(e){
+    if(panel.hidden) return;
+    if(e.key === "Escape"){ e.preventDefault(); close(); return; }
+    if(e.key !== "Tab") return;
+
+    const focusables = getFocusable(panel);
+    if(!focusables.length) return;
+
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+
+    if(e.shiftKey && document.activeElement === first){
+      e.preventDefault(); last.focus();
+    } else if(!e.shiftKey && document.activeElement === last){
+      e.preventDefault(); first.focus();
+    }
+  }
+
+  function toggle(key){
+    switch(key){
+      case "textUp":
+        state.font = Math.min(2, state.font + 1);
+        break;
+      case "textDown":
+        state.font = Math.max(0, state.font - 1);
+        break;
+      case "contrast":
+      case "gray":
+      case "underline":
+      case "focus":
+      case "reduceMotion":
+        state[key] = !state[key];
+        break;
+      case "reset":
+        state = { font:0, contrast:false, gray:false, underline:false, focus:false, reduceMotion:false };
+        break;
+      default: break;
+    }
+    save();
+    apply();
+  }
+
+  // extra CSS toggles
+  function injectA11yCss(){
+    if(document.getElementById("a11yCss")) return;
+    const css = document.createElement("style");
+    css.id = "a11yCss";
+    css.textContent = `
+      html.a11y-contrast body{
+        background:#000 !important;
+        color:#fff !important;
+      }
+      html.a11y-contrast .offer-card,
+      html.a11y-contrast .carousel,
+      html.a11y-contrast .contact-info,
+      html.a11y-contrast form,
+      html.a11y-contrast .trusted-wrap,
+      html.a11y-contrast nav,
+      html.a11y-contrast .topbar{
+        border-color: rgba(255,204,0,.85) !important;
+      }
+      html.a11y-gray body{ filter: grayscale(1); }
+      html.a11y-underline a{ text-decoration: underline !important; text-underline-offset: 3px; }
+      html.a11y-strong-focus :focus-visible{
+        outline: 4px solid var(--gold) !important;
+        outline-offset: 4px !important;
+      }
+      html.a11y-reduce-motion *{
+        transition: none !important;
+        animation: none !important;
+        scroll-behavior: auto !important;
+      }
+    `;
+    document.head.appendChild(css);
+  }
+
+  // init
+  injectA11yCss();
+  load();
+  apply();
+
+  fab.addEventListener("click", ()=>{
+    const expanded = fab.getAttribute("aria-expanded") === "true";
+    expanded ? close() : open();
+  });
+  closeBtn?.addEventListener("click", close);
+
+  panel.addEventListener("mousedown", (e)=>{
+    if(e.target === panel) close();
   });
 
-  loadState();
-  applyState();
+  panel.addEventListener("click", (e)=>{
+    const btn = e.target.closest("[data-a11y]");
+    if(!btn) return;
+    const key = btn.getAttribute("data-a11y");
+    toggle(key);
+  });
 
-}));
+  document.addEventListener("keydown", trapFocus);
+})();
