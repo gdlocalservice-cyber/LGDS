@@ -1,30 +1,25 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Terms & Conditions | Local Garage Door Service</title>
-
-  <!-- FAVICON / TAB ICON -->
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-
-  <meta name="color-scheme" content="dark light" />
-  <meta name="theme-color" content="#070707" />
-
-  <meta name="description" content="Terms and Conditions for Local Garage Door Service (PA, NJ, DE)." />
-
-  <script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Terms &amp; Conditions | Local Garage Door Service</title>
+<!-- FAVICON / TAB ICON -->
+<link href="/favicon-16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/favicon-32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<meta content="dark light" name="color-scheme"/>
+<meta content="#070707" name="theme-color"/>
+<meta content="Terms and Conditions for Local Garage Door Service (PA, NJ, DE)." name="description"/>
+<script>
     document.documentElement.classList.add('js');
   </script>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-
-  <style>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+<style>
     :root{
       --gold:#ffcc00;
       --dark:#070707;
@@ -343,11 +338,59 @@
       *{ transition:none !important; animation:none !important; }
       html.js .reveal{ opacity:1 !important; transform:none !important; }
     }
-  </style>
 
-  <!-- Google tag (gtag.js) - GA4 + Google Ads -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TVGZZ0WFTH"></script>
-  <script>
+    /* ===== Accessibility: Skip link (shows only on keyboard focus) ===== */
+    .skip-link{
+      position:fixed;
+      left:16px;
+      top:12px;
+      z-index:2500;
+      padding:10px 14px;
+      border-radius:999px;
+      background:rgba(255,204,0,.95);
+      color:#070707;
+      font-weight:900;
+      letter-spacing:.2px;
+      box-shadow:0 14px 40px rgba(0,0,0,.55);
+      transform:translateY(-160%);
+      transition:transform .18s ease;
+    }
+    .skip-link:focus,
+    .skip-link:focus-visible{
+      transform:translateY(0);
+      outline:3px solid rgba(255,255,255,.85);
+      outline-offset:2px;
+    }
+
+    /* Ensure skip target isn't hidden under sticky nav */
+    #main{ scroll-margin-top: 120px; }
+  
+/* === Legal pages: prevent logo clipping on sticky nav (safe-area + extra breathing room) === */
+body.legal-page nav{
+  padding-top: calc(14px + env(safe-area-inset-top));
+  padding-bottom: 14px;
+  overflow: visible;
+}
+body.legal-page .brand-logo{
+  width: 58px;
+  height: 58px;
+  margin-top: 4px;
+}
+@media (max-width: 520px){
+  body.legal-page nav{
+    padding-top: calc(18px + env(safe-area-inset-top));
+  }
+  body.legal-page .brand-logo{
+    width: 56px;
+    height: 56px;
+    margin-top: 6px;
+  }
+}
+
+</style>
+<!-- Google tag (gtag.js) - GA4 + Google Ads -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-TVGZZ0WFTH"></script>
+<script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
@@ -355,157 +398,135 @@
     gtag('config', 'AW-17878825273');
   </script>
 </head>
-
-<body>
-  <a class="skip-link" href="#main">Skip to main content</a>
-  <div class="topbar" id="topbar">
-    <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:center;">
-      <span class="pill"><i class="fa-solid fa-location-dot"></i> PA • NJ • DE</span>
-      <span style="font-weight:800;">100-mile radius from Philadelphia</span>
-    </div>
-    <div style="display:flex; gap:14px; flex-wrap:wrap; justify-content:center;">
-      <a href="tel:2674386494" aria-label="Call"><i class="fa-solid fa-phone"></i> 267-438-6494</a>
-      <a href="/index.html#contact" aria-label="Request Service"><i class="fa-solid fa-calendar-check"></i> Request Service</a>
-    </div>
-  </div>
-
-  <nav aria-label="Primary">
-    <a class="brand" href="/index.html#top">
-      <span class="brand-logo" aria-hidden="true">
-        <img src="/apple-touch-icon.png" alt="Local Garage Door Service Logo" loading="eager" decoding="async" />
-      </span>
-      <div class="brand-text">
-        <h1>LOCAL <span>GARAGE DOOR</span> SERVICE</h1>
-        <div class="tagline">Premium Service • Fast Response • Trusted Results</div>
-      </div>
-    </a>
-
-    <div class="nav-links">
-      <a href="/index.html#offers">Offers</a>
-      <a href="/index.html#photos">Photos</a>
-      <a href="/index.html#videos">Videos</a>
-      <a href="/index.html#contact">Request</a>
-    </div>
-
-    <div class="nav-cta">
-      <a class="btn" href="https://wa.me/12674386494" target="_blank" rel="noopener">
-        <i class="fa-brands fa-whatsapp"></i> WhatsApp
+<body class="legal-page">
+<a class="skip-link" href="#main">Skip to main content</a>
+<div class="topbar" id="topbar">
+<div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:center;">
+<span class="pill"><i class="fa-solid fa-location-dot"></i> PA • NJ • DE</span>
+<span style="font-weight:800;">100-mile radius from Philadelphia</span>
+</div>
+<div style="display:flex; gap:14px; flex-wrap:wrap; justify-content:center;">
+<a aria-label="Call" href="tel:2674386494"><i class="fa-solid fa-phone"></i> 267-438-6494</a><a aria-label="Request Service" href="/index.html#contact"><i class="fa-solid fa-calendar-check"></i> Request Service</a>
+</div>
+</div>
+<nav aria-label="Primary">
+<a class="brand" href="/index.html#top">
+<span aria-hidden="true" class="brand-logo">
+<img alt="Local Garage Door Service Logo" decoding="async" loading="eager" src="./apple-touch-icon.png"/>
+</span>
+<div class="brand-text">
+<h1>LOCAL <span>GARAGE DOOR</span> SERVICE</h1>
+<div class="tagline">Premium Service • Fast Response • Trusted Results</div>
+</div>
+</a>
+<div class="nav-links"><a href="/index.html#top">Home</a><a href="/index.html#service-areas">Areas</a><a href="/doors/residential.html">Residential Doors</a><a href="/doors/commercial.html">Commercial Doors</a><a href="/index.html#contact">Request</a><a href="/faq.html">FAQ</a></div>
+<div class="nav-cta">
+<a class="btn whatsapp" href="https://wa.me/12674386494" rel="noopener" target="_blank">
+<i class="fa-brands fa-whatsapp"></i> WhatsApp
+      </a><a class="btn btn-gold" href="tel:2674386494">
+<i class="fa-solid fa-phone"></i> Call Now
       </a>
-      <a class="btn btn-gold" href="tel:2674386494">
-        <i class="fa-solid fa-phone"></i> Call Now
-      </a>
-    </div>
-
-    <button class="burger" id="burger" type="button" aria-label="Open menu" aria-controls="mobilePanel" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-  </nav>
-
-  <!-- Mobile Menu -->
-  <div class="mobile-panel" id="mobilePanel" role="dialog" aria-modal="true" aria-label="Menu" aria-hidden="true" hidden>
-    <div class="mobile-card">
-      <div class="mobile-row">
-        <div style="font-weight:900; text-transform:uppercase; letter-spacing:.7px;">Menu</div>
-        <button class="icon-btn" id="closeMobile" type="button" aria-label="Close menu"><i class="fa-solid fa-xmark"></i></button>
-      </div>
-      <div class="mobile-links">
-        <a class="mLink" href="/index.html#offers">Offers</a>
-        <a class="mLink" href="/index.html#photos">Photos</a>
-        <a class="mLink" href="/index.html#videos">Videos</a>
-        <a class="mLink" href="/index.html#contact">Request Service</a>
-        <a class="mLink" href="tel:2674386494">Call: 267-438-6494</a>
-        <a class="mLink" href="https://wa.me/12674386494" target="_blank" rel="noopener">WhatsApp</a>
-        <a class="mLink" href="/terms.html">Terms & Conditions</a>
-        <a class="mLink" href="/privacy.html">Privacy Policy</a>
-      </div>
-    </div>
-  </div>
-
-  <main class="legal">
-    <div class="legal-card reveal">
-      <h2>Terms & Conditions</h2>
-      <div class="meta">Last updated: January 21, 2026</div>
-
-      <p>
-        These Terms & Conditions (“Terms”) govern your use of this website and any services provided by
+</div>
+<button aria-controls="mobilePanel" aria-expanded="false" aria-label="Open menu" class="burger" id="burger" type="button">
+<span></span><span></span><span></span>
+</button>
+</nav>
+<!-- Mobile Menu -->
+<div aria-hidden="true" aria-label="Menu" aria-modal="true" class="mobile-panel" hidden="" id="mobilePanel" role="dialog">
+<div class="mobile-card">
+<div class="mobile-row">
+<div style="font-weight:900; text-transform:uppercase; letter-spacing:.7px;">Menu</div>
+<button aria-label="Close menu" class="icon-btn" id="closeMobile" type="button"><i class="fa-solid fa-xmark"></i></button>
+</div>
+<div class="mobile-links">
+<a class="mLink" href="/index.html#offers">Offers</a><a class="mLink" href="/index.html#photos">Photos</a><a class="mLink" href="/index.html#videos">Videos</a><a class="mLink" href="/index.html#contact">Request Service</a><a class="mLink" href="tel:2674386494">Call: 267-438-6494</a><a class="mLink" href="https://wa.me/12674386494" rel="noopener" target="_blank">WhatsApp</a><a class="mLink" href="/terms.html">Terms &amp; Conditions</a><a class="mLink" href="/privacy.html">Privacy Policy</a>
+</div>
+</div>
+</div>
+<main class="legal" id="main">
+<div class="legal-card reveal">
+<h2>Terms &amp; Conditions</h2>
+<div class="meta">Last updated: January 21, 2026</div>
+<p>
+        These Terms &amp; Conditions (“Terms”) govern your use of this website and any services provided by
         <strong>Local Garage Door Service</strong> (“we,” “us,” “our”). By using this website or booking a service, you agree to these Terms.
       </p>
-
-      <h3>1) Estimates & Pricing</h3>
-      <ul>
-        <li>Online offers/prices are promotional or informational and may vary depending on parts, door size, condition, and labor time.</li>
-        <li>Final pricing is confirmed after inspection (on-site) or confirmed diagnosis (remote, when applicable).</li>
-        <li>If additional work is needed for safe operation, we will explain it and review updated pricing before proceeding.</li>
-      </ul>
-
-      <h3>2) Scheduling & Access</h3>
-      <ul>
-        <li>Appointments may be scheduled using an arrival window. Traffic, weather, and earlier jobs can affect arrival time.</li>
-        <li>You agree to provide safe, reasonable access to the door/opener and a clear work area.</li>
-      </ul>
-
-      <h3>3) Cancellations & Rescheduling</h3>
-      <ul>
-        <li>Please notify us as early as possible if you need to cancel or reschedule.</li>
-        <li>Same-day cancellations or missed appointments may incur a trip/diagnostic fee where permitted.</li>
-      </ul>
-
-      <h3>4) Payments</h3>
-      <ul>
-        <li>Payment is due upon completion of service unless otherwise agreed in writing.</li>
-        <li>We may accept cash, card, or other methods depending on availability.</li>
-        <li>Unpaid balances may be subject to reasonable collection efforts as allowed by law.</li>
-      </ul>
-
-      <h3>5) Warranties</h3>
-      <ul>
-        <li>Any warranty (if provided) applies only as described on your invoice/receipt or written warranty terms.</li>
-        <li>Warranty may not cover damage caused by misuse, accidents, alteration, weather events, or normal wear beyond the covered scope.</li>
-      </ul>
-
-      <h3>6) Safety Disclaimer</h3>
-      <p>
+<h3>1) Estimates &amp; Pricing</h3>
+<ul>
+<li>Online offers/prices are promotional or informational and may vary depending on parts, door size, condition, and labor time.</li>
+<li>Final pricing is confirmed after inspection (on-site) or confirmed diagnosis (remote, when applicable).</li>
+<li>If additional work is needed for safe operation, we will explain it and review updated pricing before proceeding.</li>
+</ul>
+<h3>2) Scheduling &amp; Access</h3>
+<ul>
+<li>Appointments may be scheduled using an arrival window. Traffic, weather, and earlier jobs can affect arrival time.</li>
+<li>You agree to provide safe, reasonable access to the door/opener and a clear work area.</li>
+</ul>
+<h3>3) Cancellations &amp; Rescheduling</h3>
+<ul>
+<li>Please notify us as early as possible if you need to cancel or reschedule.</li>
+<li>Same-day cancellations or missed appointments may incur a trip/diagnostic fee where permitted.</li>
+</ul>
+<h3>4) Payments</h3>
+<ul>
+<li>Payment is due upon completion of service unless otherwise agreed in writing.</li>
+<li>We may accept cash, card, or other methods depending on availability.</li>
+<li>Unpaid balances may be subject to reasonable collection efforts as allowed by law.</li>
+</ul>
+<h3>5) Warranties</h3>
+<ul>
+<li>Any warranty (if provided) applies only as described on your invoice/receipt or written warranty terms.</li>
+<li>Warranty may not cover damage caused by misuse, accidents, alteration, weather events, or normal wear beyond the covered scope.</li>
+</ul>
+<h3>6) Safety Disclaimer</h3>
+<p>
         Garage doors and torsion springs can be dangerous. Do not attempt repairs without proper training and tools.
         We are not responsible for injury or damage resulting from improper DIY repairs or modifications performed by others.
       </p>
-
-      <h3>7) Website Use</h3>
-      <ul>
-        <li>You agree not to misuse the website, attempt to access restricted systems, or disrupt site operation.</li>
-        <li>Content may not be copied or reused without permission, except where allowed by law.</li>
-      </ul>
-
-      <h3>8) Limitation of Liability</h3>
-      <p>
+<h3>7) Website Use</h3>
+<ul>
+<li>You agree not to misuse the website, attempt to access restricted systems, or disrupt site operation.</li>
+<li>Content may not be copied or reused without permission, except where allowed by law.</li>
+</ul>
+<h3>8) Limitation of Liability</h3>
+<p>
         To the fullest extent permitted by law, we are not liable for indirect, incidental, special, or consequential damages.
         Our total liability for any claim is limited to the amount paid for the specific service giving rise to the claim.
       </p>
-
-      <h3>9) Service Area</h3>
-      <p>
+<h3>9) Service Area</h3>
+<p>
         We serve PA, NJ, and DE (generally within ~100 miles of Philadelphia). Availability may vary.
       </p>
 
-      <h3>10) Contact</h3>
-      <p>
+<h3>10) SMS / Text Messaging</h3>
+<p>
+  By providing your phone number to <strong>Local Garage Door Service</strong> (for service requests, scheduling,
+  or employment/technician communication), you consent to receive SMS text messages related to appointments,
+  job dispatch updates, technician notifications, and other operational communications.
+</p>
+<p>
+  <strong>Message frequency may vary.</strong> <strong>Message and data rates may apply.</strong>
+  You may opt out at any time by replying <strong>STOP</strong> to any message.
+  For help, reply <strong>HELP</strong> or call <a href="tel:2674386494">267-438-6494</a>.
+</p>
+<p>
+  We do not send marketing or promotional text messages without explicit consent.
+</p>
+
+<h3>11) Contact</h3>
+<p>
         Questions about these Terms? Call <a href="tel:2674386494">267-438-6494</a>.
       </p>
-    </div>
-  </main>
-
-  <footer>
-    <p><strong>Local Garage Door Service</strong> • PA / NJ / DE • <a href="tel:2674386494">267-438-6494</a></p>
-
-    <div class="footer-links">
-      <a href="/terms.html">Terms & Conditions</a>
-      <a href="/privacy.html">Privacy Policy</a>
-      <a href="/index.html#contact">Request Service</a>
-    </div>
-
-    <p style="margin-top:14px;">&copy; 2026 Local Garage Door Service. All rights reserved.</p>
-  </footer>
-
-  <script>
+</div>
+</main>
+<footer>
+<p><strong>Local Garage Door Service</strong> • PA / NJ / DE • <a href="tel:2674386494">267-438-6494</a></p>
+<div class="footer-links">
+<a href="/terms.html">Terms &amp; Conditions</a><a href="/privacy.html">Privacy Policy</a><a href="/index.html#contact">Request Service</a>
+</div>
+<p style="margin-top:14px;">© 2026 Local Garage Door Service. All rights reserved.</p>
+</footer>
+<script>
     const $ = (s)=>document.querySelector(s);
     const $$ = (s)=>Array.from(document.querySelectorAll(s));
 

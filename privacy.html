@@ -1,36 +1,54 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Privacy Policy | Local Garage Door Service</title>
-
-  <!-- FAVICON / TAB ICON -->
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-
-  <meta name="color-scheme" content="dark light" />
-  <meta name="theme-color" content="#070707" />
-
-  <meta name="description" content="Privacy Policy for Local Garage Door Service (PA, NJ, DE)." />
-
-  <script>document.documentElement.classList.add('js');</script>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-
-  <!-- Reuse same styling from terms page -->
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Privacy Policy | Local Garage Door Service</title>
+<!-- FAVICON / TAB ICON -->
+<link href="/favicon-16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/favicon-32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<meta content="dark light" name="color-scheme"/>
+<meta content="#070707" name="theme-color"/>
+<meta content="Privacy Policy for Local Garage Door Service (PA, NJ, DE)." name="description"/>
+<script>document.documentElement.classList.add('js');</script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+<!-- Reuse same styling from terms page -->
+<style>
     :root{--gold:#ffcc00;--dark:#070707;--text:#ffffff;--radius2:28px;--shadow:0 18px 60px rgba(0,0,0,.55);--shadow2:0 12px 26px rgba(0,0,0,.40);--topbar-h:0px;--nav-h:72px;}
     *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
     html{scroll-behavior:smooth;}
     body{margin:0;font-family:'Montserrat',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:radial-gradient(1200px 700px at 15% 10%, rgba(255,204,0,.08), transparent 60%),radial-gradient(900px 600px at 85% 20%, rgba(255,255,255,.05), transparent 65%),var(--dark);color:var(--text);line-height:1.6;overflow-x:hidden;}
     a{color:inherit;text-decoration:none;}
-.skip-link{position:absolute;left:12px;top:12px;padding:10px 14px;border-radius:12px;background:#000;color:#fff;border:2px solid var(--gold);z-index:10000;transform:translateY(-160%);transition:transform .18s ease;}
-.skip-link:focus{transform:translateY(0);}
+/* ===== Accessibility: Skip link (shows only on keyboard focus) ===== */
+.skip-link{
+  position:fixed;
+  left:16px;
+  top:12px;
+  z-index:2500;
+  padding:10px 14px;
+  border-radius:999px;
+  background:rgba(255,204,0,.95);
+  color:#070707;
+  font-weight:900;
+  letter-spacing:.2px;
+  box-shadow:0 14px 40px rgba(0,0,0,.55);
+  transform:translateY(-160%);
+  transition:transform .18s ease;
+}
+.skip-link:focus,
+.skip-link:focus-visible{
+  transform:translateY(0);
+  outline:3px solid rgba(255,255,255,.85);
+  outline-offset:2px;
+}
+
+/* Ensure skip target isn't hidden under sticky nav */
+#main{ scroll-margin-top: 120px; }
 .sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important;}
 :focus{outline:none;}
 :focus-visible{outline:3px solid var(--gold);outline-offset:3px;}
@@ -78,277 +96,316 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
     .footer-links a:hover{border-color:rgba(255,204,0,.35);background:rgba(255,204,0,.08);color:#fff;}
     @media (max-width:980px){:root{--nav-h:66px}.nav-links,.nav-cta{display:none}.burger{display:inline-flex}.brand{min-width:0}.brand-text .tagline{display:none}.brand-logo{width:56px;height:56px}.brand-text h1{font-size:.92rem}}
     @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}html.js .reveal{opacity:1!important;transform:none!important}}
-  </style>
 
-  <!-- Google tag (gtag.js) - GA4 + Google Ads -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TVGZZ0WFTH"></script>
-  <script>
+/* === Legal pages: prevent logo clipping on sticky nav (safe-area + extra breathing room) === */
+body.legal-page nav{
+  padding-top: calc(14px + env(safe-area-inset-top));
+  padding-bottom: 14px;
+  overflow: visible;
+}
+body.legal-page .brand-logo{
+  width: 58px;
+  height: 58px;
+  margin-top: 4px;
+}
+@media (max-width: 520px){
+  body.legal-page nav{
+    padding-top: calc(18px + env(safe-area-inset-top));
+  }
+  body.legal-page .brand-logo{
+    width: 56px;
+    height: 56px;
+    margin-top: 6px;
+  }
+}
+</style>
+
+<!-- Google tag (gtag.js) - GA4 + Google Ads -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-TVGZZ0WFTH"></script>
+<script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-TVGZZ0WFTH');
     gtag('config', 'AW-17878825273');
-  </script>
+</script>
 </head>
 
-<body>
-  <a class="skip-link" href="#main">Skip to main content</a>
-  <div class="topbar" id="topbar">
-    <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:center;">
-      <span class="pill"><i class="fa-solid fa-location-dot"></i> PA • NJ • DE</span>
-      <span style="font-weight:800;">100-mile radius from Philadelphia</span>
+<body class="legal-page">
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<div class="topbar" id="topbar">
+  <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:center;">
+    <span class="pill"><i class="fa-solid fa-location-dot"></i> PA • NJ • DE</span>
+    <span style="font-weight:800;">100-mile radius from Philadelphia</span>
+  </div>
+  <div style="display:flex; gap:14px; flex-wrap:wrap; justify-content:center;">
+    <a aria-label="Call" href="tel:2674386494"><i class="fa-solid fa-phone"></i> 267-438-6494</a>
+    <a aria-label="Request Service" href="/index.html#contact"><i class="fa-solid fa-calendar-check"></i> Request Service</a>
+  </div>
+</div>
+
+<nav aria-label="Primary">
+  <a class="brand" href="/index.html#top">
+    <span aria-hidden="true" class="brand-logo">
+      <img alt="Local Garage Door Service Logo" decoding="async" loading="eager" src="./apple-touch-icon.png"/>
+    </span>
+    <div class="brand-text">
+      <h1>LOCAL <span>GARAGE DOOR</span> SERVICE</h1>
+      <div class="tagline">Premium Service • Fast Response • Trusted Results</div>
     </div>
-    <div style="display:flex; gap:14px; flex-wrap:wrap; justify-content:center;">
-      <a href="tel:2674386494" aria-label="Call"><i class="fa-solid fa-phone"></i> 267-438-6494</a>
-      <a href="/index.html#contact" aria-label="Request Service"><i class="fa-solid fa-calendar-check"></i> Request Service</a>
-    </div>
+  </a>
+
+  <div class="nav-links">
+    <a href="/index.html#top">Home</a>
+    <a href="/index.html#service-areas">Areas</a>
+    <a href="/doors/residential.html">Residential Doors</a>
+    <a href="/doors/commercial.html">Commercial Doors</a>
+    <a href="/index.html#contact">Request</a>
+    <a href="/faq.html">FAQ</a>
   </div>
 
-  <nav aria-label="Primary">
-    <a class="brand" href="/index.html#top">
-      <span class="brand-logo" aria-hidden="true">
-        <img src="/apple-touch-icon.png" alt="Local Garage Door Service Logo" loading="eager" decoding="async" />
-      </span>
-      <div class="brand-text">
-        <h1>LOCAL <span>GARAGE DOOR</span> SERVICE</h1>
-        <div class="tagline">Premium Service • Fast Response • Trusted Results</div>
-      </div>
+  <div class="nav-cta">
+    <a class="btn whatsapp" href="https://wa.me/12674386494" rel="noopener" target="_blank">
+      <i class="fa-brands fa-whatsapp"></i> WhatsApp
     </a>
-
-    <div class="nav-links">
-      <a href="/index.html#offers">Offers</a>
-      <a href="/index.html#photos">Photos</a>
-      <a href="/index.html#videos">Videos</a>
-      <a href="/index.html#contact">Request</a>
-    </div>
-
-    <div class="nav-cta">
-      <a class="btn" href="https://wa.me/12674386494" target="_blank" rel="noopener">
-        <i class="fa-brands fa-whatsapp"></i> WhatsApp
-      </a>
-      <a class="btn btn-gold" href="tel:2674386494">
-        <i class="fa-solid fa-phone"></i> Call Now
-      </a>
-    </div>
-
-    <button class="burger" id="burger" type="button" aria-label="Open menu" aria-controls="mobilePanel" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-  </nav>
-
-  <!-- Mobile Menu -->
-  <div class="mobile-panel" id="mobilePanel" role="dialog" aria-modal="true" aria-label="Menu" aria-hidden="true" hidden>
-    <div class="mobile-card">
-      <div class="mobile-row">
-        <div style="font-weight:900; text-transform:uppercase; letter-spacing:.7px;">Menu</div>
-        <button class="icon-btn" id="closeMobile" type="button" aria-label="Close menu"><i class="fa-solid fa-xmark"></i></button>
-      </div>
-      <div class="mobile-links">
-        <a class="mLink" href="/index.html#offers">Offers</a>
-        <a class="mLink" href="/index.html#photos">Photos</a>
-        <a class="mLink" href="/index.html#videos">Videos</a>
-        <a class="mLink" href="/index.html#contact">Request Service</a>
-        <a class="mLink" href="tel:2674386494">Call: 267-438-6494</a>
-        <a class="mLink" href="https://wa.me/12674386494" target="_blank" rel="noopener">WhatsApp</a>
-        <a class="mLink" href="/terms.html">Terms & Conditions</a>
-        <a class="mLink" href="/privacy.html">Privacy Policy</a>
-      </div>
-    </div>
+    <a class="btn btn-gold" href="tel:2674386494">
+      <i class="fa-solid fa-phone"></i> Call Now
+    </a>
   </div>
 
-  <main class="legal">
-    <div class="legal-card reveal">
-      <h2>Privacy Policy</h2>
-      <div class="meta">Last updated: January 21, 2026</div>
+  <button aria-controls="mobilePanel" aria-expanded="false" aria-label="Open menu" class="burger" id="burger" type="button">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
 
-      <p>
-        This Privacy Policy explains how <strong>Local Garage Door Service</strong> (“we,” “us,” “our”) collects,
-        uses, and protects your information when you visit our website or contact us.
-      </p>
-
-      <h3>1) Information We Collect</h3>
-      <ul>
-        <li><strong>Contact details</strong> you submit (name, phone number, message).</li>
-        <li><strong>Usage data</strong> such as pages viewed and device/browser info (via analytics tools).</li>
-        <li><strong>Marketing data</strong> related to advertising performance (via Google Ads/Analytics).</li>
-      </ul>
-
-      <h3>2) How We Use Information</h3>
-      <ul>
-        <li>To respond to service requests and communicate with you.</li>
-        <li>To provide and improve our services and website experience.</li>
-        <li>To measure marketing performance and optimize advertising.</li>
-        <li>To prevent fraud, abuse, or security issues.</li>
-      </ul>
-
-      <h3>3) Sharing Information</h3>
-      <p>
-        We do not sell your personal information. We may share information with service providers that help us operate
-        the website and communicate with customers (for example: form processing, analytics, and advertising tools),
-        and when required by law.
-      </p>
-
-      <h3>4) Cookies & Tracking</h3>
-      <p>
-        We may use cookies and similar technologies to understand traffic and improve marketing effectiveness.
-        You can control cookies in your browser settings. Some features may not work properly if cookies are disabled.
-      </p>
-
-      <h3>5) Third-Party Services</h3>
-      <ul>
-        <li><strong>Form submissions:</strong> Your request form is processed by Formspree.</li>
-        <li><strong>Analytics/Ads:</strong> We use Google Analytics and Google Ads to understand website performance.</li>
-        <li><strong>WhatsApp:</strong> If you click WhatsApp, WhatsApp may collect data under their policies.</li>
-      </ul>
-
-      <h3>6) Data Security</h3>
-      <p>
-        We use reasonable safeguards to protect information. However, no method of transmission over the internet is 100% secure.
-      </p>
-
-      <h3>7) Your Choices</h3>
-      <ul>
-        <li>You can request to update or delete your submitted information by calling <a href="tel:2674386494">267-438-6494</a>.</li>
-        <li>You can opt out of certain advertising personalization through Google’s ad settings.</li>
-      </ul>
-
-      <h3>8) Children’s Privacy</h3>
-      <p>
-        Our website and services are not directed to children under 13, and we do not knowingly collect information from children.
-      </p>
-
-      <h3>9) Updates to This Policy</h3>
-      <p>
-        We may update this policy from time to time. Changes will be posted on this page with a new “Last updated” date.
-      </p>
-
-      <h3>10) Contact</h3>
-      <p>
-        Questions about this Privacy Policy? Call <a href="tel:2674386494">267-438-6494</a>.
-      </p>
+<!-- Mobile Menu -->
+<div aria-hidden="true" aria-label="Menu" aria-modal="true" class="mobile-panel" hidden="" id="mobilePanel" role="dialog">
+  <div class="mobile-card">
+    <div class="mobile-row">
+      <div style="font-weight:900; text-transform:uppercase; letter-spacing:.7px;">Menu</div>
+      <button aria-label="Close menu" class="icon-btn" id="closeMobile" type="button"><i class="fa-solid fa-xmark"></i></button>
     </div>
-  </main>
-
-  <footer>
-    <p><strong>Local Garage Door Service</strong> • PA / NJ / DE • <a href="tel:2674386494">267-438-6494</a></p>
-
-    <div class="footer-links">
-      <a href="/terms.html">Terms & Conditions</a>
-      <a href="/privacy.html">Privacy Policy</a>
-      <a href="/index.html#contact">Request Service</a>
+    <div class="mobile-links">
+      <a class="mLink" href="/index.html#offers">Offers</a>
+      <a class="mLink" href="/index.html#photos">Photos</a>
+      <a class="mLink" href="/index.html#videos">Videos</a>
+      <a class="mLink" href="/index.html#contact">Request Service</a>
+      <a class="mLink" href="tel:2674386494">Call: 267-438-6494</a>
+      <a class="mLink" href="https://wa.me/12674386494" rel="noopener" target="_blank">WhatsApp</a>
+      <a class="mLink" href="/terms.html">Terms &amp; Conditions</a>
+      <a class="mLink" href="/privacy.html">Privacy Policy</a>
     </div>
+  </div>
+</div>
 
-    <p style="margin-top:14px;">&copy; 2026 Local Garage Door Service. All rights reserved.</p>
-  </footer>
+<main class="legal" id="main">
+  <div class="legal-card reveal">
+    <h2>Privacy Policy</h2>
+    <div class="meta">Last updated: January 21, 2026</div>
 
-  <script>
-    const $ = (s)=>document.querySelector(s);
-    const $$ = (s)=>Array.from(document.querySelectorAll(s));
+    <p>
+      This Privacy Policy explains how <strong>Local Garage Door Service</strong> (“we,” “us,” “our”) collects,
+      uses, and protects your information when you visit our website or contact us.
+    </p>
 
-    window.addEventListener("DOMContentLoaded", () => {
-      const topbar = $("#topbar");
-      const nav = document.querySelector("nav");
+    <h3>1) Information We Collect</h3>
+    <ul>
+      <li><strong>Contact details</strong> you submit (name, phone number, message).</li>
+      <li><strong>Usage data</strong> such as pages viewed and device/browser info (via analytics tools).</li>
+      <li><strong>Marketing data</strong> related to advertising performance (via Google Ads/Analytics).</li>
+    </ul>
 
-      function setHeaderVars(){
-        const topbarH = topbar ? topbar.getBoundingClientRect().height : 0;
-        const navH = nav ? nav.getBoundingClientRect().height : 72;
-        document.documentElement.style.setProperty("--topbar-h", topbarH + "px");
-        document.documentElement.style.setProperty("--nav-h", navH + "px");
-      }
-      setHeaderVars();
-      const mobilePanel = $("#mobilePanel");
-      const burger = $("#burger");
-      const closeMobile = $("#closeMobile");
+    <h3>2) How We Use Information</h3>
+    <ul>
+      <li>To respond to service requests and communicate with you.</li>
+      <li>To provide and improve our services and website experience.</li>
+      <li>To measure marketing performance and optimize advertising.</li>
+      <li>To prevent fraud, abuse, or security issues.</li>
+    </ul>
 
-      let lastFocused = null;
+    <!-- ✅ Added for A2P / SMS compliance -->
+    <h3>SMS Policy</h3>
+    <p>
+      If you provide your phone number to contact us, request service, or as part of employment/technician onboarding,
+      we may send SMS text messages related to appointments, job dispatch updates, technician notifications, and other
+      operational communications.
+    </p>
+    <p>
+      <strong>Message frequency may vary.</strong> <strong>Message and data rates may apply.</strong>
+      You may opt out at any time by replying <strong>STOP</strong> to any message. For help, reply <strong>HELP</strong>
+      or call <a href="tel:2674386494">267-438-6494</a>.
+    </p>
+    <p>
+      We do not sell or share SMS consent with third parties for their marketing purposes.
+    </p>
 
-      function getFocusable(container){
-        if(!container) return [];
-        return Array.from(container.querySelectorAll(
-          'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
-        )).filter(el => !el.hasAttribute("disabled"));
-      }
+    <h3>3) Sharing Information</h3>
+    <p>
+      We do not sell your personal information. We may share information with service providers that help us operate
+      the website and communicate with customers (for example: form processing, analytics, and advertising tools),
+      and when required by law.
+    </p>
 
-      function openMenu(){
-        if(!mobilePanel || !burger) return;
-        lastFocused = document.activeElement;
-        mobilePanel.hidden = false;
-        mobilePanel.style.display = "block";
-        mobilePanel.setAttribute("aria-hidden","false");
-        burger.setAttribute("aria-expanded","true");
-        document.body.style.overflow = "hidden";
-        const f = getFocusable(mobilePanel);
-        (f[0] || mobilePanel).focus?.();
-      }
+    <h3>4) Cookies &amp; Tracking</h3>
+    <p>
+      We may use cookies and similar technologies to understand traffic and improve marketing effectiveness.
+      You can control cookies in your browser settings. Some features may not work properly if cookies are disabled.
+    </p>
 
-      function closeMenu(){
-        if(!mobilePanel || !burger) return;
-        mobilePanel.style.display = "none";
-        mobilePanel.hidden = true;
-        mobilePanel.setAttribute("aria-hidden","true");
-        burger.setAttribute("aria-expanded","false");
-        document.body.style.overflow = "";
-        if(lastFocused && typeof lastFocused.focus === "function") lastFocused.focus();
-      }
+    <h3>5) Third-Party Services</h3>
+    <ul>
+      <li><strong>Form submissions:</strong> Your request form is processed by Formspree.</li>
+      <li><strong>Analytics/Ads:</strong> We use Google Analytics and Google Ads to understand website performance.</li>
+      <li><strong>WhatsApp:</strong> If you click WhatsApp, WhatsApp may collect data under their policies.</li>
+    </ul>
 
-      if(burger && mobilePanel){
-        burger.addEventListener("click", ()=>{
-          const expanded = burger.getAttribute("aria-expanded") === "true";
-          expanded ? closeMenu() : openMenu();
-        });
-      }
-      if(closeMobile && mobilePanel){
-        closeMobile.addEventListener("click", closeMenu);
-      }
-      $$(".mLink").forEach(a => a.addEventListener("click", closeMenu));
+    <h3>6) Data Security</h3>
+    <p>
+      We use reasonable safeguards to protect information. However, no method of transmission over the internet is 100% secure.
+    </p>
 
-      // Close on backdrop click
-      if(mobilePanel){
-        mobilePanel.addEventListener("mousedown", (e)=>{ if(e.target === mobilePanel) closeMenu(); });
-      }
+    <h3>7) Your Choices</h3>
+    <ul>
+      <li>You can request to update or delete your submitted information by calling <a href="tel:2674386494">267-438-6494</a>.</li>
+      <li>You can opt out of certain advertising personalization through Google’s ad settings.</li>
+    </ul>
 
-      // Focus trap + Esc
-      document.addEventListener("keydown", (e)=>{
-        if(!mobilePanel || mobilePanel.hidden) return;
-        if(e.key === "Escape"){ e.preventDefault(); closeMenu(); return; }
-        if(e.key !== "Tab") return;
+    <h3>8) Children’s Privacy</h3>
+    <p>
+      Our website and services are not directed to children under 13, and we do not knowingly collect information from children.
+    </p>
 
-        const focusables = getFocusable(mobilePanel);
-        if(!focusables.length) return;
+    <h3>9) Updates to This Policy</h3>
+    <p>
+      We may update this policy from time to time. Changes will be posted on this page with a new “Last updated” date.
+    </p>
 
-        const first = focusables[0];
-        const last = focusables[focusables.length - 1];
+    <h3>10) Contact</h3>
+    <p>
+      Questions about this Privacy Policy? Call <a href="tel:2674386494">267-438-6494</a>.
+    </p>
+  </div>
+</main>
 
-        if(e.shiftKey && document.activeElement === first){
-          e.preventDefault(); last.focus();
-        } else if(!e.shiftKey && document.activeElement === last){
-          e.preventDefault(); first.focus();
-        }
+<footer>
+  <p><strong>Local Garage Door Service</strong> • PA / NJ / DE • <a href="tel:2674386494">267-438-6494</a></p>
+  <div class="footer-links">
+    <a href="/terms.html">Terms &amp; Conditions</a>
+    <a href="/privacy.html">Privacy Policy</a>
+    <a href="/index.html#contact">Request Service</a>
+  </div>
+  <p style="margin-top:14px;">© 2026 Local Garage Door Service. All rights reserved.</p>
+</footer>
+
+<script>
+  const $ = (s)=>document.querySelector(s);
+  const $$ = (s)=>Array.from(document.querySelectorAll(s));
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const topbar = $("#topbar");
+    const nav = document.querySelector("nav");
+
+    function setHeaderVars(){
+      const topbarH = topbar ? topbar.getBoundingClientRect().height : 0;
+      const navH = nav ? nav.getBoundingClientRect().height : 72;
+      document.documentElement.style.setProperty("--topbar-h", topbarH + "px");
+      document.documentElement.style.setProperty("--nav-h", navH + "px");
+    }
+    setHeaderVars();
+
+    const mobilePanel = $("#mobilePanel");
+    const burger = $("#burger");
+    const closeMobile = $("#closeMobile");
+
+    let lastFocused = null;
+
+    function getFocusable(container){
+      if(!container) return [];
+      return Array.from(container.querySelectorAll(
+        'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
+      )).filter(el => !el.hasAttribute("disabled"));
+    }
+
+    function openMenu(){
+      if(!mobilePanel || !burger) return;
+      lastFocused = document.activeElement;
+      mobilePanel.hidden = false;
+      mobilePanel.style.display = "block";
+      mobilePanel.setAttribute("aria-hidden","false");
+      burger.setAttribute("aria-expanded","true");
+      document.body.style.overflow = "hidden";
+      const f = getFocusable(mobilePanel);
+      (f[0] || mobilePanel).focus?.();
+    }
+
+    function closeMenu(){
+      if(!mobilePanel || !burger) return;
+      mobilePanel.style.display = "none";
+      mobilePanel.hidden = true;
+      mobilePanel.setAttribute("aria-hidden","true");
+      burger.setAttribute("aria-expanded","false");
+      document.body.style.overflow = "";
+      if(lastFocused && typeof lastFocused.focus === "function") lastFocused.focus();
+    }
+
+    if(burger && mobilePanel){
+      burger.addEventListener("click", ()=>{
+        const expanded = burger.getAttribute("aria-expanded") === "true";
+        expanded ? closeMenu() : openMenu();
       });
+    }
+    if(closeMobile && mobilePanel){
+      closeMobile.addEventListener("click", closeMenu);
+    }
+    $$(".mLink").forEach(a => a.addEventListener("click", closeMenu));
 
+    // Close on backdrop click
+    if(mobilePanel){
+      mobilePanel.addEventListener("mousedown", (e)=>{ if(e.target === mobilePanel) closeMenu(); });
+    }
 
-      let observer;
-      function bindReveal(){
-        if (!("IntersectionObserver" in window)) {
-          $$(".reveal").forEach(el => el.classList.add("show"));
-          return;
-        }
-        if(observer) observer.disconnect();
-        observer = new IntersectionObserver((entries)=>{
-          entries.forEach(entry=>{
-            if(entry.isIntersecting){
-              entry.target.classList.add("show");
-              observer.unobserve(entry.target);
-            }
-          });
-        }, { threshold: 0.12 });
+    // Focus trap + Esc
+    document.addEventListener("keydown", (e)=>{
+      if(!mobilePanel || mobilePanel.hidden) return;
+      if(e.key === "Escape"){ e.preventDefault(); closeMenu(); return; }
+      if(e.key !== "Tab") return;
 
-        $$(".reveal").forEach(el => { if(!el.classList.contains("show")) observer.observe(el); });
+      const focusables = getFocusable(mobilePanel);
+      if(!focusables.length) return;
+
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+
+      if(e.shiftKey && document.activeElement === first){
+        e.preventDefault(); last.focus();
+      } else if(!e.shiftKey && document.activeElement === last){
+        e.preventDefault(); first.focus();
       }
-      bindReveal();
-
-      window.addEventListener("resize", ()=> setTimeout(setHeaderVars, 60));
     });
-  </script>
+
+    let observer;
+    function bindReveal(){
+      if (!("IntersectionObserver" in window)) {
+        $$(".reveal").forEach(el => el.classList.add("show"));
+        return;
+      }
+      if(observer) observer.disconnect();
+      observer = new IntersectionObserver((entries)=>{
+        entries.forEach(entry=>{
+          if(entry.isIntersecting){
+            entry.target.classList.add("show");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+
+      $$(".reveal").forEach(el => { if(!el.classList.contains("show")) observer.observe(el); });
+    }
+    bindReveal();
+
+    window.addEventListener("resize", ()=> setTimeout(setHeaderVars, 60));
+  });
+</script>
 </body>
 </html>
