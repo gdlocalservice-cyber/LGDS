@@ -728,3 +728,31 @@ footer{ text-align:center; padding:44px 5% 110px; color:rgba(255,255,255,.60); b
   bottom: max(14px, env(safe-area-inset-bottom));
 }
 
+.sms-consent-row{
+  margin-top:14px;
+}
+
+.sms-consent{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  font-size:14px;
+  line-height:1.4;
+  color:#cfcfcf;
+  opacity:.95;
+  cursor:pointer;
+  user-select:none;
+}
+
+.sms-consent input{
+  margin-top:3px;
+  width:16px;
+  height:16px;
+  accent-color:#f5c542;
+  flex:0 0 auto;
+}
+
+.sms-consent a{
+  text-decoration:underline;
+  color:#f5c542;
+}
