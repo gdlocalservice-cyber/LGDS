@@ -368,7 +368,7 @@ window.addEventListener("DOMContentLoaded", () => {
     mobilePanel.style.display = "block";
     mobilePanel.setAttribute("aria-hidden","false");
     burger.setAttribute("aria-expanded","true");
-    document.body.style.overflow = "hidden";
+    document.body.style.overflowY = "hidden";
     const focusables = getFocusable(mobilePanel);
     (focusables[0] || mobilePanel).focus?.();
   }
@@ -546,7 +546,7 @@ window.addEventListener("DOMContentLoaded", () => {
     panel.style.display = "block";
     panel.setAttribute("aria-hidden","false");
     fab.setAttribute("aria-expanded","true");
-    document.body.style.overflow = "hidden";
+    document.body.style.overflowY = "hidden";
 
     // focus first button
     const first = panel.querySelector("[data-a11y]");
