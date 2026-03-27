@@ -1,39 +1,39 @@
 // ===== MEDIA =====
 const photos = [
-  "https://res.cloudinary.com/dixal2c3q/image/upload/v1768364091/WhatsApp_Image_2026-01-13_at_10.30.27_PM_uaqcxr.jpg",
-  "https://res.cloudinary.com/dixal2c3q/image/upload/v1768364089/WhatsApp_Image_2026-01-13_at_10.30.27_PM_1_wwugo0.jpg",
-  "https://res.cloudinary.com/dixal2c3q/image/upload/v1768364089/WhatsApp_Image_2026-01-13_at_10.30.28_PM_fan2cw.jpg",
-  "https://res.cloudinary.com/dixal2c3q/image/upload/v1768364089/WhatsApp_Image_2026-01-13_at_10.30.28_PM_1_e3gyaj.jpg",
-  "https://res.cloudinary.com/dixal2c3q/image/upload/v1768364089/WhatsApp_Image_2026-01-13_at_10.30.28_PM_2_tgp90s.jpg",
-  "https://res.cloudinary.com/dixal2c3q/image/upload/v1768364086/WhatsApp_Image_2026-01-13_at_10.31.44_PM_zwedzz.jpg",
-  "https://res.cloudinary.com/dixal2c3q/image/upload/v1768364085/WhatsApp_Image_2026-01-13_at_10.31.45_PM_ozczcn.jpg",
-  "https://res.cloudinary.com/dixal2c3q/image/upload/v1768364085/WhatsApp_Image_2026-01-13_at_10.31.44_PM_1_szlk4s.jpg",
-  "https://res.cloudinary.com/dixal2c3q/image/upload/v1768364085/WhatsApp_Image_2026-01-13_at_10.31.44_PM_3_pyxgmq.jpg",
-  "https://res.cloudinary.com/dixal2c3q/image/upload/v1768364085/WhatsApp_Image_2026-01-13_at_10.31.44_PM_2_aqzqwy.jpg",
-  "https://res.cloudinary.com/dixal2c3q/image/upload/v1768364083/WhatsApp_Image_2026-01-13_at_10.31.45_PM_1_jpag39.jpg",
-  "https://res.cloudinary.com/dixal2c3q/image/upload/v1768364082/WhatsApp_Image_2026-01-13_at_10.31.45_PM_4_deg7hq.jpg",
-  "https://res.cloudinary.com/dixal2c3q/image/upload/v1768364082/WhatsApp_Image_2026-01-13_at_10.31.45_PM_3_l9vp7n.jpg",
-  "https://res.cloudinary.com/dixal2c3q/image/upload/v1768364082/WhatsApp_Image_2026-01-13_at_10.31.45_PM_5_hdj98u.jpg",
-  "https://res.cloudinary.com/dixal2c3q/image/upload/v1768364080/WhatsApp_Image_2026-01-13_at_10.31.45_PM_6_izmzi0.jpg",
-  "https://res.cloudinary.com/dixal2c3q/image/upload/v1768364080/WhatsApp_Image_2026-01-13_at_10.31.45_PM_7_tenlit.jpg",
-  "https://res.cloudinary.com/dixal2c3q/image/upload/v1768364079/WhatsApp_Image_2026-01-13_at_10.31.45_PM_9_l9ra6y.jpg",
-  "https://res.cloudinary.com/dixal2c3q/image/upload/v1768364079/WhatsApp_Image_2026-01-13_at_10.31.45_PM_8_lc7odf.jpg",
-  "https://res.cloudinary.com/dixal2c3q/image/upload/v1768364079/WhatsApp_Image_2026-01-13_at_10.31.45_PM_10_e2vqpr.jpg",
-  "https://res.cloudinary.com/dixal2c3q/image/upload/v1768364079/WhatsApp_Image_2026-01-13_at_10.31.45_PM_11_erhaar.jpg",
-  "https://res.cloudinary.com/dixal2c3q/image/upload/v1768364077/WhatsApp_Image_2026-01-13_at_10.31.45_PM_12_yjjape.jpg",
-  "https://res.cloudinary.com/dixal2c3q/image/upload/v1768364076/WhatsApp_Image_2026-01-13_at_10.31.46_PM_ddfpzw.jpg",
-  "https://res.cloudinary.com/dixal2c3q/image/upload/v1768364076/WhatsApp_Image_2026-01-13_at_10.31.46_PM_1_wc0chp.jpg",
-  "https://res.cloudinary.com/dixal2c3q/image/upload/v1768364076/WhatsApp_Image_2026-01-13_at_10.31.46_PM_4_zttwgs.jpg",
-  "https://res.cloudinary.com/dixal2c3q/image/upload/v1768364076/WhatsApp_Image_2026-01-13_at_10.31.46_PM_2_hxvn0e.jpg",
-  "https://res.cloudinary.com/dixal2c3q/image/upload/v1768364076/WhatsApp_Image_2026-01-13_at_10.31.46_PM_3_n3utbb.jpg",
-  "https://res.cloudinary.com/dixal2c3q/image/upload/v1768364075/WhatsApp_Image_2026-01-13_at_10.31.46_PM_5_btoilf.jpg"
+  "https://res.cloudinary.com/dixal2c3q/image/upload/f_auto,q_auto,w_880/v1768364091/WhatsApp_Image_2026-01-13_at_10.30.27_PM_uaqcxr.jpg",
+  "https://res.cloudinary.com/dixal2c3q/image/upload/f_auto,q_auto,w_880/v1768364089/WhatsApp_Image_2026-01-13_at_10.30.27_PM_1_wwugo0.jpg",
+  "https://res.cloudinary.com/dixal2c3q/image/upload/f_auto,q_auto,w_880/v1768364089/WhatsApp_Image_2026-01-13_at_10.30.28_PM_fan2cw.jpg",
+  "https://res.cloudinary.com/dixal2c3q/image/upload/f_auto,q_auto,w_880/v1768364089/WhatsApp_Image_2026-01-13_at_10.30.28_PM_1_e3gyaj.jpg",
+  "https://res.cloudinary.com/dixal2c3q/image/upload/f_auto,q_auto,w_880/v1768364089/WhatsApp_Image_2026-01-13_at_10.30.28_PM_2_tgp90s.jpg",
+  "https://res.cloudinary.com/dixal2c3q/image/upload/f_auto,q_auto,w_880/v1768364086/WhatsApp_Image_2026-01-13_at_10.31.44_PM_zwedzz.jpg",
+  "https://res.cloudinary.com/dixal2c3q/image/upload/f_auto,q_auto,w_880/v1768364085/WhatsApp_Image_2026-01-13_at_10.31.45_PM_ozczcn.jpg",
+  "https://res.cloudinary.com/dixal2c3q/image/upload/f_auto,q_auto,w_880/v1768364085/WhatsApp_Image_2026-01-13_at_10.31.44_PM_1_szlk4s.jpg",
+  "https://res.cloudinary.com/dixal2c3q/image/upload/f_auto,q_auto,w_880/v1768364085/WhatsApp_Image_2026-01-13_at_10.31.44_PM_3_pyxgmq.jpg",
+  "https://res.cloudinary.com/dixal2c3q/image/upload/f_auto,q_auto,w_880/v1768364085/WhatsApp_Image_2026-01-13_at_10.31.44_PM_2_aqzqwy.jpg",
+  "https://res.cloudinary.com/dixal2c3q/image/upload/f_auto,q_auto,w_880/v1768364083/WhatsApp_Image_2026-01-13_at_10.31.45_PM_1_jpag39.jpg",
+  "https://res.cloudinary.com/dixal2c3q/image/upload/f_auto,q_auto,w_880/v1768364082/WhatsApp_Image_2026-01-13_at_10.31.45_PM_4_deg7hq.jpg",
+  "https://res.cloudinary.com/dixal2c3q/image/upload/f_auto,q_auto,w_880/v1768364082/WhatsApp_Image_2026-01-13_at_10.31.45_PM_3_l9vp7n.jpg",
+  "https://res.cloudinary.com/dixal2c3q/image/upload/f_auto,q_auto,w_880/v1768364082/WhatsApp_Image_2026-01-13_at_10.31.45_PM_5_hdj98u.jpg",
+  "https://res.cloudinary.com/dixal2c3q/image/upload/f_auto,q_auto,w_880/v1768364080/WhatsApp_Image_2026-01-13_at_10.31.45_PM_6_izmzi0.jpg",
+  "https://res.cloudinary.com/dixal2c3q/image/upload/f_auto,q_auto,w_880/v1768364080/WhatsApp_Image_2026-01-13_at_10.31.45_PM_7_tenlit.jpg",
+  "https://res.cloudinary.com/dixal2c3q/image/upload/f_auto,q_auto,w_880/v1768364079/WhatsApp_Image_2026-01-13_at_10.31.45_PM_9_l9ra6y.jpg",
+  "https://res.cloudinary.com/dixal2c3q/image/upload/f_auto,q_auto,w_880/v1768364079/WhatsApp_Image_2026-01-13_at_10.31.45_PM_8_lc7odf.jpg",
+  "https://res.cloudinary.com/dixal2c3q/image/upload/f_auto,q_auto,w_880/v1768364079/WhatsApp_Image_2026-01-13_at_10.31.45_PM_10_e2vqpr.jpg",
+  "https://res.cloudinary.com/dixal2c3q/image/upload/f_auto,q_auto,w_880/v1768364079/WhatsApp_Image_2026-01-13_at_10.31.45_PM_11_erhaar.jpg",
+  "https://res.cloudinary.com/dixal2c3q/image/upload/f_auto,q_auto,w_880/v1768364077/WhatsApp_Image_2026-01-13_at_10.31.45_PM_12_yjjape.jpg",
+  "https://res.cloudinary.com/dixal2c3q/image/upload/f_auto,q_auto,w_880/v1768364076/WhatsApp_Image_2026-01-13_at_10.31.46_PM_ddfpzw.jpg",
+  "https://res.cloudinary.com/dixal2c3q/image/upload/f_auto,q_auto,w_880/v1768364076/WhatsApp_Image_2026-01-13_at_10.31.46_PM_1_wc0chp.jpg",
+  "https://res.cloudinary.com/dixal2c3q/image/upload/f_auto,q_auto,w_880/v1768364076/WhatsApp_Image_2026-01-13_at_10.31.46_PM_4_zttwgs.jpg",
+  "https://res.cloudinary.com/dixal2c3q/image/upload/f_auto,q_auto,w_880/v1768364076/WhatsApp_Image_2026-01-13_at_10.31.46_PM_2_hxvn0e.jpg",
+  "https://res.cloudinary.com/dixal2c3q/image/upload/f_auto,q_auto,w_880/v1768364076/WhatsApp_Image_2026-01-13_at_10.31.46_PM_3_n3utbb.jpg",
+  "https://res.cloudinary.com/dixal2c3q/image/upload/f_auto,q_auto,w_880/v1768364075/WhatsApp_Image_2026-01-13_at_10.31.46_PM_5_btoilf.jpg"
 ];
 
 const videos = [
-  "https://res.cloudinary.com/dixal2c3q/video/upload/v1768364089/WhatsApp_Video_2026-01-13_at_10.30.28_PM_ohm5aj.mp4",
-  "https://res.cloudinary.com/dixal2c3q/video/upload/v1768364088/WhatsApp_Video_2026-01-13_at_10.30.28_PM_1_vimrwj.mp4",
-  "https://res.cloudinary.com/dixal2c3q/video/upload/v1768364088/WhatsApp_Video_2026-01-13_at_10.30.28_PM_2_ahjxav.mp4",
-  "https://res.cloudinary.com/dixal2c3q/video/upload/v1768364088/WhatsApp_Video_2026-01-13_at_10.30.28_PM_3_apahtf.mp4"
+  "https://res.cloudinary.com/dixal2c3q/video/upload/f_auto,q_auto/v1768364089/WhatsApp_Video_2026-01-13_at_10.30.28_PM_ohm5aj.mp4",
+  "https://res.cloudinary.com/dixal2c3q/video/upload/f_auto,q_auto/v1768364088/WhatsApp_Video_2026-01-13_at_10.30.28_PM_1_vimrwj.mp4",
+  "https://res.cloudinary.com/dixal2c3q/video/upload/f_auto,q_auto/v1768364088/WhatsApp_Video_2026-01-13_at_10.30.28_PM_2_ahjxav.mp4",
+  "https://res.cloudinary.com/dixal2c3q/video/upload/f_auto,q_auto/v1768364088/WhatsApp_Video_2026-01-13_at_10.30.28_PM_3_apahtf.mp4"
 ];
 
 const $ = (s)=>document.querySelector(s);
@@ -194,7 +194,17 @@ function setPromoCode(code){
 
 function scrollToContact(){
   const el = $("#contact");
-  if(el) el.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block:"start" });
+  if(el){
+    const nav = document.querySelector("nav");
+    // Only account for sticky UI. Topbar is not sticky.
+    // After landing on the section, nudge a bit further DOWN so the Service Areas chips
+    // above are not visible (matches your desired behavior).
+    const offset = (nav?.offsetHeight || 0) + 8;
+    const baseY = el.getBoundingClientRect().top + window.pageYOffset - offset;
+    const extraDown = Math.min(72, Math.round(window.innerHeight * 0.08));
+    const y = baseY + extraDown;
+    window.scrollTo({ top: Math.max(0, y), behavior: prefersReducedMotion ? "auto" : "smooth" });
+  }
   else window.location.hash = "#contact";
 }
 
@@ -218,9 +228,100 @@ function toggleWidget(){
   widget.classList.contains("is-collapsed") ? expandWidget() : collapseWidget();
 }
 
+
+function handleRequestForm(){
+  const form = $("#requestForm");
+  if(!form) return;
+
+  const status = $("#formStatus");
+  const endpoint = (form.getAttribute("data-formspree") || "").trim();
+
+  function setStatus(msg, ok){
+    if(!status) return;
+    status.textContent = msg;
+    status.classList.remove("ok","err");
+    status.classList.add(ok ? "ok" : "err");
+  }
+
+  form.addEventListener("submit", async (e)=>{
+    // If endpoint not configured, fallback to mailto (so user never loses leads)
+    if(!endpoint || endpoint.includes("REPLACE_WITH_FORMSPREE_ENDPOINT")){
+      e.preventDefault();
+      setStatus("Form endpoint is not configured yet. Replace data-formspree in index.html with your Formspree endpoint.", false);
+      return;
+    }
+
+    e.preventDefault();
+    const btn = form.querySelector('button[type="submit"]');
+    if(btn){ btn.disabled = true; btn.textContent = "Sending…"; }
+    setStatus("", true);
+
+    try{
+      const fd = new FormData(form);
+      // include current URL
+      fd.set("url", window.location.href);
+
+      const resp = await fetch(endpoint, {
+        method: "POST",
+        body: fd,
+        headers: { "Accept": "application/json" }
+      });
+
+      if(resp.ok){
+        window.location.href = "/thank-you.html";
+      } else {
+        setStatus("Something went wrong. Please call or WhatsApp us for fastest help.", false);
+        if(btn){ btn.disabled = false; btn.innerHTML = "⚡ Send Request"; }
+      }
+    } catch(err){
+      setStatus("Network error. Please call or WhatsApp us for fastest help.", false);
+      if(btn){ btn.disabled = false; btn.innerHTML = "⚡ Send Request"; }
+    }
+  });
+}
+
+
+function normalizeHashLinks(){
+  const isIndex = /\/index\.html?$/.test(location.pathname) || location.pathname === "/" || location.pathname === "";
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    const href = a.getAttribute("href");
+    if(!href || href === "#") return;
+    if(!isIndex){
+      // on inner pages, send hash links back to homepage
+      a.setAttribute("href", "/index.html"+href);
+    }
+  });
+}
+
 window.addEventListener("DOMContentLoaded", () => {
+  handleRequestForm();
+  normalizeHashLinks();
+
+  // On the homepage, make sure clicking any #contact link scrolls to the exact same
+  // spot (and hides the Service Areas chips above the form).
+  const isIndex = /\/index\.html?$/.test(location.pathname) || location.pathname === "/" || location.pathname === "";
+  if(isIndex){
+    $$('a[href="#contact"]').forEach(a => {
+      a.addEventListener("click", (e)=>{
+        e.preventDefault();
+        scrollToContact();
+      });
+    });
+    // If the page loads with #contact in the URL, scroll consistently after layout.
+    if(location.hash === "#contact"){
+      setTimeout(scrollToContact, 50);
+    }
+  }
   const yearEl = $("#year");
   if(yearEl) yearEl.textContent = String(new Date().getFullYear());
+
+  // Deal tab attention (only until user interacts)
+  const giftTab = $("#giftTab");
+  try{
+    const seen = localStorage.getItem("lgds_deal_seen");
+    if(giftTab && !seen) giftTab.classList.add("pulse");
+  }catch(e){}
+  giftTab?.addEventListener("click", ()=>{ try{ localStorage.setItem("lgds_deal_seen","1"); giftTab.classList.remove("pulse"); }catch(e){} });
 
   // Reveal
   if(prefersReducedMotion){
@@ -301,7 +402,6 @@ window.addEventListener("DOMContentLoaded", () => {
   $$(".mLink").forEach(a => a.addEventListener("click", closeMenu));
 
   // Widget toggle
-  const giftTab = $("#giftTab");
   giftTab?.addEventListener("click", toggleWidget);
   // Always start collapsed to avoid accidental popups
   collapseWidget();
@@ -566,4 +666,275 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 
   document.addEventListener("keydown", trapFocus);
+})();
+
+
+// ===== REVIEWS (Thumbtack) =====
+window.LGDS_REVIEWS = [{"name": "Google Customer", "date": null, "source": "Google", "text": "Excellent service! The garage door spring was fixed quickly and professionally. Jacob was extremely helpful, friendly, and took the time to explain everything clearly. It's rare to find such honest and reliable service these days. Highly recommend this company to anyone needing garage door repairs!"}, {"name": "Google Customer", "date": null, "source": "Google", "text": "Jacob was extremely thorough. He knows everything about his craft and did a great job explaining the work that needed to be done. He worked quickly and the price is reasonable. I recommend him highly if you are in need of garage door services."}, {"name": "Google Customer", "date": null, "source": "Google", "text": "Jacob responded to my Yelp request quickly. He gave me a reasonable quote. I accepted the quote. He had all the parts and installed them right away. He checked the existing springs and found a latent failure. He installed replacement springs at my request. Very satisfied customer. Very professional vendor with helpful attitude."}, {"name": "Google Customer", "date": null, "source": "Google", "text": "Very good experience with this guy, very good person with knowledge. Work in Phoenixville PA 19460."}, {"name": "Google Customer", "date": null, "source": "Google", "text": "David was here and replaced my opener with a new one. He was nice and the price was the lowest that I got from any other company."}, {"name": "Google Customer", "date": null, "source": "Google", "text": "Had a really good experience with this company. They replaced the garage door at a property I'm flipping and did a great job. Everything came out clean and the door works perfectly. The guys were professional, easy to work with and knew what they were doing. Would definitely recommend them."}, {"name": "Google Customer", "date": null, "source": "Google", "text": "Fantastic service! They arrived quickly, figured out the issue fast, and got my garage door working again the same day. Fair pricing and very professional. I would absolutely use them again and recommend them to anyone."}, {"name": "Google Customer", "date": null, "source": "Google", "text": "Jacob did an excellent job, great communication and on time installation."}, {"name": "Helen D.", "date": "2026-01-23", "text": "Jacob was wonderful. Not only did he perform the repair the same day, he took time to explain the process and walk us through our options. He even programmed all of our garage remotes. His punctuality, workmanship, and professionalism are truly appreciated.", "source": "Thumbtack"}, {"name": "Michaela S.", "date": "2026-01-22", "text": "Had a great experience with this company. Jacob was on time, explained everything clearly, and did a solid job.", "source": "Thumbtack"}, {"name": "Kristy K.", "date": "2026-01-17", "text": "Great garage motor experience! Very professional and knowledgeable.", "source": "Thumbtack"}, {"name": "Laura A.", "date": "2026-01-15", "text": "Jacob arrived early, assessed the issues, and explained different solutions clearly. He completed the repair quickly and the garage door works even better than before. I would absolutely work with them again and highly recommend.", "source": "Thumbtack"}, {"name": "Stephanie T.", "date": "2026-01-14", "text": "Local Garage Door did a fantastic job. From the office staff—patient and helpful—to the technician—very thorough and highly professional. Truly a great experience.", "source": "Thumbtack"}, {"name": "Judith K.", "date": "2026-01-14", "text": "Jacob was here today and did a fast, high-quality job. He was clearly very professional, and I really appreciate the great service. Thank you so much.", "source": "Thumbtack"}, {"name": "Sebastian B.", "date": "2026-01-14", "text": "David did an excellent job and also helped me with a few extra things along the way. I really appreciate the service and will definitely keep them in mind for the future.", "source": "Thumbtack"}, {"name": "John U.", "date": null, "text": "Isaac and David were super quick to respond and came out right away to assess my broken garage door. After doing a cost analysis, we replaced the old tension spring system with a torsion spring—safer and quieter. It works well and I absolutely love it!", "source": "Thumbtack"}, {"name": "Max D.", "date": "2026-01-13", "text": "Jacob installed a new garage door motor/opener and replaced the entire spring system. Everything works smooth and quiet now. Professional, fast, and clean work—highly recommend!", "source": "Thumbtack"}, {"name": "Lily G.", "date": "2026-01-13", "text": "An amazing experience! David was super—on time and even called to let me know he was on his way. After months of issues, he fixed the problem in a few hours. The door works better than it ever did. Highly recommend.", "source": "Thumbtack"}, {"name": "Amir A.", "date": null, "text": "David came out and did an excellent job. Very professional and efficient. I would definitely recommend them.", "source": "Thumbtack"}, {"name": "Gregory K.", "date": "2026-01-13", "text": "Jacob was great. He came on time and explained every detail. He gave us a few options and helped us choose the best for us. Overall 10/10. Would definitely recommend.", "source": "Thumbtack"}, {"name": "Alyse J.", "date": "2026-01-12", "text": "I was convinced my garage door needed to be fully replaced after multiple technicians. Then David arrived and calmly explained the situation and gave me two honest options—replace the door or repair it. His honesty and professionalism truly helped me, and I really appreciate the service.", "source": "Thumbtack"}, {"name": "Sofia R.", "date": "2026-01-12", "text": "I had my garage door replaced and also asked them to install an opening for my cat. They made sure everything was sealed properly and finished in a really clean, high-quality way. You can tell they actually care about doing things right. Huge thanks to the team, and special thanks to Jacob.", "source": "Thumbtack"}, {"name": "Rina D.", "date": "2026-01-12", "text": "Amazing service. The technician arrived and even called another technician to help. Together they got the garage door working exactly the way it was before. They felt like magicians. A thousand thanks to you all—truly appreciated.", "source": "Thumbtack"}, {"name": "Sandeep G.", "date": null, "text": "I used Thumbtack to find a garage door service and this was one of the smoothest experiences I’ve had. Fast response, simple scheduling, and no surprises. Jacob arrived on time, explained what needed to be done, and completed the work efficiently and cleanly. Professional, honest, and reliable.", "source": "Thumbtack"}, {"name": "Sarah L.", "date": "2026-01-11", "text": "No pressure, no confusion—just smooth, professional service from start to finish. Everything was clear, well handled, and done with real attention to detail.", "source": "Thumbtack"}, {"name": "Eric S.", "date": "2026-01-11", "text": "Solid service from start to finish. Jacob was professional, on time, and knew exactly what needed to be done. Everything was handled smoothly and efficiently. Definitely a service you can rely on.", "source": "Thumbtack"}, {"name": "Isaac D.", "date": null, "text": "Not many reviews yet, but great service. Professional, honest, and the job was done right. Glad to support a local business.", "source": "Thumbtack"}];
+
+(function initReviewsCarousel(){
+  const all = Array.isArray(window.LGDS_REVIEWS) ? window.LGDS_REVIEWS : [];
+  if(!all.length) return;
+
+  function fmtDate(iso){
+    if(!iso) return "Verified customer";
+    try {
+      const d = new Date(iso + "T00:00:00");
+      return d.toLocaleDateString(undefined, { year:"numeric", month:"short", day:"numeric" });
+    } catch(e) {
+      return "Verified customer";
+    }
+  }
+
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, (c)=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+  }
+
+  function buildStarRow(){
+    return '<div class="stars" aria-label="5 out of 5 stars" role="img">' +
+      '<i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>' +
+    '</div>';
+  }
+
+  function render(container){
+    const limit = Math.max(3, Math.min(20, parseInt(container.getAttribute("data-limit") || "9", 10)));
+    const items = all.slice(0, limit);
+
+    container.innerHTML = `
+      <div class="rc-wrap">
+        <div class="rc-track"></div>
+        <div class="rc-actions" aria-hidden="false">
+          <button class="rc-btn rc-prev" type="button" aria-label="Previous review"><i class="fa-solid fa-chevron-left"></i></button>
+          <button class="rc-btn rc-next" type="button" aria-label="Next review"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+      </div>
+      <div class="rc-dots" role="tablist" aria-label="Review pages"></div>
+    `;
+
+    const track = container.querySelector(".rc-track");
+    const dots = container.querySelector(".rc-dots");
+    const prevBtn = container.querySelector(".rc-prev");
+    const nextBtn = container.querySelector(".rc-next");
+
+    items.forEach((r, i)=>{
+      const slide = document.createElement("div");
+      slide.className = "rc-slide";
+      const text = escapeHtml(r.text || "");
+      const name = escapeHtml(r.name || "Customer");
+      const date = fmtDate(r.date);
+      slide.innerHTML = `
+        <div class="rc-card">
+          ${buildStarRow()}
+          <p class="rc-quote">“${text}”</p>
+          <div class="rc-meta">
+            <div>— ${name}</div>
+            <div class="rc-source">${escapeHtml(date)}${date !== "Verified customer" ? " • " : ""}${escapeHtml(r.source || "Thumbtack")}</div>
+          </div>
+        </div>
+      `;
+      track.appendChild(slide);
+
+      const dot = document.createElement("button");
+      dot.className = "rc-dot";
+      dot.type = "button";
+      dot.setAttribute("role","tab");
+      dot.setAttribute("aria-label", `Go to review ${i+1}`);
+      dot.addEventListener("click", ()=>go(i));
+      dots.appendChild(dot);
+    });
+
+    let index = 0;
+    let timer = null;
+
+    function update(){
+      track.style.transform = `translateX(${-index*100}%)`;
+      Array.from(dots.children).forEach((d, i)=>d.setAttribute("aria-current", i===index ? "true" : "false"));
+      prevBtn.disabled = index===0;
+      nextBtn.disabled = index===items.length-1;
+    }
+
+    function go(i){
+      index = Math.max(0, Math.min(items.length-1, i));
+      update();
+    }
+
+    function next(){
+      if(index < items.length-1) go(index+1);
+      else go(0);
+    }
+
+    function start(){
+      stop();
+      timer = window.setInterval(next, 6500);
+    }
+    function stop(){
+      if(timer) window.clearInterval(timer);
+      timer = null;
+    }
+
+    prevBtn.addEventListener("click", ()=>go(index-1));
+    nextBtn.addEventListener("click", ()=>go(index+1));
+
+    container.addEventListener("mouseenter", stop);
+    container.addEventListener("mouseleave", start);
+    container.addEventListener("focusin", stop);
+    container.addEventListener("focusout", start);
+
+    // Touch swipe (simple)
+    let startX = null;
+    container.addEventListener("touchstart", (e)=>{ startX = e.touches[0].clientX; }, {passive:true});
+    container.addEventListener("touchend", (e)=>{
+      if(startX===null) return;
+      const dx = e.changedTouches[0].clientX - startX;
+      startX = null;
+      if(Math.abs(dx) < 35) return;
+      if(dx < 0) go(index+1);
+      else go(index-1);
+    });
+
+    go(0);
+    start();
+  }
+
+  document.addEventListener("DOMContentLoaded", ()=>{
+    document.querySelectorAll(".reviews-carousel").forEach(render);
+  });
+})();
+
+// ===== Same-Day Service Popup =====
+(function(){
+  const STORAGE_KEY = 'lgds_popup_seen';
+  const DELAY_MS    = 800; // slight delay so page finishes loading first
+
+  function createPopup(){
+    // Don't show again within same session
+    try{ if(sessionStorage.getItem(STORAGE_KEY)) return; }catch(e){}
+
+    const overlay = document.createElement('div');
+    overlay.id = 'lgds-popup-overlay';
+    overlay.setAttribute('role','dialog');
+    overlay.setAttribute('aria-modal','true');
+    overlay.setAttribute('aria-label','Same Day Service');
+    overlay.innerHTML = `
+      <div id="lgds-popup">
+        <button id="lgds-popup-close" aria-label="Close" type="button">&#x2715;</button>
+        <div class="lgds-popup-emoji">&#x1F6A8;</div>
+        <h2 class="lgds-popup-title">Garage Door<br/><span>Problem?</span></h2>
+        <p class="lgds-popup-sub">Do you need service now?<br/>We\'re available today across PA, NJ &amp; DE.</p>
+        <div class="lgds-popup-actions">
+          <a class="lgds-popup-btn lgds-popup-call" href="tel:2674386494">
+            <i class="fa-solid fa-phone"></i> Call 267-438-6494
+          </a>
+          <a class="lgds-popup-btn lgds-popup-wa" href="https://wa.me/12674386494" target="_blank" rel="noopener">
+            <i class="fa-brands fa-whatsapp"></i> WhatsApp Us
+          </a>
+        </div>
+      </div>
+    `;
+
+    // Styles injected once
+    if(!document.getElementById('lgds-popup-style')){
+      const style = document.createElement('style');
+      style.id = 'lgds-popup-style';
+      style.textContent = `
+        #lgds-popup-overlay{
+          position:fixed;inset:0;z-index:99999;
+          background:rgba(0,0,0,.72);
+          display:flex;align-items:center;justify-content:center;
+          padding:16px;
+          opacity:0;transition:opacity .25s ease;
+        }
+        #lgds-popup-overlay.lgds-visible{ opacity:1; }
+        #lgds-popup{
+          background:#0a0a0a;
+          border:1.5px solid rgba(255,255,255,.12);
+          border-radius:16px;
+          padding:36px 32px 32px;
+          max-width:460px;width:100%;
+          position:relative;
+          text-align:center;
+          box-shadow:0 24px 80px rgba(0,0,0,.7);
+          transform:translateY(18px) scale(.97);
+          transition:transform .28s cubic-bezier(.22,.68,0,1.2);
+        }
+        #lgds-popup-overlay.lgds-visible #lgds-popup{
+          transform:translateY(0) scale(1);
+        }
+        #lgds-popup-close{
+          position:absolute;top:12px;right:14px;
+          background:none;border:none;cursor:pointer;
+          color:rgba(255,255,255,.35);font-size:1.25rem;
+          line-height:1;padding:4px 6px;border-radius:6px;
+          transition:color .15s;
+        }
+        #lgds-popup-close:hover{ color:#fff; }
+        .lgds-popup-emoji{
+          font-size:2.6rem;margin-bottom:12px;line-height:1;
+        }
+        .lgds-popup-title{
+          color:#fff;font-size:1.75rem;font-weight:900;
+          text-transform:uppercase;letter-spacing:.04em;
+          line-height:1.15;margin:0 0 10px;
+        }
+        .lgds-popup-title span{ color:#ffcc00; }
+        .lgds-popup-sub{
+          color:rgba(255,255,255,.5);font-size:.9rem;
+          font-weight:600;line-height:1.5;margin:0 0 26px;
+        }
+        .lgds-popup-actions{
+          display:flex;flex-direction:column;gap:12px;
+        }
+        .lgds-popup-btn{
+          display:flex;align-items:center;justify-content:center;gap:9px;
+          padding:15px 20px;border-radius:10px;
+          font-size:1rem;font-weight:900;letter-spacing:.03em;
+          text-decoration:none;transition:transform .15s,box-shadow .15s;
+          cursor:pointer;
+        }
+        .lgds-popup-btn:hover{ transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,0,0,.4); }
+        .lgds-popup-call{
+          background:#ffcc00;color:#000;
+        }
+        .lgds-popup-wa{
+          background:#25D366;color:#fff;
+        }
+        @media(min-width:560px){
+          #lgds-popup{ padding:44px 40px 40px; }
+          .lgds-popup-title{ font-size:2.2rem; }
+          .lgds-popup-emoji{ font-size:3.2rem; }
+        }
+        @media(max-width:360px){
+          #lgds-popup{ padding:28px 18px 22px; }
+          .lgds-popup-title{ font-size:1.4rem; }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
+    document.body.appendChild(overlay);
+
+    // Animate in
+    requestAnimationFrame(()=>{
+      requestAnimationFrame(()=>{ overlay.classList.add('lgds-visible'); });
+    });
+
+    // Close handlers
+    const close = ()=>{
+      overlay.classList.remove('lgds-visible');
+      setTimeout(()=>{ overlay.remove(); }, 280);
+      try{ sessionStorage.setItem(STORAGE_KEY,'1'); }catch(e){}
+    };
+
+    document.getElementById('lgds-popup-close').addEventListener('click', close);
+    overlay.addEventListener('click', (e)=>{ if(e.target === overlay) close(); });
+    document.addEventListener('keydown', function esc(e){
+      if(e.key==='Escape'){ close(); document.removeEventListener('keydown',esc); }
+    });
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', ()=> setTimeout(createPopup, DELAY_MS));
+  } else {
+    setTimeout(createPopup, DELAY_MS);
+  }
 })();

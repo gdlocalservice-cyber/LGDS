@@ -1,0 +1,34 @@
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-XSS-Protection = "1; mode=block"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    Content-Security-Policy = "default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval'; frame-ancestors 'self';"
+
+[[redirects]]
+  from = "/services/spring-repair"
+  to = "/services/spring-repair.html"
+  status = 301
+
+[[redirects]]
+  from = "/services/emergency-service"
+  to = "/services/emergency-service.html"
+  status = 301
+
+[[redirects]]
+  from = "/services/opener-installation"
+  to = "/services/opener-installation.html"
+  status = 301
+
+[[redirects]]
+  from = "/faq"
+  to = "/faq.html"
+  status = 301
+
+[[redirects]]
+  from = "/blog"
+  to = "/blog/"
+  status = 301

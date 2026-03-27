@@ -11,7 +11,7 @@
 <link href="/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <meta content="dark light" name="color-scheme"/>
 <meta content="#070707" name="theme-color"/>
-<meta content="Privacy Policy for Local Garage Door Service (PA, NJ, DE)." name="description"/>
+<meta content="Privacy policy for Local Garage Door Service. Learn how we collect, use, and protect your information." name="description"/>
 <script>document.documentElement.classList.add('js');</script>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -60,8 +60,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
     .topbar a{color:rgba(255,255,255,.92);font-weight:900;} .topbar a:hover{color:var(--gold);}
     nav{position:sticky;top:0;z-index:1100;background:rgba(10,10,10,.88);backdrop-filter:blur(16px);padding:14px 5%;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid rgba(255,204,0,.65);gap:10px;}
     .brand{display:flex;align-items:center;gap:12px;min-width:240px;}
-    .brand-logo{width:65px;height:65px;border-radius:50%;overflow:hidden;border:none;background:transparent;box-shadow:none;}
-    .brand-logo img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.06);}
+    .brand-logo{width:65px;height:65px;border-radius:18px;overflow:visible;border:none;background:transparent;box-shadow:none;}
+    .brand-logo img{width:100%;height:100%;object-fit:contain;display:block;transform:none;border-radius:18px;}
     .brand-text h1{font-size:1.05rem;margin:0;font-weight:900;text-transform:uppercase;letter-spacing:.8px;line-height:1.05;}
     .brand-text h1 span{color:var(--gold);}
     .brand-text .tagline{margin-top:4px;font-size:.78rem;font-weight:700;color:rgba(255,255,255,.72);}
@@ -134,36 +134,89 @@ body.legal-page .brand-logo{
 <body class="legal-page">
 <a class="skip-link" href="#main">Skip to main content</a>
 
-<div class="topbar" id="topbar">
-  <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:center;">
-    <span class="pill"><i class="fa-solid fa-location-dot"></i> PA • NJ • DE</span>
-    <span style="font-weight:800;">100-mile radius from Philadelphia</span>
-  </div>
-  <div style="display:flex; gap:14px; flex-wrap:wrap; justify-content:center;">
-    <a aria-label="Call" href="tel:2674386494"><i class="fa-solid fa-phone"></i> 267-438-6494</a>
-    <a aria-label="Request Service" href="/index.html#contact"><i class="fa-solid fa-calendar-check"></i> Request Service</a>
-  </div>
+<div class="topbar topbar-c" id="topbar">
+<div class="topbar-left">
+  <span class="pill"><i aria-hidden="true" class="fa-solid fa-location-dot"></i> PA • NJ • DE</span>
+  <span class="pill pill-sm">Same-Day Service</span>
 </div>
-
+<a aria-label="Call 267-438-6494" class="topbar-phone" href="tel:2674386494">
+  <i aria-hidden="true" class="fa-solid fa-phone"></i> 267-438-6494
+</a>
+<div class="topbar-right">
+  <a aria-label="Request Service" class="topbar-req" href="/index.html#contact">
+    <i aria-hidden="true" class="fa-solid fa-calendar-check"></i> Request Service
+  </a>
+</div>
+</div>
 <nav aria-label="Primary">
   <a class="brand" href="/index.html#top">
     <span aria-hidden="true" class="brand-logo">
       <img alt="Local Garage Door Service Logo" decoding="async" loading="eager" src="./apple-touch-icon.png"/>
     </span>
     <div class="brand-text">
-      <h1>LOCAL <span>GARAGE DOOR</span> SERVICE</h1>
-      <div class="tagline">Premium Service • Fast Response • Trusted Results</div>
+      <div class="brand-name">LOCAL <span>GARAGE DOOR</span> SERVICE</div>
+      <div class="tagline">Same-Day Service • Fast Response • Trusted Results</div>
     </div>
   </a>
 
   <div class="nav-links">
-    <a href="/index.html#top">Home</a>
-    <a href="/index.html#service-areas">Areas</a>
-    <a href="/doors/residential.html">Residential Doors</a>
-    <a href="/doors/commercial.html">Commercial Doors</a>
-    <a href="/index.html#contact">Request</a>
-    <a href="/faq.html">FAQ</a>
+<a href="/index.html#top">Home</a>
+<div class="nav-item">
+  <a href="/index.html#services">Services</a>
+  <div class="nav-dropdown">
+    <div class="dd-label">Repairs</div>
+    <a href="/services/spring-repair.html">Spring Repair &amp; Replacement</a>
+    <a href="/services/cable-repair.html">Cable Repair</a>
+    <a href="/services/off-track-repair.html">Off-Track Repair</a>
+    <a href="/services/roller-repair.html">Roller Repair</a>
+    <a href="/services/sensor-alignment.html">Sensor Repair &amp; Alignment</a>
+    <a href="/services/weatherstripping.html">Weatherstripping</a>
+    <a href="/services/panel-replacement.html">Panel Replacement</a>
+    <a href="/services/emergency-service.html">Emergency Service</a>
+    <div class="dd-divider"></div>
+    <div class="dd-label">Installation</div>
+    <a href="/services/opener-installation.html">Opener Repair &amp; Install</a>
+    <a href="/services/liftmaster-chamberlain-installation.html">LiftMaster &amp; Chamberlain</a>
+    <a href="/services/smart-opener-installation.html">Smart WiFi Opener</a>
+    <a href="/services/new-door-installation.html">New Door Installation</a>
+    <a href="/services/commercial-garage-door-repair.html">Commercial Repair</a>
+    <div class="dd-divider"></div>
+    <a href="/services/tune-up.html">Tune-Up &amp; Maintenance</a>
   </div>
+</div>
+<div class="nav-item">
+  <a href="/index.html#service-areas">Areas</a>
+  <div class="nav-dropdown">
+    <div class="dd-label">Pennsylvania</div>
+    <a href="/locations/philadelphia-pa.html">Philadelphia, PA</a>
+    <a href="/locations/king-of-prussia-pa.html">King of Prussia, PA</a>
+    <a href="/locations/allentown-pa.html">Allentown, PA</a>
+    <a href="/locations/norristown-pa.html">Norristown, PA</a>
+    <a href="/locations/bucks-county-pa.html">Bucks County, PA</a>
+    <div class="dd-divider"></div>
+    <div class="dd-label">New Jersey</div>
+    <a href="/locations/cherry-hill-nj.html">Cherry Hill, NJ</a>
+    <a href="/locations/woodbury-nj.html">Woodbury, NJ</a>
+    <a href="/locations/willingboro-nj.html">Willingboro, NJ</a>
+    <a href="/locations/moorestown-nj.html">Moorestown, NJ</a>
+    <a href="/locations/marlton-nj.html">Marlton, NJ</a>
+    <a href="/locations/trenton-nj.html">Trenton, NJ</a>
+    <a href="/locations/south-jersey-nj.html">South Jersey, NJ</a>
+    <div class="dd-divider"></div>
+    <div class="dd-label">Delaware</div>
+    <a href="/locations/wilmington-de.html">Wilmington, DE</a>
+    <a href="/locations/newark-de.html">Newark, DE</a>
+    <a href="/locations/smyrna-de.html">Smyrna, DE</a>
+    <a href="/locations/middletown-de.html">Middletown, DE</a>
+    <a href="/locations/delaware-de.html">Delaware (Statewide)</a>
+  </div>
+</div>
+<a href="/doors/residential.html">Residential</a>
+<a href="/doors/commercial.html">Commercial</a>
+<a href="/index.html#contact">Request</a>
+<a href="/faq.html">FAQ</a>
+<a href="/blog/">Blog</a>
+</div>
 
   <div class="nav-cta">
     <a class="btn whatsapp" href="https://wa.me/12674386494" rel="noopener" target="_blank">
@@ -186,16 +239,7 @@ body.legal-page .brand-logo{
       <div style="font-weight:900; text-transform:uppercase; letter-spacing:.7px;">Menu</div>
       <button aria-label="Close menu" class="icon-btn" id="closeMobile" type="button"><i class="fa-solid fa-xmark"></i></button>
     </div>
-    <div class="mobile-links">
-      <a class="mLink" href="/index.html#offers">Offers</a>
-      <a class="mLink" href="/index.html#photos">Photos</a>
-      <a class="mLink" href="/index.html#videos">Videos</a>
-      <a class="mLink" href="/index.html#contact">Request Service</a>
-      <a class="mLink" href="tel:2674386494">Call: 267-438-6494</a>
-      <a class="mLink" href="https://wa.me/12674386494" rel="noopener" target="_blank">WhatsApp</a>
-      <a class="mLink" href="/terms.html">Terms &amp; Conditions</a>
-      <a class="mLink" href="/privacy.html">Privacy Policy</a>
-    </div>
+    <div class="mobile-links"><a class="mLink" href="/index.html#services">Services</a><a class="mLink" href="/index.html#service-areas">Areas</a><a class="mLink" href="/doors/residential.html">Residential Doors</a><a class="mLink" href="/doors/commercial.html">Commercial Doors</a><a class="mLink" href="/index.html#offers">Offers</a><a class="mLink" href="/index.html#photos">Photos</a><a class="mLink" href="/index.html#contact">Request Service</a><a class="mLink" href="/blog/">Blog</a><a class="mLink" href="/faq.html">FAQ</a><a class="mLink" href="tel:2674386494">Call: 267-438-6494</a><a class="mLink" href="https://wa.me/12674386494" rel="noopener" target="_blank">WhatsApp</a><a class="mLink" href="/terms.html">Terms &amp; Conditions</a><a class="mLink" href="/privacy.html">Privacy Policy</a></div>
   </div>
 </div>
 
@@ -212,7 +256,7 @@ body.legal-page .brand-logo{
     <h3>1) Information We Collect</h3>
     <ul>
       <li><strong>Contact details</strong> you submit (name, phone number, message).</li>
-      <li><strong>Usage data</strong> such as pages viewed and device/browser info (via analytics tools).</li>
+      <li><strong>Usage data</strong> such as pages viewed, device/browser info, and approximate location (such as city/region) derived from IP address (via analytics tools).</li>
       <li><strong>Marketing data</strong> related to advertising performance (via Google Ads/Analytics).</li>
     </ul>
 
@@ -225,15 +269,14 @@ body.legal-page .brand-logo{
     </ul>
 
     <!-- ✅ Added for A2P / SMS compliance -->
-    <h3>SMS Policy</h3>
+    <h3>3) SMS / Text Messaging</h3>
     <p>
-      SMS Policy
-
-If you provide your phone number to contact us or request service, you consent to receive SMS text messages from Local Garage Door Service (DBA of GALMOR LLP) related to appointments, scheduling updates, and technician arrival notifications.
-
-Message frequency may vary. Message and data rates may apply. You may opt out at any time by replying STOP to any message. For help, reply HELP or call 267-438-6494.
-
-Mobile information will not be shared with third parties for marketing or promotional purposes.
+      If you provide your phone number to contact us or request service, you consent to receive SMS text messages from
+      <strong>Local Garage Door Service (DBA of GALMOR LLP)</strong> related to appointments, scheduling updates, and
+      technician arrival notifications.
+    </p>
+    <p>
+      Your consent is not a condition of purchase.
     </p>
     <p>
       <strong>Message frequency may vary.</strong> <strong>Message and data rates may apply.</strong>
@@ -241,55 +284,68 @@ Mobile information will not be shared with third parties for marketing or promot
       or call <a href="tel:2674386494">267-438-6494</a>.
     </p>
     <p>
-      Mobile information will not be shared with third parties for marketing or promotional purposes.  
+      Mobile information will not be shared with third parties for marketing or promotional purposes.
     </p>
 
-    <h3>3) Sharing Information</h3>
+    <h3>4) Sharing Information</h3>
     <p>
-      We do not sell your personal information. We may share information with service providers that help us operate
+      We do not sell or rent your personal information. We may share information with service providers that help us operate
       the website and communicate with customers (for example: form processing, analytics, and advertising tools),
       and when required by law.
     </p>
 
-    <h3>4) Cookies &amp; Tracking</h3>
+    <h3>5) Cookies &amp; Tracking</h3>
     <p>
       We may use cookies and similar technologies to understand traffic and improve marketing effectiveness.
       You can control cookies in your browser settings. Some features may not work properly if cookies are disabled.
     </p>
 
-    <h3>5) Third-Party Services</h3>
+    <h3>6) Third-Party Services</h3>
     <ul>
       <li><strong>Form submissions:</strong> Your request form is processed by Formspree.</li>
       <li><strong>Analytics/Ads:</strong> We use Google Analytics and Google Ads to understand website performance.</li>
       <li><strong>WhatsApp:</strong> If you click WhatsApp, WhatsApp may collect data under their policies.</li>
     </ul>
 
-    <h3>6) Data Security</h3>
+    <h3>7) Data Security</h3>
     <p>
       We use reasonable safeguards to protect information. However, no method of transmission over the internet is 100% secure.
     </p>
 
-    <h3>7) Your Choices</h3>
+    <h3>8) Your Choices</h3>
     <ul>
-      <li>You can request to update or delete your submitted information by calling <a href="tel:2674386494">267-438-6494</a>.</li>
+      <li>You can request to update or delete your submitted information by contacting us.</li>
       <li>You can opt out of certain advertising personalization through Google’s ad settings.</li>
+      <li>If you are a New Jersey resident, you may have additional rights under the New Jersey Data Privacy Act (NJDPA), including the right to access, correct, or delete your personal data.</li>
+      <li>Residents of Pennsylvania, Delaware, and other states may also have rights under applicable state privacy laws.</li>
     </ul>
+    <p>To exercise any privacy rights, contact us at <a href="tel:2674386494">267-438-6494</a>.</p>
 
-    <h3>8) Children’s Privacy</h3>
+    <h3>8a) Data Retention</h3>
+    <p>
+      We retain personal information only as long as necessary to fulfill the purposes described in this policy, provide services you have requested, resolve disputes, enforce our agreements, or comply with applicable legal obligations. Service request and scheduling data is generally retained for up to 3 years. You may request deletion of your information at any time by calling <a href="tel:2674386494">267-438-6494</a>.
+    </p>
+
+    <h3>9) Children’s Privacy</h3>
     <p>
       Our website and services are not directed to children under 13, and we do not knowingly collect information from children.
     </p>
 
-    <h3>9) Updates to This Policy</h3>
+    <h3>10) Updates to This Policy</h3>
     <p>
       We may update this policy from time to time. Changes will be posted on this page with a new “Last updated” date.
     </p>
 
-    <h3>10) Contact</h3>
+    <h3>11) Contact</h3>
     <p>
       Questions about this Privacy Policy? Call <a href="tel:2674386494">267-438-6494</a>.
     </p>
   </div>
+
+<section style="margin-top:32px;">
+  <h2 style="font-size:1.1rem;font-weight:900;text-transform:uppercase;letter-spacing:.04em;color:var(--gold);margin:0 0 12px;padding-bottom:8px;border-bottom:1px solid rgba(255,204,0,.18);">California Residents (CCPA)</h2>
+  <p>If you are a California resident, you have the right to know what personal information we collect and how it is used. <strong>We do not sell your personal information to third parties.</strong> For any privacy-related requests, contact us at <a href="mailto:info@localgaragedoorsvc.com" style="color:var(--gold);">info@localgaragedoorsvc.com</a>.</p>
+</section>
 </main>
 
 <footer>
@@ -300,6 +356,8 @@ Mobile information will not be shared with third parties for marketing or promot
     <a href="/index.html#contact">Request Service</a>
   </div>
   <p style="margin-top:14px;">© 2026 Local Garage Door Service. All rights reserved.</p>
+
+<p style="font-size:0.75rem;color:rgba(255,255,255,.38);margin-top:8px;font-weight:700;">Local Garage Door Service is a DBA of GALMOR LLP &bull; PA &bull; NJ &bull; DE</p>
 </footer>
 
 <script>
@@ -410,6 +468,41 @@ Mobile information will not be shared with third parties for marketing or promot
 
     window.addEventListener("resize", ()=> setTimeout(setHeaderVars, 60));
   });
+</script>
+
+<!-- Mobile Sticky Bottom CTA Bar -->
+<div class="mobile-cta-bar" aria-label="Quick contact actions">
+  <a class="mcta-btn mcta-call" href="tel:2674386494"><i aria-hidden="true" class="fa-solid fa-phone"></i> Call Now</a>
+  <a class="mcta-btn mcta-wa" href="https://wa.me/12674386494" rel="noopener" target="_blank"><i aria-hidden="true" class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+  <a class="mcta-btn mcta-req" href="/index.html#contact"><i aria-hidden="true" class="fa-solid fa-calendar-check"></i> Request</a>
+</div>
+<script src="/main.js"></script>
+
+<!-- Cookie Consent Banner -->
+<div id="cookie-banner" style="display:none;" role="dialog" aria-label="Cookie consent">
+  <p>We use cookies for analytics and advertising to improve your experience. <a href="/privacy.html">Learn more</a></p>
+  <div class="cookie-btns">
+    <button class="cookie-accept" id="cookieAccept">Accept</button>
+    <button class="cookie-decline" id="cookieDecline">Decline</button>
+  </div>
+</div>
+<script>
+(function(){
+  if(localStorage.getItem('cookieConsent')) return;
+  var b = document.getElementById('cookie-banner');
+  if(b){ b.style.display='flex'; }
+  document.getElementById('cookieAccept').addEventListener('click',function(){
+    localStorage.setItem('cookieConsent','accepted');
+    document.getElementById('cookie-banner').style.display='none';
+    // enable GA4
+    window['ga-disable-G-TVGZZ0WFTH'] = false;
+  });
+  document.getElementById('cookieDecline').addEventListener('click',function(){
+    localStorage.setItem('cookieConsent','declined');
+    document.getElementById('cookie-banner').style.display='none';
+    window['ga-disable-G-TVGZZ0WFTH'] = true;
+  });
+})();
 </script>
 </body>
 </html>
