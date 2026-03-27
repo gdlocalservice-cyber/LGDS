@@ -819,11 +819,12 @@ window.LGDS_REVIEWS = [{"name": "Google Customer", "date": null, "source": "Goog
       <div id="lgds-popup">
         <button id="lgds-popup-close" aria-label="Close" type="button">&#x2715;</button>
         <div class="lgds-popup-emoji">&#x1F6A8;</div>
-        <h2 class="lgds-popup-title">Garage Door<br/><span>Problem?</span></h2>
-        <p class="lgds-popup-sub">Do you need service now?<br/>We\'re available today across PA, NJ &amp; DE.</p>
+        <p class="lgds-popup-kicker">Same Day Garage Door Service</p>
+        <h2 class="lgds-popup-title">Garage Door<br/><span>Issue?</span></h2>
+        <p class="lgds-popup-sub">We\'ll take care of it today.</p>
         <div class="lgds-popup-actions">
           <a class="lgds-popup-btn lgds-popup-call" href="tel:2674386494">
-            <i class="fa-solid fa-phone"></i> Call 267-438-6494
+            📞 Call Now – 267-438-6494
           </a>
           <a class="lgds-popup-btn lgds-popup-wa" href="https://wa.me/12674386494" target="_blank" rel="noopener">
             <i class="fa-brands fa-whatsapp"></i> WhatsApp Us
@@ -870,6 +871,11 @@ window.LGDS_REVIEWS = [{"name": "Google Customer", "date": null, "source": "Goog
         #lgds-popup-close:hover{ color:#fff; }
         .lgds-popup-emoji{
           font-size:2.6rem;margin-bottom:12px;line-height:1;
+        }
+        .lgds-popup-kicker{
+          color:#ffcc00;font-size:.72rem;font-weight:700;
+          text-transform:uppercase;letter-spacing:.12em;
+          margin:0 0 8px;
         }
         .lgds-popup-title{
           color:#fff;font-size:1.75rem;font-weight:900;
