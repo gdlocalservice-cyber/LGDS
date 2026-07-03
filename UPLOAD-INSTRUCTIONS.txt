@@ -1,0 +1,16 @@
+LGDS FINAL PACKAGE (v4) — Upload instructions
+==============================================
+1. In GitHub repo LGDS: Add file -> Upload files
+2. FIRST drag the "assets" FOLDER alone. Wait until GitHub
+   finishes listing all its files (fonts, doors, hero images).
+3. Then drag everything else (all HTML files, styles.css,
+   main.js, netlify.toml, sitemaps, icons, folders:
+   services / locations / doors / blog).
+4. One commit: "final speed package v4"
+5. Wait for Netlify deploy (Deploys tab -> Published)
+6. Hard-refresh the site: Ctrl+Shift+R (or open incognito)
+
+What's inside v4:
+- Icons embedded inside styles.css (cannot break again)
+- Hero image self-hosted (no external dependency)
+- Cache fix + version tags (?v=4) force fresh files for everyone
