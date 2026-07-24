@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://localgaragedoorsvc.com/</loc>
+    <image:image>
+      <image:loc>https://localgaragedoorsvc.com/og-image.jpg</image:loc>
+      <image:title>Local Garage Door Service - Garage Door Repair and Installation in PA, NJ and DE</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://localgaragedoorsvc.com/doors/residential.html</loc>
+    <image:image>
+      <image:loc>https://localgaragedoorsvc.com/assets/doors/res1.webp</image:loc>
+      <image:title>Long Panel Residential Garage Door</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://localgaragedoorsvc.com/assets/doors/res2.webp</image:loc>
+      <image:title>Carriage House Style Garage Door</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://localgaragedoorsvc.com/assets/doors/res3.webp</image:loc>
+      <image:title>Modern Flush Panel Garage Door</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://localgaragedoorsvc.com/assets/doors/res4.webp</image:loc>
+      <image:title>Raised Panel Residential Garage Door</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://localgaragedoorsvc.com/doors/commercial.html</loc>
+    <image:image>
+      <image:loc>https://localgaragedoorsvc.com/assets/doors/com1.webp</image:loc>
+      <image:title>Commercial Sectional Steel Door</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://localgaragedoorsvc.com/assets/doors/com11.webp</image:loc>
+      <image:title>High-Cycle Commercial Garage Door</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://localgaragedoorsvc.com/assets/doors/com2.webp</image:loc>
+      <image:title>Commercial Rolling Steel Door</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://localgaragedoorsvc.com/assets/doors/com3.webp</image:loc>
+      <image:title>Full-View Aluminum Commercial Door</image:title>
+    </image:image>
+  </url>
+</urlset>
