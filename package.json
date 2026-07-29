@@ -1,0 +1,11 @@
+{
+  "name": "lgds-site-audit",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "audit:browser": "node browser-audit.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.55.0"
+  }
+}
