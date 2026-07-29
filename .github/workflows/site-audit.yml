@@ -55,11 +55,17 @@ jobs:
           sleep 3
 
       - name: Run desktop and mobile browser audit
+        continue-on-error: true
         env:
           AUDIT_BASE_URL: http://127.0.0.1:4173
           AUDIT_DIST: dist
           AUDIT_OUTPUT: audit-results
         run: node browser-audit.mjs
+
+      - name: Validate browser audit results
+        env:
+          AUDIT_REPORT: audit-results/browser-audit.json
+        run: node validate-browser-audit.mjs
 
       - name: Upload audit report and screenshots
         if: always()
