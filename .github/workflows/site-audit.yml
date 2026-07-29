@@ -1,0 +1,74 @@
+name: Full site audit
+
+on:
+  push:
+    branches:
+      - agent/deep-site-audit-and-fixes
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install audit dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Build final static site
+        run: |
+          cat chunks/chunk-* > LGDS-STATIC-SITE.zip
+          rm -rf dist audit-results
+          mkdir -p dist
+          unzip -q LGDS-STATIC-SITE.zip -d dist
+          node privacy-consent.js dist
+          node site-quality-fixes.js dist
+          node mobile-service-links.js dist
+          node mobile-site-fixes.js dist
+          node cache-bust.js dist
+
+      - name: Run structural content and SEO audit
+        run: node audit-site.js dist
+
+      - name: Start local preview
+        run: |
+          python3 -m http.server 4173 --directory dist > /tmp/lgds-audit-server.log 2>&1 &
+          echo $! > /tmp/lgds-audit-server.pid
+          sleep 3
+
+      - name: Run desktop and mobile browser audit
+        env:
+          AUDIT_BASE_URL: http://127.0.0.1:4173
+          AUDIT_DIST: dist
+          AUDIT_OUTPUT: audit-results
+        run: node browser-audit.mjs
+
+      - name: Upload audit report and screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lgds-site-audit
+          path: |
+            audit-results
+            /tmp/lgds-audit-server.log
+          if-no-files-found: warn
+          retention-days: 14
