@@ -1,9 +1,6 @@
 name: Full site audit
 
 on:
-  push:
-    branches:
-      - agent/deep-site-audit-and-fixes
   pull_request:
     branches:
       - main
