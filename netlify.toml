@@ -1,5 +1,5 @@
 [build]
-  command = "cat chunks/chunk-* > LGDS-STATIC-SITE.zip && rm -rf dist && mkdir -p dist && unzip -q LGDS-STATIC-SITE.zip -d dist"
+  command = "cat chunks/chunk-* > LGDS-STATIC-SITE.zip && rm -rf dist && mkdir -p dist && unzip -q LGDS-STATIC-SITE.zip -d dist && node privacy-consent.js dist && node cache-bust.js dist"
   publish = "dist"
 
 [build.environment]
