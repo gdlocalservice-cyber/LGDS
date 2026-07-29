@@ -42,6 +42,7 @@ jobs:
           node site-quality-fixes.js dist
           node mobile-service-links.js dist
           node mobile-site-fixes.js dist
+          node final-ui-fixes.js dist
           node cache-bust.js dist
 
       - name: Run structural content and SEO audit
