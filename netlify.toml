@@ -1,9 +1,10 @@
 [build]
-  command = "cat chunks/chunk-* > LGDS-STATIC-SITE.zip && rm -rf dist && mkdir -p dist && unzip -q LGDS-STATIC-SITE.zip -d dist && node privacy-consent.js dist && node site-quality-fixes.js dist && node mobile-service-links.js dist && node mobile-site-fixes.js dist && node cache-bust.js dist && node audit-site.js dist"
+  command = "npm install --no-audit --no-fund && npx playwright install chromium && cat chunks/chunk-* > LGDS-STATIC-SITE.zip && rm -rf dist audit-results && mkdir -p dist && unzip -q LGDS-STATIC-SITE.zip -d dist && node privacy-consent.js dist && node site-quality-fixes.js dist && node mobile-service-links.js dist && node mobile-site-fixes.js dist && node cache-bust.js dist && node audit-site.js dist && (python3 -m http.server 4173 --directory dist > /tmp/lgds-audit-server.log 2>&1 & server_pid=$!; sleep 3; AUDIT_BASE_URL=http://127.0.0.1:4173 node browser-audit.mjs; audit_status=$?; kill $server_pid 2>/dev/null || true; exit $audit_status)"
   publish = "dist"
 
 [build.environment]
   NODE_VERSION = "22"
+  PLAYWRIGHT_BROWSERS_PATH = "0"
 
 [[headers]]
   for = "/_next/static/*"
