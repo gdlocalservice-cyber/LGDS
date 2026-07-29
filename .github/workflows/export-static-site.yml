@@ -1,0 +1,28 @@
+name: Export static site
+
+on:
+  push:
+    branches:
+      - agent/export-approved-site
+      - agent/recover-approved-updates
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Rebuild static site archive
+        run: cat chunks/chunk-* > LGDS-STATIC-SITE.zip
+      - name: Upload archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: lgds-static-site-${{ github.head_ref || github.ref_name }}
+          path: LGDS-STATIC-SITE.zip
+          retention-days: 7
