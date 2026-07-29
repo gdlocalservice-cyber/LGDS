@@ -5,6 +5,9 @@ on:
     branches:
       - agent/export-approved-site
       - agent/recover-approved-updates
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
@@ -20,6 +23,6 @@ jobs:
       - name: Upload archive
         uses: actions/upload-artifact@v4
         with:
-          name: lgds-static-site-${{ github.ref_name }}
+          name: lgds-static-site-${{ github.head_ref || github.ref_name }}
           path: LGDS-STATIC-SITE.zip
           retention-days: 7
