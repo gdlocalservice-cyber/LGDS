@@ -49,7 +49,7 @@ const homeProblemCardFallback = `<script id="lgds-home-problem-card-fallback">
     {label:'Wont Open', keys:['wont open','door wont open','not open']},
     {label:'Broken Spring', keys:['broken spring','spring']},
     {label:'Off Track', keys:['off track','track']},
-    {label:'New Door / Opener', keys:['new door opener','new door','installation']},
+    {label:'New Door / Opener', keys:['new door opener','new door','new garage door','new opener','installation']},
     {label:'Opener Issue', keys:['opener issue','opener']},
     {label:'Noisy / Heavy', keys:['noisy heavy','noisy','heavy']}
   ];
