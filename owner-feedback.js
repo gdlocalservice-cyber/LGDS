@@ -120,7 +120,9 @@ const homeProblemCardFallback = `<script id="lgds-home-problem-card-fallback">
 
       event.preventDefault();
       setIssue(requestForm, issue);
-      requestHeading.scrollIntoView({behavior:'smooth', block:'start'});
+      const headingOffset = window.matchMedia('(min-width: 901px)').matches ? 140 : 96;
+      const scrollTop = requestHeading.getBoundingClientRect().top + window.scrollY - headingOffset;
+      window.scrollTo({top:Math.max(0, scrollTop), behavior:'smooth'});
     });
   }
 
