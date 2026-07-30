@@ -186,8 +186,39 @@ const bootstrap = String.raw`<style id="lgds-cookie-banner-suppression">
   observer.observe(document.documentElement, { childList: true, subtree: true });
   window.setTimeout(function () { observer.disconnect(); }, 12000);
 
+  var googleTagLoadTimer = 0;
+
+  function loadGoogleTagOnEngagement() {
+    if (googleTagLoadTimer) {
+      window.clearTimeout(googleTagLoadTimer);
+      googleTagLoadTimer = 0;
+    }
+
+    document.removeEventListener('pointerdown', loadGoogleTagOnEngagement);
+    document.removeEventListener('keydown', loadGoogleTagOnEngagement);
+    document.removeEventListener('touchstart', loadGoogleTagOnEngagement);
+    ensureGoogleTag();
+  }
+
+  document.addEventListener('pointerdown', loadGoogleTagOnEngagement, {
+    once: true,
+    passive: true
+  });
+  document.addEventListener('keydown', loadGoogleTagOnEngagement, { once: true });
+  document.addEventListener('touchstart', loadGoogleTagOnEngagement, {
+    once: true,
+    passive: true
+  });
+
   function loadGoogleTagAfterPage() {
-    window.setTimeout(ensureGoogleTag, 0);
+    if (
+      window.google_tag_manager ||
+      document.querySelector('script[src*="googletagmanager.com/gtag/js"]')
+    ) {
+      return;
+    }
+
+    googleTagLoadTimer = window.setTimeout(loadGoogleTagOnEngagement, 4500);
   }
 
   if (document.readyState === 'complete') {
