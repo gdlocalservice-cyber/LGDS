@@ -137,6 +137,88 @@ const homeProblemCardFallback = `<script id="lgds-home-problem-card-fallback">
 const priorityLink =
   /<a class="mobile-priority-service (?:emergency|same-day)"[^>]*>.*?<\/a>/g;
 
+function optimizeHomeDocument(html) {
+  const nextScriptPreload =
+    /<link\b(?=[^>]*\brel=["']preload["'])(?=[^>]*\bas=["']script["'])[^>]*\bhref=["']\/_next\/static\/chunks\/[^"']+["'][^>]*>/gi;
+  const nextChunkScript =
+    /<script\b[^>]*\bsrc=["']\/_next\/static\/chunks\/[^"']+["'][^>]*>\s*<\/script>/gi;
+  const nextFlightScript =
+    /<script>\s*(?:\(self\.__next_f\s*=|self\.__next_f\.push)[\s\S]*?<\/script>/g;
+  const heroPreload =
+    /<link\b(?=[^>]*\brel=["']preload["'])(?=[^>]*\bas=["']image["'])[^>]*\bhref=["']\/assets\/garage-door-technician-king-of-prussia-pa-lgds-mobile-720\.avif["'][^>]*>/gi;
+  const fontPreload =
+    '<link rel="preload" href="/assets/fonts/montserrat-latin-variable.woff2" as="font" type="font/woff2" crossorigin="anonymous"/>';
+
+  html = html
+    .replace(nextScriptPreload, '')
+    .replace(nextChunkScript, '')
+    .replace(nextFlightScript, '');
+
+  let heroPreloadSeen = false;
+  html = html.replace(heroPreload, function (match) {
+    if (heroPreloadSeen) return '';
+    heroPreloadSeen = true;
+    return match;
+  });
+
+  if (!html.includes('href="/assets/fonts/montserrat-latin-variable.woff2"')) {
+    html = html.replace(
+      /<link rel="stylesheet" href="\/_next\/static\/chunks\//,
+      `${fontPreload}<link rel="stylesheet" href="/_next/static/chunks/`
+    );
+  }
+
+  html = html.replace(
+    'fetchPriority="high" alt="Local Garage Door Service technician arriving',
+    'fetchPriority="high" loading="eager" decoding="sync" alt="Local Garage Door Service technician arriving'
+  );
+
+  if (
+    /<script\b[^>]*\bsrc=["']\/_next\/static\/chunks\//i.test(html) ||
+    /self\.__next_f/.test(html)
+  ) {
+    throw new Error(
+      '[owner-feedback] Homepage still contains Next hydration scripts after performance optimization.'
+    );
+  }
+
+  return html;
+}
+
+function repairComparisonAssetPairs() {
+  const interactionsFile = path.join(publishDir, 'recovery-interactions.js');
+  const original = fs.readFileSync(interactionsFile, 'utf8');
+  const oldLogic = `          var current = image.getAttribute('src') || '';
+          image.setAttribute('src', showBefore ? current.replace('-after.webp', '-before.webp') : current.replace('-before.webp', '-after.webp'));`;
+  const newLogic = `          var current = image.getAttribute('src') || '';
+          var comparisonPairs = [
+            {
+              before: '/assets/work/new-construction-garage-before.webp',
+              after: '/assets/work/black-garage-doors-after.webp'
+            },
+            {
+              before: '/assets/work/old-garage-door-before.webp',
+              after: '/assets/work/white-garage-door-after.webp'
+            },
+            {
+              before: '/assets/work/garage-opening-before.webp',
+              after: '/assets/work/garage-door-completed-after.webp'
+            }
+          ];
+          var pair = comparisonPairs.find(function (candidate) {
+            return candidate.before === current || candidate.after === current;
+          });
+          if (pair) image.setAttribute('src', showBefore ? pair.before : pair.after);`;
+
+  if (!original.includes(oldLogic)) {
+    throw new Error(
+      '[owner-feedback] Expected before/after interaction logic was not found.'
+    );
+  }
+
+  fs.writeFileSync(interactionsFile, original.replace(oldLogic, newLogic), 'utf8');
+}
+
 for (const htmlFile of htmlFiles) {
   let html = fs.readFileSync(htmlFile, 'utf8');
   html = html.replace(priorityLink, '');
@@ -156,16 +238,18 @@ for (const htmlFile of htmlFiles) {
     html = html.replace('</head>', `${compactStyles}</head>`);
   }
 
-  if (
-    htmlFile === path.join(publishDir, 'index.html') &&
-    !html.includes('id="lgds-home-problem-card-fallback"')
-  ) {
-    html = html.replace('</body>', `${homeProblemCardFallback}</body>`);
+  if (htmlFile === path.join(publishDir, 'index.html')) {
+    html = optimizeHomeDocument(html);
+    if (!html.includes('id="lgds-home-problem-card-fallback"')) {
+      html = html.replace('</body>', `${homeProblemCardFallback}</body>`);
+    }
   }
 
   fs.writeFileSync(htmlFile, html);
 }
 
+repairComparisonAssetPairs();
+
 console.log(
-  `[owner-feedback] Updated ${htmlFiles.length} pages: simplified mobile menu, compacted home sections, replaced the Emergency image, and repaired home problem-card request navigation.`
+  `[owner-feedback] Updated ${htmlFiles.length} pages: simplified mobile menu, compacted home sections, replaced the Emergency image, repaired home problem-card request navigation, and removed redundant homepage hydration.`
 );
