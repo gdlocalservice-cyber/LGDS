@@ -176,8 +176,6 @@ const bootstrap = String.raw`<style id="lgds-cookie-banner-suppression">
     }
   }
 
-  ensureGoogleTag();
-
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', removeLegacyCookieBanner, { once: true });
   } else {
@@ -188,7 +186,15 @@ const bootstrap = String.raw`<style id="lgds-cookie-banner-suppression">
   observer.observe(document.documentElement, { childList: true, subtree: true });
   window.setTimeout(function () { observer.disconnect(); }, 12000);
 
-  window.setTimeout(ensureGoogleTag, 1200);
+  function loadGoogleTagAfterPage() {
+    window.setTimeout(ensureGoogleTag, 0);
+  }
+
+  if (document.readyState === 'complete') {
+    loadGoogleTagAfterPage();
+  } else {
+    window.addEventListener('load', loadGoogleTagAfterPage, { once: true });
+  }
 
   if (document.readyState === 'complete') {
     window.setTimeout(sendPageView, 0);
