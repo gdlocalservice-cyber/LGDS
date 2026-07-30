@@ -6,6 +6,9 @@ Recovery branch: `agent/lgds-complete-recovery-2026-07-29`
 Working-video baseline: `3166689`  
 Approved feature source restored: `12205b5`
 
+Draft PR: https://github.com/gdlocalservice-cyber/LGDS/pull/7  
+Netlify Preview: https://deploy-preview-7--local-garage-door-service.netlify.app
+
 ## Recovery scope
 
 - Restored the approved bright navy/gold LGDS site and original logo.
@@ -46,6 +49,8 @@ The video is a valid 24.7-second H.264 MP4 at 848×480. These hashes match the v
 | Core metadata/H1 | 108 browser runs | 0 failures |
 | Form accessibility labels | 108 browser runs | 0 warnings |
 | Focused interaction audit | 18 conversion/media/navigation checks | 18 PASS |
+| Netlify Preview interaction audit | The same 18 checks against the public Preview | 18 PASS |
+| Netlify Preview route check | 54 sitemap routes over HTTPS | 54 final HTTP 200 responses |
 | axe WCAG 2 A/AA audit | Home, Emergency and Philadelphia × desktop/mobile | 0 critical/serious violations |
 | Direct Core Web Vitals | Home, Emergency and Philadelphia × desktop/mobile | 6 PASS, 0 threshold failures |
 
@@ -77,7 +82,9 @@ The browser audit recorded two non-blocking aborted requests for the customer-te
 | Mobile | Emergency | 532 ms | 532 ms | 0.000 |
 | Mobile | Philadelphia | 216 ms | 216 ms | 0.000 |
 
-These are direct local Chromium Performance API measurements. Lighthouse CLI could not attach to Chrome because the audit container blocks Chrome's debugging socket. A public PageSpeed/Lighthouse check should be attempted against the Netlify Preview.
+These are direct local Chromium Performance API measurements. Lighthouse CLI could not attach to Chrome because the audit container blocks Chrome's debugging socket. Google PageSpeed Insights was then requested against the public Preview, but its unauthenticated API returned `429 RESOURCE_EXHAUSTED` with a zero daily quota for the shared audit project.
+
+Direct measurements through the Preview proxy were not treated as site-level Core Web Vitals because the first request in each new browser context paid 7–12 seconds of proxy/TLS setup while subsequent Preview pages measured below 1.1 seconds. This transport artifact did not reproduce locally and does not isolate page performance.
 
 ## SEO, local accuracy and originality
 
@@ -93,14 +100,14 @@ These are direct local Chromium Performance API measurements. Lighthouse CLI cou
 - Current Chromium desktop, iPhone-sized mobile emulation and Android-sized viewport behavior passed.
 - Edge is covered at the shared Chromium rendering-engine level.
 - A current Playwright WebKit build downloaded, but this container lacks the native GTK/GStreamer/WebKit libraries required to launch it. Safari/WebKit should receive a final smoke test on the public Preview if an external WebKit runner is available.
-- Lighthouse scores and live HTTPS/mixed-content behavior require the public Netlify Preview.
+- The public Preview returns HTTPS 200, HSTS, `X-Content-Type-Options: nosniff`, the approved Referrer/Permissions policies and Netlify's `X-Robots-Tag: noindex`. No mixed-content references are present.
+- Each non-root sitemap URL performs one expected Netlify clean-URL redirect to its trailing-slash form, followed by HTTP 200; there are no multi-hop redirect chains.
 - Owner visual approval, merge, production deployment and live smoke testing remain intentionally pending.
 
 ## Release gate
 
 Do not merge to `main` or deploy to production until:
 
-1. The Netlify Preview is available.
-2. Preview HTTPS, headers, forms and representative pages receive a final smoke test.
-3. The owner visually approves the desktop and mobile screenshots.
-4. The owner explicitly approves production.
+1. The owner visually approves the Netlify Preview and desktop/mobile screenshots.
+2. Safari/WebKit receives a final smoke test if an external runner is available, or the owner explicitly accepts the documented environment limitation.
+3. The owner explicitly approves production.
