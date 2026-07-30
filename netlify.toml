@@ -1,5 +1,5 @@
 [build]
-  command = "cat chunks/chunk-* > LGDS-STATIC-SITE.zip && rm -rf dist && mkdir -p dist && unzip -q LGDS-STATIC-SITE.zip -d dist"
+  command = "cat chunks/chunk-* > LGDS-STATIC-SITE.zip && rm -rf dist && mkdir -p dist && unzip -q LGDS-STATIC-SITE.zip -d dist && node privacy-consent.js dist && node cache-bust.js dist"
   publish = "dist"
 
 [build.environment]
@@ -14,3 +14,20 @@
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=2592000"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+[[headers]]
+  for = "/"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
