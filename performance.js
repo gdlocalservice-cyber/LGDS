@@ -94,8 +94,21 @@ if (!currentHeroPreload) {
 const optimizedHeroPreload =
   `<link rel="preload" href="${optimizedHeroUrl}" as="image" type="image/webp" fetchpriority="high" media="(max-width: 620px)"/>`;
 
+const charsetMeta = html.match(/<meta\s+charSet=["']utf-8["']\s*\/?>/i)?.[0];
+const viewportMeta = html.match(
+  /<meta\s+name=["']viewport["']\s+content=["']width=device-width,\s*initial-scale=1["']\s*\/?>/i
+)?.[0];
+
+if (!charsetMeta || !viewportMeta) {
+  throw new Error('[performance] Expected homepage charset or viewport metadata was not found.');
+}
+
 html = html.replace(currentHeroPreload, '');
-html = html.replace(/<head(\s[^>]*)?>/i, (headTag) => headTag + optimizedHeroPreload);
+html = html.replace(charsetMeta, '').replace(viewportMeta, '');
+html = html.replace(
+  /<head(\s[^>]*)?>/i,
+  (headTag) => headTag + charsetMeta + viewportMeta + optimizedHeroPreload
+);
 
 const heroImagePattern =
   /(<section class="hero" id="top">[\s\S]*?<img\b[^>]*\bloading=["']eager["'][^>]*\bdecoding=["'])sync(["'][^>]*>)/i;
