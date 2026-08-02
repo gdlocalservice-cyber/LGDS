@@ -11,11 +11,9 @@
   status = 301
   force = true
 
-[[redirects]]
-  from = "/services/roller-repair.html"
-  to = "https://www.localgaragedoorsvc.com/services/garage-door-roller-hinge-repair/"
-  status = 301
-  force = true
+[[edge_functions]]
+  path = "/services/roller-repair.html"
+  function = "legacy-roller-repair"
 
 [[headers]]
   for = "/_next/static/*"
