@@ -7,13 +7,13 @@
 
 [[redirects]]
   from = "/services/roller-repair"
-  to = "/services/garage-door-roller-hinge-repair/"
+  to = "https://www.localgaragedoorsvc.com/services/garage-door-roller-hinge-repair/"
   status = 301
   force = true
 
 [[redirects]]
   from = "/services/roller-repair.html"
-  to = "/services/garage-door-roller-hinge-repair/"
+  to = "https://www.localgaragedoorsvc.com/services/garage-door-roller-hinge-repair/"
   status = 301
   force = true
 
