@@ -127,6 +127,9 @@ const bootstrap = String.raw`<style id="lgds-cookie-banner-suppression">
   consentInitialized = true;
 
   window.gtag('config', MEASUREMENT_ID, { send_page_view: false });
+  window.gtag('config', 'AW-17878825273/TxwGCJyr6-IcELnypM1C', {
+    'phone_conversion_number': '267-438-6494'
+  });
 
   function ensureGoogleTag() {
     if (window.google_tag_manager || document.querySelector('script[src*="googletagmanager.com/gtag/js"]')) return;
