@@ -27,9 +27,10 @@ form.service-request-card input,form.service-request-card select,form.service-re
 .ads-actions { display: flex; flex-wrap: wrap; gap: 12px; }
 .ads-trust { font-size: 14px; font-weight: 700; margin: 18px 0 8px; line-height: 1.6; }
 .ads-photo { grid-column: 1; grid-row: 2; margin: 0; }
-.ads-photo-placeholder { min-height: 200px; border: 1px dashed #758499; background: #edf1f4; color: #33465b; border-radius: 16px; display: grid; place-content: center; padding: 24px; text-align: center; }
-.ads-photo-placeholder strong { font-size: 19px; margin-bottom: 8px; }
 .ads-photo img { display: block; width: 100%; height: auto; border-radius: 16px; }
+.ads-photo picture { display:block; }
+.ads-work-photo { max-width:720px; margin:24px 0 0; }
+.ads-work-photo img { display:block; width:100%; height:auto; border-radius:16px; }
 .ads-request { grid-column: 2; grid-row: 1 / 3; }
 .ads-request .service-request-card { width: 100%; margin: 0; }
 .ads-request h2 { font-size: 25px; margin: 0 0 6px; }

@@ -1,6 +1,7 @@
 module.exports = [
   {
     slug: 'garage-door-repair', group: 'General Garage Door Repair', title: 'Garage Door Repair',
+    workPhoto: { src:'/assets/media/services/garage-door-repair-active-service.webp', width:1440, height:960, alt:'Technician working on garage door track and panel hardware' },
     h1: 'Garage Door Won’t Open or Close?',
     hero: 'Garage door stuck, uneven, noisy or not responding normally? Tell us your ZIP code and what the door is doing. We’ll confirm service availability and explain the next step.',
     problems: ['Door will not open', 'Door will not close', 'Door is stuck', 'Door is uneven or crooked', 'Door is noisy or heavy', 'General repair', 'Other / not sure'],
@@ -9,6 +10,7 @@ module.exports = [
   },
   {
     slug: 'garage-door-opener-repair', group: 'Opener & Sensor Repair', title: 'Garage Door Opener Repair',
+    workPhoto: { src:'/assets/media/services/garage-door-opener-installation.webp', width:1440, height:960, alt:'Chamberlain garage door opener and rail mounted inside a residential garage' },
     h1: 'Garage Door Opener or Sensor Not Working?',
     hero: 'Having trouble with the opener, safety sensors, remote or keypad? Tell us your ZIP code and what the system is doing. We’ll confirm service availability and explain the next step.',
     problems: ['Opener not working', 'Door will not close', 'Safety sensor problem', 'Remote problem', 'Keypad problem', 'Motor problem', 'Other / not sure'],
@@ -18,6 +20,7 @@ module.exports = [
   },
   {
     slug: 'spring-cable-off-track-repair', group: 'Spring, Cable & Off-Track Repair', title: 'Spring, Cable & Off-Track Repair',
+    workPhoto: { src:'/assets/services/garage-door-spring-system-inspection.webp', width:1200, height:800, alt:'Technician working on the torsion spring system above a residential garage door' },
     h1: 'Broken Spring, Cable or Door Off Track?',
     hero: 'A broken spring, damaged cable or off-track door can prevent normal operation. Tell us your ZIP code and what happened. We’ll confirm service availability and explain the next step.',
     problems: ['Broken spring', 'Broken or loose cable', 'Door came off track', 'Door is crooked', 'Door is stuck', 'Other / not sure'],
