@@ -1,0 +1,12 @@
+{
+  "name": "lgds-static-website",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build.cjs",
+    "test": "node --test test/*.test.cjs",
+    "verify": "npm run build && npm test"
+  },
+  "engines": { "node": ">=22.22.2" },
+  "dependencies": { "cheerio": "1.2.0" },
+  "devDependencies": { "@netlify/edge-functions": "^2.0.0", "jsdom": "30.1.0" }
+}

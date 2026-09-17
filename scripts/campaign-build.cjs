@@ -1,0 +1,122 @@
+'use strict';
+const fs = require('node:fs');
+const path = require('node:path');
+const cheerio = require('cheerio');
+const campaigns = require('../site/campaigns.cjs');
+const dir = path.resolve(process.argv[2] || 'dist');
+const domain = 'https://www.localgaragedoorsvc.com';
+const production = process.env.CONTEXT === 'production';
+if (production && process.env.LGDS_RELEASE_APPROVED !== '1') throw new Error('Release blocked: Itzik must approve the preview and outstanding evidence before LGDS_RELEASE_APPROVED=1 is set.');
+if (production && !process.env.LGDS_APPROVED_COMPANY_PHOTO) throw new Error('Release blocked: supply the approved real company photo before publishing campaign pages.');
+const esc = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const files = fs.readdirSync(dir, {recursive:true}).filter(p=>p.endsWith('.html'));
+const routes = new Set(files.filter(p=>p.endsWith('index.html')).map(p=>'/'+p.slice(0,-10)));
+campaigns.forEach(p=>routes.add('/ads/'+p.slug+'/'));
+const legacy = {};
+for (const line of fs.readFileSync(path.join(dir,'_redirects'),'utf8').split('\n')) {
+  const [from,to] = line.trim().split(/\s+/);
+  if (from?.startsWith('/') && to?.startsWith('/')) legacy[from] = to === '/' ? '/' : to.replace(/\/$/,'')+'/';
+}
+legacy['/services/roller-repair'] = '/services/garage-door-roller-hinge-repair/';
+legacy['/services/roller-repair/'] = '/services/garage-door-roller-hinge-repair/';
+const routeList = [...routes].sort();
+fs.writeFileSync('site/routes.mjs', `// Generated from the actual exported pages and legacy redirects.\nconst routes = new Set(${JSON.stringify(routeList)});\nconst legacy = ${JSON.stringify(legacy,null,2)};\nexport function canonicalPath(p) {\n  if (legacy[p]) return legacy[p];\n  if (p.endsWith('/index.html') && routes.has(p.slice(0,-10))) return p.slice(0,-10);\n  if (p.endsWith('.html') && routes.has(p.slice(0,-5)+'/')) return p.slice(0,-5)+'/';\n  if (!p.endsWith('/') && routes.has(p+'/')) return p+'/';\n  return p;\n}\n`);
+function normalHref(href) {
+  if (!href || href.startsWith('#')) return href;
+  let u; try {u = new URL(href,domain);} catch {return href;}
+  if (!['www.localgaragedoorsvc.com','localgaragedoorsvc.com'].includes(u.hostname)) return href;
+  let p = legacy[u.pathname] || u.pathname;
+  if (p.endsWith('/index.html')) p=p.slice(0,-10);
+  if (p.endsWith('.html') && routes.has(p.slice(0,-5)+'/')) p=p.slice(0,-5)+'/';
+  if (!p.endsWith('/') && routes.has(p+'/')) p+='/';
+  return p+u.search+u.hash;
+}
+const home=cheerio.load(fs.readFileSync(path.join(dir,'index.html'),'utf8'));
+const reviews=cheerio.load(fs.readFileSync(path.join(dir,'reviews/index.html'),'utf8'));
+const reviewMap = {};
+reviews('.review-card').each((_,e)=>{
+  const card=reviews(e); const text=card.find('p').first().text().replace(/^[“"]|[”"]$/g,'');
+  const match=card.text().match(/\b[A-Z]\.[A-Z]\./);
+  if(match) reviewMap[match[0]]=text;
+});
+const brand = home('header .brand').first().toString();
+const brands = home('.trusted-brands').first().toString();
+const consent = home('form .form-consent').first().toString();
+const sticky = home('.mobile-cta').first().toString().replace('/#service-request-form','#service-request');
+const cssPath = '/_next/static/chunks/'+fs.readdirSync(path.join(dir,'_next/static/chunks')).find(n=>n.endsWith('.css'));
+const commonFaq=[
+ ['Do you serve my ZIP code?', 'Service coverage and availability vary by location. Call us or submit your ZIP code and we’ll confirm whether service is currently available in your area.'],
+ ['Will I know the price before work begins?', 'The technician diagnoses the issue, explains the available options and reviews pricing before approved work begins.'],
+ ['What happens after I request service?', 'We contact you to confirm the issue, service location and appointment availability. A submitted form is a service request and does not automatically confirm an appointment.']
+];
+const call = '<a class="button button-gold" href="tel:2674386494">Call 267-438-6494</a>';
+const actions = `<div class="ads-actions">${call}<a class="button button-outline" href="#service-request">Request Service</a></div>`;
+for (const page of campaigns) {
+  const canonical=domain+'/ads/'+page.slug+'/';
+  const faq=page.extraFaq ? [...commonFaq,page.extraFaq] : commonFaq;
+  const photo=process.env.LGDS_APPROVED_COMPANY_PHOTO;
+  if(photo && (!/^\/assets\/[\w/.-]+\.(webp|avif)$/.test(photo)||!fs.existsSync(path.join(dir,photo.slice(1))))) throw new Error('Approved photo must be an existing local WebP/AVIF asset');
+  const image = photo ? `<img src="${esc(photo)}" width="${Number(process.env.LGDS_PHOTO_WIDTH)||960}" height="${Number(process.env.LGDS_PHOTO_HEIGHT)||640}" fetchpriority="high" loading="eager" decoding="async" alt="Local Garage Door Service team member with company branding">` : '<div class="ads-photo-placeholder"><strong>Company photo awaiting approval</strong><span>Staging placeholder: a real LGDS owner or technician with a visible face and company branding is needed.</span></div>';
+  const snippets=page.reviews.map(initials=>{if(!reviewMap[initials])throw new Error('Missing approved review '+initials);return `<blockquote><p>“${esc(reviewMap[initials])}”</p><cite>— ${esc(initials)}, Google review excerpt</cite></blockquote>`;}).join('');
+  const form=`<form class="service-request-card" id="service-request" name="service-request" method="POST"><input type="text" name="_gotcha" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" aria-label="Leave this field empty"><input type="hidden" name="source" value="ads_${esc(page.slug)}"><h2>Request Service</h2><p>Tell us the issue and your ZIP code.</p><label><span>Name</span><input name="name" autocomplete="name" required maxlength="120"></label><div class="request-row"><label><span>Phone</span><input name="phone" type="tel" autocomplete="tel" required maxlength="30"></label><label><span>ZIP code</span><input name="zip" inputmode="numeric" autocomplete="postal-code" pattern="[0-9]{5}" maxlength="5" required></label></div><label><span>Problem type</span><select name="issue" required><option value="">Choose a problem</option>${page.problems.map(p=>`<option>${esc(p)}</option>`).join('')}</select></label><label><span>Additional details <em>Optional</em></span><textarea name="details" maxlength="4000"></textarea></label>${consent}<button class="button button-gold" type="submit">Request Service</button></form>`;
+  const schema={'@context':'https://schema.org','@type':'Service','@id':canonical+'#service',name:page.title,serviceType:page.title,url:canonical,provider:{'@type':'HomeAndConstructionBusiness',name:'Local Garage Door Service',url:domain+'/',telephone:'+12674386494'},areaServed:['Selected communities in Pennsylvania','Selected communities in New Jersey','Selected communities in Delaware']};
+  const html=`<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${esc(page.title)} | Local Garage Door Service</title><meta name="description" content="${esc(page.hero)}"><link rel="canonical" href="${canonical}"><meta name="robots" content="noindex, follow"><link rel="stylesheet" href="${cssPath}"><link rel="preload" as="font" href="/assets/fonts/montserrat-latin-variable.woff2" type="font/woff2" crossorigin><script type="application/ld+json">${JSON.stringify(schema)}</script></head><body class="ads-page" data-service="${page.slug}"><a class="skip-link" href="#main">Skip to content</a>${production?'':'<p class="ads-preview-note">Preview for review — requests and advertising events are not sent.</p>'}<header class="ads-header">${brand}<div class="ads-header-actions"><a class="header-phone" href="tel:2674386494">267-438-6494</a><a class="button button-gold" href="tel:2674386494">Call Now</a></div></header><main id="main" class="ads-main"><section class="ads-hero"><div class="ads-intro"><p class="eyebrow">Local Garage Door Service</p><h1>${esc(page.h1)}</h1><p class="ads-lead">${esc(page.hero)}</p>${actions}<p class="ads-trust">Licensed · Insured · Bonded · Pricing Reviewed Before Approved Work</p></div><figure class="ads-photo">${image}</figure><div class="ads-request">${form}</div></section><section class="ads-section"><h2>Problems We Handle</h2><p>${esc(page.intro)}</p><ul class="ads-problems">${page.problems.map(p=>`<li>${esc(p)}</li>`).join('')}</ul></section><section class="ads-section"><h2>Why Homeowners Call Local Garage Door Service</h2><ul class="ads-reasons"><li>Licensed, Insured and Bonded</li><li>Repair Options and Pricing Explained Before Approved Work</li><li>Technician Courtesy Call Approximately 30 Minutes Before Arrival</li><li>Service Across Selected Communities in Pennsylvania, New Jersey and Delaware</li></ul><p>Enter your ZIP code or call us to confirm service coverage and current availability.</p></section><section class="ads-section"><h2>How the Service Process Works</h2><ol class="ads-process"><li>Tell us the issue and ZIP code.</li><li>We confirm the service area and appointment availability.</li><li>The technician diagnoses the problem and explains the available options and pricing before approved work begins.</li></ol></section><section class="ads-section"><h2>Customer Experiences</h2><div class="ads-reviews">${snippets}</div><a class="ads-google-profile" href="https://share.google/ArfweksEz68jrQfo9" target="_blank" rel="noopener noreferrer">View Our Google Profile</a></section><section class="ads-section">${brands}</section><section class="ads-section ads-faq"><h2>Frequently Asked Questions</h2>${faq.map(([q,a])=>`<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('')}</section><section class="ads-section"><h2>Tell us what your door is doing.</h2><p>Call or request service to confirm coverage and availability.</p>${actions}</section></main><footer class="ads-footer"><div class="ads-footer-grid"><div><strong>Local Garage Door Service</strong><p>A DBA of GALMOR LLP</p><p><a href="tel:2674386494">267-438-6494</a></p><p>Licensed · Insured · Bonded</p><p>PA HIC #PA220090 · NJ HICB #13VH14099400</p></div><div><strong>Operating hours — Eastern Time</strong><p>Sunday–Thursday: 7:00 AM–10:00 PM</p><p>Friday: 7:00 AM–5:00 PM</p><p>Saturday: Closed</p><nav class="legal-links" aria-label="Footer"><a href="/privacy/">Privacy Policy</a><a href="/terms/">Terms</a><a href="/reviews/">Reviews</a><a href="/locations/">Service Areas</a></nav></div></div></footer>${sticky}</body></html>`;
+  const output=path.join(dir,'ads',page.slug,'index.html');fs.mkdirSync(path.dirname(output),{recursive:true});fs.writeFileSync(output,html);files.push('ads/'+page.slug+'/index.html');
+}
+const settings={measurementEnabled:production,submissionsEnabled:production,verification:false};
+// Forms and measurement are installed once in every document, before interaction.
+fs.writeFileSync(path.join(dir,'lgds-measurement.js'),fs.readFileSync('site/measurement.js','utf8').replace('__LGDS_SETTINGS__',JSON.stringify(settings)));
+fs.copyFileSync('site/forms.js',path.join(dir,'lgds-forms.js'));
+fs.copyFileSync('site/campaign.css',path.join(dir,'lgds-campaign.css'));
+const recoveryPath=path.join(dir,'recovery-interactions.js');
+let recovery=fs.readFileSync(recoveryPath,'utf8');
+recovery=recovery.replace(/  function attribution\(\) \{[\s\S]*?(?=  function initialize\(\))/, '').replace('    prepareForms();','').replace('a[href="#service-request"]','a[href="#service-request-form"]');
+recovery=recovery.replace("if (typeof window.gtag === 'function') window.gtag('event', name, parameters || {});", "try { window.lgdsMeasurement.event(name, parameters || {}); } catch (_) {}");
+fs.writeFileSync(recoveryPath,recovery);
+let linksUpdated=0; let formsUpdated=0;
+for(const file of files) {
+  const p=path.join(dir,file); const $=cheerio.load(fs.readFileSync(p,'utf8'));
+  const ads=file.startsWith('ads/'); const route=file==='index.html'?'/':'/'+file.replace(/index\.html$/,'');
+  // The archive is a static Next export, with a separate interaction layer already in place.
+  // Remove hydration on all pages so it cannot restore stale CTAs, duplicate tags or forms.
+  $('script').each((_,el)=>{const s=$(el);if(s.attr('id')==='lgds-regional-consent-bootstrap'||(s.attr('src')||'').startsWith('/_next/')||s.text().includes('self.__next_f'))s.remove();});
+  $('link[as=script][href^="/_next/"]').remove();
+  $('meta[name=generator]').remove();
+  const form=$('form.service-request-card').first();
+  if(form.length) {
+    form.attr('id',ads?'service-request':'service-request-form').attr('action','https://formspree.io/f/xpqqzvwo').attr('data-lgds-submissions',production?'production':'preview').removeAttr('data-netlify').removeAttr('netlify-honeypot');
+    form.find('[name=form-name]').remove();
+    if(!production){form.find('[type=submit]').attr('disabled','');form.attr('action','#'+form.attr('id'));}
+    form.append('<noscript><p>Please enable JavaScript or call <a href="tel:2674386494">267-438-6494</a> to request service.</p></noscript>');
+    formsUpdated++;
+  }
+  $('a[href]').each((_,el)=>{const a=$(el),old=a.attr('href'); let href=normalHref(old);
+    if(form.length && (/^(\/)?#(service-request(?:-form)?|request)$/.test(href)|| /^(\/)?#service-request(?:-form)?$/.test(old))) href='#'+form.attr('id');
+    if(href!==old){a.attr('href',href);linksUpdated++;}
+    if(/^tel:/.test(href)){
+      a.attr('data-lgds-phone','');
+      a.contents().filter((_,n)=>n.type==='text'&&/267[- ]?438[- ]?6494/.test(n.data)).each((_,n)=>{ $(n).replaceWith(n.data.replace(/267[- ]?438[- ]?6494/g,'<span data-lgds-phone-text>267-438-6494</span>')); });
+    }
+  });
+  if(!ads && form.length && file.startsWith('services/')) {
+    const request=$('a[href="#service-request-form"]').filter((_,a)=>!$(a).closest('header,.mobile-cta,footer').length).first();
+    request.parent().after('<p class="lgds-coverage">Serving selected communities in Pennsylvania, New Jersey and Delaware. Enter your ZIP code or call to confirm coverage and current availability.</p>');
+  }
+  if(routes.has(route)) $('link[rel=canonical]').attr('href',domain+route);
+  $('meta[property="og:url"]').each((_,el)=>$(el).attr('content',domain+route));
+  $('script[type="application/ld+json"]').each((_,el)=>{let j=JSON.parse($(el).text()); function fix(v){if(Array.isArray(v))return v.map(fix);if(v&&typeof v==='object'){for(const k of Object.keys(v))v[k]=fix(v[k]);return v;}if(typeof v==='string'&&v.startsWith(domain)) return domain+normalHref(v);return v;}$(el).text(JSON.stringify(fix(j)));});
+  $('head').append('<script id="lgds-measurement" src="/lgds-measurement.js"></script><script id="lgds-forms" defer src="/lgds-forms.js"></script><link rel="stylesheet" href="/lgds-campaign.css">');
+  if(!production){$('meta[name=robots]').remove();$('head').append('<meta name="robots" content="noindex, follow">');}
+  // On preview domains use the official deep link to the real business, never the preview host.
+  if(production){$('head').append('<script async src="https://news.google.com/swg/js/v1/publisher.js"></script>');$('footer').first().append('<div class="lgds-preferred-source" google-add-preferred-source-btn data-theme="dark"></div>');}
+  else $('footer').first().append('<p class="lgds-preferred-source"><a href="https://www.google.com/preferences/source?q=localgaragedoorsvc.com" target="_blank" rel="noopener noreferrer">Add as a preferred source on Google</a></p>');
+  fs.writeFileSync(p,$.html());
+}
+// Preserve only actual indexable routes; paid pages and internal confirmation pages are excluded.
+const sitemap=cheerio.load(fs.readFileSync(path.join(dir,'sitemap.xml'),'utf8'),{xmlMode:true});
+const urls=[...new Set(sitemap('loc').map((_,el)=>domain+normalHref(sitemap(el).text())).get())].filter(u=>!u.includes('/ads/'));
+fs.writeFileSync(path.join(dir,'sitemap.xml'),'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+urls.map(u=>`  <url><loc>${esc(u)}</loc></url>`).join('\n')+'\n</urlset>\n');
+fs.writeFileSync(path.join(dir,'_redirects'),'# Canonical paths and legacy redirects are handled by canonical-path.ts.\n');
+if(!production) fs.appendFileSync(path.join(dir,'_headers'),'\n/*\n  X-Robots-Tag: noindex, follow\n');
+fs.writeFileSync(path.join(dir,'lgds-build.json'),JSON.stringify({mode:production?'production':'preview',pages:files.length,forms:formsUpdated,normalizedLinks:linksUpdated,photoApproved:!!process.env.LGDS_APPROVED_COMPANY_PHOTO},null,2));
+console.log(`[campaigns] Built ${campaigns.length} paid pages; updated ${formsUpdated} forms and ${linksUpdated} links. Mode: ${production?'production':'isolated preview'}.`);
