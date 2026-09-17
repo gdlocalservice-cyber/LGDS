@@ -82,6 +82,7 @@ for(const file of files) {
   $('script').each((_,el)=>{const s=$(el);if(s.attr('id')==='lgds-regional-consent-bootstrap'||(s.attr('src')||'').startsWith('/_next/')||s.text().includes('self.__next_f'))s.remove();});
   $('link[as=script][href^="/_next/"]').remove();
   $('meta[name=generator]').remove();
+  $('p').filter((_,e)=>$(e).text()==='Selected excerpts are shown as lightweight page content so customer proof does not slow the site with a third-party review widget.').text('Read selected experiences from customers who contacted Local Garage Door Service for repair or installation.');
   if(file==='privacy/index.html') {
     $('li').filter((_,e)=>$(e).text().startsWith('Analytics and advertising:')).text('Analytics and advertising: We may use Google Analytics, Google Ads and the OpenAI advertising measurement pixel to understand website and campaign performance. We record service-request conversions only after our form provider confirms receipt; names, phone numbers and request details are not included in these analytics events. Regional privacy controls restrict Google analytics and advertising storage in the European Economic Area, the United Kingdom and Switzerland. OpenAI measurement remains disabled unless a U.S. visit is confirmed. Global Privacy Control signals disable OpenAI measurement and restrict Google analytics and advertising storage.');
   }
