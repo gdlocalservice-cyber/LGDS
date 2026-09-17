@@ -9,14 +9,15 @@ const base=path.resolve(__dirname,'../dist');
 const measurement=fs.readFileSync(path.resolve(__dirname,'../site/measurement.js'),'utf8');
 const forms=fs.readFileSync(path.resolve(__dirname,'../site/forms.js'),'utf8');
 const tick=()=>new Promise(resolve=>setTimeout(resolve,5));
-function browser({url='https://www.localgaragedoorsvc.com/ads/garage-door-repair/',live=true,tracking=true,storage,denyStorage=false,response}={}) {
+function browser({url='https://www.localgaragedoorsvc.com/ads/garage-door-repair/',live=true,tracking=true,storage,denyStorage=false,response,usRegion=true,gpc=false}={}) {
   const html=fs.readFileSync(base+'/ads/garage-door-repair/index.html','utf8');
   const dom=new JSDOM(html,{url,runScripts:'outside-only',pretendToBeVisual:true});
   const w=dom.window; const form=w.document.querySelector('form');
+  Object.defineProperty(w.navigator,'globalPrivacyControl',{value:gpc});
   form.dataset.lgdsSubmissions=live?'production':'preview';
   if(storage)for(const [k,v] of Object.entries(storage))w.sessionStorage.setItem(k,v);
   if(denyStorage)Object.defineProperty(w,'sessionStorage',{get(){throw new Error('blocked');}});
-  let requests=[];w.fetch=async(url,opts)=>{requests.push({url,opts,fields:Object.fromEntries(opts.body)});return response?response():{ok:true,json:async()=>({ok:true})};};
+  let requests=[];w.fetch=async(url,opts)=>{if(url==='/lgds-measurement-region')return {ok:true,json:async()=>({openaiMeasurementAllowed:usRegion})};requests.push({url,opts,fields:Object.fromEntries(opts.body)});return response?response():{ok:true,json:async()=>({ok:true})};};
   const inputHandlers=[]; const add=w.document.addEventListener.bind(w.document);
   w.document.addEventListener=(type,fn,...rest)=>{if(type==='input')inputHandlers.push(fn);return add(type,fn,...rest);};
   if(tracking)w.eval(measurement.replace('__LGDS_SETTINGS__',JSON.stringify({measurementEnabled:live,submissionsEnabled:live,verification:false})));
@@ -40,7 +41,7 @@ test('each paid page matches the approved heading, choices, canonical, CTA and s
  }
 });
 test('all 62 pages keep working local assets/links and exactly one measurement/forms owner',()=>{
- const files=fs.readdirSync(base,{recursive:true}).filter(p=>p.endsWith('.html'));
+ const files=fs.readdirSync(base,{recursive:true}).filter(p=>p.endsWith('.html')&&!p.startsWith('__review__/'));
  assert.equal(files.length,62);
  for(const p of files){const $=cheerio.load(fs.readFileSync(base+'/'+p,'utf8'));
   assert.equal($('script#lgds-measurement').length,1,p);assert.equal($('script[src^="/_next/"]').length,0,p);
@@ -83,6 +84,9 @@ test('form_start requires user interaction, happens once, and is never a lead',(
 test('call links work before tracking loads; callback updates displayed and dialed numbers together',()=>{const b=browser();const links=[...b.w.document.querySelectorAll('[data-lgds-phone]')];assert.ok(links.length>=5);assert.ok(links.every(l=>l.getAttribute('href')==='tel:2674386494'));
  const config=b.w.dataLayer.find(e=>e[0]==='config'&&e[1]==='AW-17878825273/TxwGCJyr6-IcELnypM1C');config[2].phone_conversion_callback('(800) 555-0100','+18005550100');assert.ok(links.every(l=>l.href==='tel:+18005550100'));assert.ok([...b.w.document.querySelectorAll('[data-lgds-phone-text]')].every(n=>n.textContent==='(800) 555-0100'));b.close();});
 test('tracking bootstrap cannot be installed twice in one document',()=>{const b=browser();b.w.eval(measurement.replace('__LGDS_SETTINGS__',JSON.stringify({measurementEnabled:true})));assert.equal(b.w.document.querySelectorAll('script[src*="googletagmanager"]').length,1);assert.equal(b.w.document.querySelectorAll('script[src*="bzrcdn"]').length,1);b.close();});
+test('OpenAI starts denied and does not measure unconfirmed/non-US regions',async()=>{const b=browser({usRegion:false});assert.equal(b.w.oaiq.q[0][0],'consent');assert.equal(b.w.oaiq.q[0][1],false);fill(b);submit(b);await tick();assert.equal(b.requests.length,1);assert.equal(b.w.oaiq.q.filter(e=>e[0]==='measure').length,0);assert.equal(events(b,'generate_lead').length,1);b.close();});
+test('GPC blocks OpenAI measurement without stopping a service request',async()=>{const b=browser({gpc:true});fill(b);submit(b);await tick();assert.equal(b.requests.length,1);assert.equal(b.w.oaiq.q.filter(e=>e[0]==='measure').length,0);assert.equal(b.w.dataLayer[0][2].ad_storage,'denied');b.close();});
+test('region endpoint only enables a confirmed U.S. visitor and never caches',async()=>{const endpoint=(await import('../netlify/edge-functions/measurement-region.ts')).default;for(const country of ['US','GB','FR',undefined]){const r=endpoint(new Request('https://example.com/lgds-measurement-region'),{geo:{country:{code:country}}});assert.deepEqual(await r.json(),{openaiMeasurementAllowed:country==='US'});assert.match(r.headers.get('cache-control'),/no-store/);}});
 test('canonical redirects are idempotent, with no loop and no arbitrary 404 redirect',async()=>{const {canonicalPath}=await import('../site/routes.mjs');for(const route of ['/services/roller-repair.html','/services/roller-repair','/services/garage-door-repair','/ads/garage-door-repair','/index.html','/privacy.html']){const target=canonicalPath(route);assert.equal(canonicalPath(target),target);assert.ok(target.endsWith('/'));}assert.equal(canonicalPath('/unknown'),'/unknown');
  const edge=(await import('../netlify/edge-functions/canonical-path.ts')).default;const req=new Request('https://localgaragedoorsvc.com/services/roller-repair.html?gclid=TEST&x=a%2Bb&x=two');const r=edge(req,{next:()=>new Response('next')});assert.equal(r.status,301);assert.equal(r.headers.get('location'),'https://www.localgaragedoorsvc.com/services/garage-door-roller-hinge-repair/?gclid=TEST&x=a%2Bb&x=two');assert.equal(edge(new Request('https://www.localgaragedoorsvc.com/ads/garage-door-repair/'),{next:()=>new Response('next')}).status,200);
 });

@@ -30,6 +30,20 @@
   var evidence = [];
   var delivered = json(read('lgds_measured_leads_v2'), {});
   var forwarding = null;
+  var openaiAllowed = false;
+  var openaiRegionResolved = false;
+  var pendingOpenai = new Set();
+  var privacyOptOut = w.navigator.globalPrivacyControl === true;
+  function sendOpenai(id) {
+    if (!openaiRegionResolved) { pendingOpenai.add(id); return; }
+    if (!openaiAllowed) return;
+    var record = delivered[id] || {};
+    if (record.openai) return;
+    w.oaiq('measure', 'lead_created', { type: 'customer_action' });
+    record.openai = true;
+    delivered[id] = record;
+    write('lgds_measured_leads_v2', JSON.stringify(delivered));
+  }
   function applyPhoneNumber() {
     if (!forwarding) return;
     d.querySelectorAll('[data-lgds-phone]').forEach(function (link) {
@@ -59,9 +73,8 @@
     }
     if (!record.openai) {
       try {
-        if (live) w.oaiq('measure', 'lead_created', { type: 'customer_action' });
-        else evidence.push({ destination: 'openai', event: 'lead_created', parameters: { type: 'customer_action' } });
-        record.openai = true;
+        if (live) { delivered[id] = record; sendOpenai(id); }
+        else { evidence.push({ destination: 'openai', event: 'lead_created', parameters: { type: 'customer_action' } }); record.openai = true; }
       } catch (_) {}
     }
     delivered[id] = record;
@@ -81,7 +94,8 @@
   if (live) {
     w.dataLayer = w.dataLayer || [];
     w.gtag = w.gtag || function () { w.dataLayer.push(arguments); };
-    w.gtag('consent', 'default', { ad_storage: 'granted', analytics_storage: 'granted', ad_user_data: 'granted', ad_personalization: 'granted' });
+    var consentDefault = privacyOptOut ? 'denied' : 'granted';
+    w.gtag('consent', 'default', { ad_storage: consentDefault, analytics_storage: consentDefault, ad_user_data: consentDefault, ad_personalization: consentDefault });
     w.gtag('consent', 'default', { ad_storage: 'denied', analytics_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', region: ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IS','IE','IT','LV','LI','LT','LU','MT','NL','NO','PL','PT','RO','SK','SI','ES','SE','CH','GB'] });
     w.gtag('js', new Date());
     w.gtag('config', 'GT-NGJ3Z7QQ', { send_page_view: false });
@@ -96,7 +110,27 @@
     d.head.appendChild(google);
     // Official OpenAI Ads bootstrap, installed once per document.
     !function(w,d,s,u){if(w.oaiq)return;var q=function(){q.q.push(arguments)};q.q=[];w.oaiq=q;var j=d.createElement(s);j.async=1;j.src=u;var f=d.getElementsByTagName(s)[0];f.parentNode.insertBefore(j,f)}(w,d,'script','https://bzrcdn.openai.com/sdk/oaiq.min.js');
+    // Start denied. Only a confirmed U.S. request without GPC can enable this pixel.
+    // This is independent from the form's permission to contact the customer.
+    w.oaiq('consent', false);
     w.oaiq('init', { pixelId: 'QEWL68vbdMGYqEuE22V49Y', debug: !!settings.verification });
+    if (!privacyOptOut && typeof w.fetch === 'function') {
+      var regionController = new AbortController();
+      var regionTimeout = w.setTimeout(function () { regionController.abort(); }, 5000);
+      w.fetch('/lgds-measurement-region', { credentials: 'same-origin', cache: 'no-store', signal: regionController.signal })
+        .then(function (response) { if (!response.ok) throw new Error('Region unavailable'); return response.json(); })
+        .then(function (result) {
+          openaiRegionResolved = true;
+          openaiAllowed = result?.openaiMeasurementAllowed === true;
+          if (openaiAllowed) {
+            w.oaiq('consent', true);
+            pendingOpenai.forEach(function (id) { try { sendOpenai(id); } catch (_) {} });
+          }
+          pendingOpenai.clear();
+        })
+        .catch(function () { openaiRegionResolved = true; pendingOpenai.clear(); })
+        .finally(function () { w.clearTimeout(regionTimeout); });
+    } else openaiRegionResolved = true;
   }
   function ready() {
     event('page_view', { page_title: d.title, page_location: w.location.href });

@@ -82,6 +82,9 @@ for(const file of files) {
   $('script').each((_,el)=>{const s=$(el);if(s.attr('id')==='lgds-regional-consent-bootstrap'||(s.attr('src')||'').startsWith('/_next/')||s.text().includes('self.__next_f'))s.remove();});
   $('link[as=script][href^="/_next/"]').remove();
   $('meta[name=generator]').remove();
+  if(file==='privacy/index.html') {
+    $('li').filter((_,e)=>$(e).text().startsWith('Analytics and advertising:')).text('Analytics and advertising: We may use Google Analytics, Google Ads and the OpenAI advertising measurement pixel to understand website and campaign performance. We record service-request conversions only after our form provider confirms receipt; names, phone numbers and request details are not included in these analytics events. Regional privacy controls restrict Google analytics and advertising storage in the European Economic Area, the United Kingdom and Switzerland. OpenAI measurement remains disabled unless a U.S. visit is confirmed. Global Privacy Control signals disable OpenAI measurement and restrict Google analytics and advertising storage.');
+  }
   const form=$('form.service-request-card').first();
   if(form.length) {
     form.attr('id',ads?'service-request':'service-request-form').attr('action','https://formspree.io/f/xpqqzvwo').attr('data-lgds-submissions',production?'production':'preview').removeAttr('data-netlify').removeAttr('netlify-honeypot');
@@ -117,6 +120,10 @@ const sitemap=cheerio.load(fs.readFileSync(path.join(dir,'sitemap.xml'),'utf8'),
 const urls=[...new Set(sitemap('loc').map((_,el)=>domain+normalHref(sitemap(el).text())).get())].filter(u=>!u.includes('/ads/'));
 fs.writeFileSync(path.join(dir,'sitemap.xml'),'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+urls.map(u=>`  <url><loc>${esc(u)}</loc></url>`).join('\n')+'\n</urlset>\n');
 fs.writeFileSync(path.join(dir,'_redirects'),'# Canonical paths and legacy redirects are handled by canonical-path.ts.\n');
-if(!production) fs.appendFileSync(path.join(dir,'_headers'),'\n/*\n  X-Robots-Tag: noindex, follow\n');
+if(!production) {
+  fs.appendFileSync(path.join(dir,'_headers'),'\n/*\n  X-Robots-Tag: noindex, follow\n');
+  fs.mkdirSync(path.join(dir,'__review__'),{recursive:true});
+  fs.copyFileSync('site/review.html',path.join(dir,'__review__/index.html'));
+}
 fs.writeFileSync(path.join(dir,'lgds-build.json'),JSON.stringify({mode:production?'production':'preview',pages:files.length,forms:formsUpdated,normalizedLinks:linksUpdated,photoApproved:!!process.env.LGDS_APPROVED_COMPANY_PHOTO},null,2));
 console.log(`[campaigns] Built ${campaigns.length} paid pages; updated ${formsUpdated} forms and ${linksUpdated} links. Mode: ${production?'production':'isolated preview'}.`);
