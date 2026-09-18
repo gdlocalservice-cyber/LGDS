@@ -1,19 +1,9 @@
 [build]
-  command = "cat chunks/chunk-* > LGDS-STATIC-SITE.zip && rm -rf dist && mkdir -p dist && unzip -q LGDS-STATIC-SITE.zip -d dist && node privacy-consent.js dist && node owner-feedback.js dist && node performance.js dist && node cache-bust.js dist"
+  command = "npm run build"
   publish = "dist"
 
 [build.environment]
-  NODE_VERSION = "22"
-
-[[redirects]]
-  from = "/services/roller-repair"
-  to = "https://www.localgaragedoorsvc.com/services/garage-door-roller-hinge-repair/"
-  status = 301
-  force = true
-
-[[edge_functions]]
-  path = "/services/roller-repair.html"
-  function = "legacy-roller-repair"
+  NODE_VERSION = "22.22.2"
 
 [[headers]]
   for = "/_next/static/*"
