@@ -6,6 +6,7 @@ const campaigns = require('../site/campaigns.cjs');
 const campaignSections = require('../site/campaign-sections.cjs');
 const preferredSources = require('../site/preferred-sources.cjs');
 const pageQuality = require('../site/page-quality.cjs');
+const editorial = require('../site/editorial.cjs');
 const dir = path.resolve(process.argv[2] || 'dist');
 const domain = 'https://www.localgaragedoorsvc.com';
 const production = process.env.CONTEXT === 'production';
@@ -122,6 +123,7 @@ for(const file of files) {
   $('head').append('<script id="lgds-measurement" src="/lgds-measurement.js"></script><script id="lgds-forms" defer src="/lgds-forms.js"></script><link rel="stylesheet" href="/lgds-campaign.css">');
   if(!production){$('meta[name=robots]').remove();$('head').append('<meta name="robots" content="noindex, follow">');}
   preferredSources($,{production,file});
+  editorial($,file);
   removedPreloads+=pageQuality($).removedPreloads;
   fs.writeFileSync(p,$.html());
 }
