@@ -5,10 +5,11 @@ const cheerio = require('cheerio');
 const campaigns = require('../site/campaigns.cjs');
 const campaignSections = require('../site/campaign-sections.cjs');
 const preferredSources = require('../site/preferred-sources.cjs');
+const pageQuality = require('../site/page-quality.cjs');
 const dir = path.resolve(process.argv[2] || 'dist');
 const domain = 'https://www.localgaragedoorsvc.com';
 const production = process.env.CONTEXT === 'production';
-if (production && process.env.LGDS_RELEASE_APPROVED !== '1') throw new Error('Release blocked: Itzik must approve the preview and outstanding evidence before LGDS_RELEASE_APPROVED=1 is set.');
+if (production && process.env.LGDS_RELEASE_APPROVED !== '1') throw new Error('Release blocked: Itzik must approve the completed preview before setting LGDS_RELEASE_APPROVED=1. Live form, conversion and Preferred Sources checks follow the approved release.');
 const esc = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const files = fs.readdirSync(dir, {recursive:true}).filter(p=>p.endsWith('.html'));
 const routes = new Set(files.filter(p=>p.endsWith('index.html')).map(p=>'/'+p.slice(0,-10)));
@@ -77,8 +78,12 @@ const recoveryPath=path.join(dir,'recovery-interactions.js');
 let recovery=fs.readFileSync(recoveryPath,'utf8');
 recovery=recovery.replace(/  function attribution\(\) \{[\s\S]*?(?=  function initialize\(\))/, '').replace('    prepareForms();','').replace('a[href="#service-request"]','a[href="#service-request-form"]');
 recovery=recovery.replace("if (typeof window.gtag === 'function') window.gtag('event', name, parameters || {});", "try { window.lgdsMeasurement.event(name, parameters || {}); } catch (_) {}");
+const comparisonState="candidate.classList.toggle('active', candidate === button);";
+if(!recovery.includes(comparisonState)) throw new Error('Missing before/after comparison state update');
+recovery=recovery.replace(comparisonState,comparisonState+"\n            candidate.setAttribute('aria-pressed', String(candidate === button));");
 fs.writeFileSync(recoveryPath,recovery);
 let linksUpdated=0; let formsUpdated=0;
+let removedPreloads=0;
 for(const file of files) {
   const p=path.join(dir,file); const $=cheerio.load(fs.readFileSync(p,'utf8'));
   const ads=file.startsWith('ads/'); const route=file==='index.html'?'/':'/'+file.replace(/index\.html$/,'');
@@ -117,6 +122,7 @@ for(const file of files) {
   $('head').append('<script id="lgds-measurement" src="/lgds-measurement.js"></script><script id="lgds-forms" defer src="/lgds-forms.js"></script><link rel="stylesheet" href="/lgds-campaign.css">');
   if(!production){$('meta[name=robots]').remove();$('head').append('<meta name="robots" content="noindex, follow">');}
   preferredSources($,{production,file});
+  removedPreloads+=pageQuality($).removedPreloads;
   fs.writeFileSync(p,$.html());
 }
 // Preserve only actual indexable routes; paid pages and internal confirmation pages are excluded.
@@ -130,4 +136,4 @@ if(!production) {
   fs.copyFileSync('site/review.html',path.join(dir,'__review__/index.html'));
 }
 fs.writeFileSync(path.join(dir,'lgds-build.json'),JSON.stringify({mode:production?'production':'preview',pages:files.length,forms:formsUpdated,normalizedLinks:linksUpdated,photoSelected:true,photoSource:'Existing LGDS project images, selected at owner request'},null,2));
-console.log(`[campaigns] Built ${campaigns.length} paid pages; updated ${formsUpdated} forms and ${linksUpdated} links. Mode: ${production?'production':'isolated preview'}.`);
+console.log(`[campaigns] Built ${campaigns.length} paid pages; updated ${formsUpdated} forms and ${linksUpdated} links; removed ${removedPreloads} unused/duplicate preloads. Mode: ${production?'production':'isolated preview'}.`);

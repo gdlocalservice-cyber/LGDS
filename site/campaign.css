@@ -30,6 +30,15 @@
 .ads-page .skip-link:focus { transform:translateY(0); }
 html { scroll-padding-bottom:100px; }
 form.service-request-card input,form.service-request-card select,form.service-request-card textarea,form.service-request-card button { scroll-margin-bottom:110px; }
+/* A two-color keyboard ring remains visible on both white and navy surfaces. */
+body :is(a,button,input,select,textarea,summary):focus-visible,
+form.service-request-card :is(input,select,textarea,button):focus-visible,
+.ads-page :is(a,button,input,select,textarea,summary):focus-visible {
+  outline:3px solid #997010; outline-offset:3px; box-shadow:0 0 0 3px #fff;
+}
+.ads-page :is(.button,.header-phone,.ads-google-profile,.ads-coverage-note a,.legal-links a) { min-height:44px; display:inline-flex; align-items:center; }
+form.service-request-card :is(input:not([type=checkbox]):not([type=hidden]):not(.honeypot),select,button[type=submit]) { min-height:44px; }
+.before-after-control button { min-height:44px; min-width:44px; }
 .ads-main { max-width:1240px; margin:0 auto; padding:40px 24px 64px; }
 .ads-hero { display: grid; grid-template-columns: minmax(0,1.05fr) minmax(340px,.95fr); gap: 20px 42px; align-items: start; }
 .ads-intro { grid-column: 1; grid-row: 1; }
