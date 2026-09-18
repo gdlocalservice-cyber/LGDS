@@ -7,7 +7,7 @@
 .lgds-preferred-source { max-width:1192px; margin:26px auto 0; padding-top:20px; min-height:44px; border-top:1px solid #ffffff40; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; }
 .lgds-preferred-source p { margin:0; font-size:14px; }
 .lgds-preferred-link { display:inline-flex; align-items:center; justify-content:center; gap:10px; min-height:44px; padding:11px 17px; border:1px solid currentColor; border-radius:8px; font-size:14px; font-weight:700; line-height:1.4; text-decoration:none; text-align:center; }
-.lgds-preferred-guides { margin:36px 0; padding:32px; display:flex; align-items:center; justify-content:space-between; gap:28px; background:#f0f4f8; border:1px solid #dce4ed; border-left:4px solid #dba92d; border-radius:16px; color:#102d49; }
+.lgds-preferred-guides { width:calc(100% - 48px); max-width:1192px; margin:36px auto; padding:32px; display:flex; align-items:center; justify-content:space-between; gap:28px; background:#f0f4f8; border:1px solid #dce4ed; border-left:4px solid #dba92d; border-radius:16px; color:#102d49; }
 .lgds-preferred-guides h2 { margin:6px 0 10px; font-size:28px; line-height:1.2; font-weight:750; }
 .lgds-preferred-guides p { margin:0; line-height:1.6; max-width:52ch; }
 .lgds-preferred-guides .lgds-preferred-eyebrow { font-size:11px; text-transform:uppercase; letter-spacing:.1em; font-weight:700; }
@@ -103,7 +103,7 @@ form.service-request-card input,form.service-request-card select,form.service-re
 .ads-footer .legal-links { justify-content: flex-start; flex-wrap: wrap; }
 .ads-preview-note { margin: 0; padding: 10px 20px; text-align: center; background: #fff1cc; color: #352e1e; font-size: 14px; }
 @media(max-width:760px) {
-  .lgds-preferred-guides { flex-direction:column; align-items:flex-start; padding:24px; gap:20px; }
+  .lgds-preferred-guides { width:calc(100% - 36px); flex-direction:column; align-items:flex-start; padding:24px; gap:20px; }
   .lgds-preferred-guides h2 { font-size:24px; }
   .lgds-preferred-source { align-items:flex-start; flex-direction:column; }
   .ads-page { padding-bottom: calc(78px + env(safe-area-inset-bottom)); }
