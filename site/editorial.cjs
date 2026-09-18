@@ -23,6 +23,28 @@ const serviceNotes = {
 };
 
 module.exports = function editorial($, file) {
+  const copyChanges = new Map();
+  $('main p,main h2').each((_,el)=>{
+    const node=$(el), old=node.text().trim();
+    let next=old;
+    if(old==='Selected Google review excerpts are presented as lightweight site content, with a direct link to the public review profile.') next='Read selected Google reviews below, or visit our Google profile to see the full reviews.';
+    if(/^\d+ service paths$/.test(old)) next=old.replace('service paths','services');
+    if(old==='Every common residential service path.') next='Services for your home';
+    if(old.startsWith('This page highlights ')) next=old.replace('This page highlights ','You can request ').replace('Other listed residential and standard commercial garage door services can also be requested.','For another door or opener problem, describe what happened in your service request.');
+    if(old.includes('keeps the request connected to the right service path')) next=old.replace('Identifying the door type at the start keeps the request connected to the right service path.','Tell us which type of door you have when you contact us.');
+    if(next!==old && !node.find('a').length) {node.text(next);copyChanges.set(old,next);}
+  });
+  // Keep FAQ answers in structured data aligned with the visible wording.
+  $('script[type="application/ld+json"]').each((_,el)=>{
+    const data=JSON.parse($(el).text());
+    function replace(value) {
+      if(typeof value==='string') return copyChanges.get(value)||value;
+      if(Array.isArray(value)) return value.map(replace);
+      if(value && typeof value==='object') for(const key of Object.keys(value)) value[key]=replace(value[key]);
+      return value;
+    }
+    if(copyChanges.size) $(el).text(JSON.stringify(replace(data)));
+  });
   const service = /^services\/([^/]+)\/index\.html$/.exec(file);
   const location = /^locations\/([^/]+)\/index\.html$/.exec(file);
   if (!service && !location) return false;
@@ -55,4 +77,3 @@ module.exports = function editorial($, file) {
   }
   return true;
 };
-
