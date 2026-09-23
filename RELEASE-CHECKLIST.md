@@ -7,7 +7,7 @@ This branch is for review. It does not authorize merging or publishing the live 
 - Finish the three landing pages and the separate Preferred Sources addition.
 - Review the pages and existing-site changes together, then run one consolidated build/test pass.
 - Check desktop/mobile layout, keyboard navigation, form validation, error/success handling in the test environment, and local assets/links.
-- Confirm the business hours. The current specification and code use Friday 7 AM–5 PM Eastern; do not change this from an older note without the owner's answer.
+- Owner confirmed Friday 7 AM–5 PM Eastern; code matches. Owner approved the homepage hero and supplied review excerpts; these are implemented.
 - Keep preview requests and advertising events disabled. A simulated response is not evidence of a real inbox receipt or account conversion.
 - Record remaining limitations and get Itzik's approval of the completed preview before authorizing a production release.
 
@@ -39,7 +39,7 @@ These source-level improvements are not a Lighthouse score or a claim of complet
 
 ## Original-scope work that must remain visible
 
-- Google tag: keep GT-NGJ3Z7QQ, GA4 G-TVGZZ0WFTH and Ads AW-17878825273. Do not migrate to GTM. Obtain the full text/screenshots of both Needs Attention alerts before diagnosing them.
+- Google tag: keep GT-NGJ3Z7QQ, GA4 G-TVGZZ0WFTH and Ads AW-17878825273. Do not migrate to GTM. The supplied screenshots identify additional-domain configuration suggestions and a second-administrator recommendation. Account decisions remain with Itzik.
 - Form conversion: code sends generate_lead to GA4 after receipt. Confirm the existing GA4-to-Ads conversion mapping and campaign goal settings. Do not add a second primary conversion for the same submission. form_start, ordinary clicks and phone-link taps must not be treated as completed form leads. Actual qualified website calls are a separate conversion.
 - Philadelphia: investigate the bookkeeping-related queries for August 31–September 13, 2026. Capture Security Issues, Manual Actions, indexed HTML, crawl date, Google-selected canonical and live inspection. Compare deployment history, shared templates, scripts, redirects, cache and administrative access. Report evidence before security changes. A local string scan does not clear the live site or establish a compromise.
 - Content: editorial cleanup now covers 40 service/location pages, including 17 service-specific request notes. This removes template language; it does not create verified local project histories or prove the provenance of existing photos.
@@ -48,10 +48,10 @@ These source-level improvements are not a Lighthouse score or a claim of complet
 ## Owner/account handoff
 
 Before publication, provide:
-1. Screenshots with both Needs Attention alert details expanded, including the affected tag/destination.
-2. Google Ads conversion-action list showing source, goal, primary/secondary status and counting setting; show whether generate_lead from G-TVGZZ0WFTH is already mapped. Confirm the linked GA4 property. No credentials are needed in chat.
+1. Review the supplied Needs Attention screenshots with Itzik: additional Netlify domains and adding another administrator. Neither action has been approved or performed by this implementation.
+2. The supplied list already shows the GA4 generate_lead import as Primary, Count One, Active. Verify the actual linked stream/property and campaign goals in the account; do not create a duplicate import. No credentials are needed in chat.
 3. Search Console evidence for Philadelphia as listed above, plus the query export for the specified date range with an exact page filter. Preserve evidence before requesting recrawl.
-4. Confirmation of Friday closing time (current specification: 5 PM Eastern), the selected company-photo provenance, and review excerpts.
+4. Owner approvals received: Friday closes at 5 PM Eastern, reuse the homepage hero, and use supplied reviews. Image provenance has not been independently certified.
 5. Itzik's visual review of the three preview pages and explicit approval before production or Ads final-URL changes.
 
 After the approved release:

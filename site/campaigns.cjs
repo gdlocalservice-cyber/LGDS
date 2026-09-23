@@ -6,7 +6,7 @@ module.exports = [
     hero: 'Garage door stuck, uneven, noisy or not responding normally? Tell us your ZIP code and what the door is doing. We’ll confirm service availability and explain the next step.',
     problems: ['Door will not open', 'Door will not close', 'Door is stuck', 'Door is uneven or crooked', 'Door is noisy or heavy', 'General repair', 'Other / not sure'],
     intro: 'We diagnose local garage door repair problems, from damaged hardware to an overhead garage door that no longer moves normally. The technician explains the cause and available repair options before approved work begins.',
-    reviews: ['G.C.', 'J.S.']
+    reviews: ['Brandon Munson', 'Kardia Rowe']
   },
   {
     slug: 'garage-door-opener-repair', group: 'Opener & Sensor Repair', title: 'Garage Door Opener Repair',
@@ -15,7 +15,7 @@ module.exports = [
     hero: 'Having trouble with the opener, safety sensors, remote or keypad? Tell us your ZIP code and what the system is doing. We’ll confirm service availability and explain the next step.',
     problems: ['Opener not working', 'Door will not close', 'Safety sensor problem', 'Remote problem', 'Keypad problem', 'Motor problem', 'Other / not sure'],
     intro: 'A door that will not close may have a sensor, control or opener problem. We check the system and explain garage door motor repair, sensor repair and replacement options based on what we find.',
-    reviews: ['S.K.', 'D.G.'],
+    reviews: ['Ralph DeJesus', 'Kardia Rowe'],
     extraFaq: ['Which garage door opener brands do you service?', 'We work with many major garage door opener brands, including LiftMaster, Chamberlain and Genie. Call with the model information if available.']
   },
   {
@@ -25,7 +25,7 @@ module.exports = [
     hero: 'A broken spring, damaged cable or off-track door can prevent normal operation. Tell us your ZIP code and what happened. We’ll confirm service availability and explain the next step.',
     problems: ['Broken spring', 'Broken or loose cable', 'Door came off track', 'Door is crooked', 'Door is stuck', 'Other / not sure'],
     intro: 'We evaluate broken garage door springs, damaged cables and doors that came off track. A crooked or uneven door needs a system check before garage door spring, cable or off-track repairs are selected.',
-    reviews: ['A.K.', 'J.S.'],
+    reviews: ['Jatish Patel', 'Michael Crudup'],
     extraFaq: ['Should I continue operating the door?', 'Avoid operating a door with a visibly broken spring, damaged cable or off-track section. Contact us so the system can be evaluated.']
   }
 ];
