@@ -155,3 +155,10 @@ form.service-request-card :is(input:not([type=checkbox]):not([type=hidden]):not(
   .ads-footer { padding-bottom: 24px; }
 }
 @media(prefers-reduced-motion:reduce) { html { scroll-behavior: auto; } }
+
+.ads-opening-review { display:none; }
+@media(max-width:760px) {
+  .ads-opening-review { display:block; margin:16px 0; padding:10px 14px; border-left:3px solid #dba92d; font-size:14px; }
+  .ads-opening-review p { margin:0 0 5px; }
+  .ads-opening-review cite { font-size:12px; font-style:normal; }
+}

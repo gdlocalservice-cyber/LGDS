@@ -22,8 +22,9 @@
   params.forEach(function (value, key) {
     if (/^(gclid|gbraid|wbraid|oppref|utm_[a-z0-9_]+)$/.test(key) && value) incoming[key] = value.slice(0, 2000);
   });
-  // Preserve the first campaign in this tab's session, including navigation via the logo.
-  if (!attribution || (!attribution.has_campaign && Object.keys(incoming).length)) {
+  // A new ad click replaces the whole campaign; ordinary navigation preserves it.
+  var newClick = ['gclid','gbraid','wbraid','oppref'].some(function (key) { return incoming[key] && incoming[key] !== attribution?.[key]; });
+  if (!attribution || newClick || (!attribution.has_campaign && Object.keys(incoming).length)) {
     attribution = Object.assign({ landing_page: w.location.href, referrer: d.referrer, has_campaign: !!Object.keys(incoming).length }, incoming);
     write('lgds_attribution_v2', JSON.stringify(attribution));
   }
@@ -39,7 +40,7 @@
     if (!openaiAllowed) return;
     var record = delivered[id] || {};
     if (record.openai) return;
-    w.oaiq('measure', 'lead_created', { type: 'customer_action' });
+    w.oaiq('measure', 'lead_created', { type: 'customer_action' }, { event_id: id });
     record.openai = true;
     delivered[id] = record;
     write('lgds_measured_leads_v2', JSON.stringify(delivered));
@@ -108,12 +109,6 @@
     google.id = 'lgds-gtag'; google.async = true;
     google.src = 'https://www.googletagmanager.com/gtag/js?id=GT-NGJ3Z7QQ';
     d.head.appendChild(google);
-    // Official OpenAI Ads bootstrap, installed once per document.
-    !function(w,d,s,u){if(w.oaiq)return;var q=function(){q.q.push(arguments)};q.q=[];w.oaiq=q;var j=d.createElement(s);j.async=1;j.src=u;var f=d.getElementsByTagName(s)[0];f.parentNode.insertBefore(j,f)}(w,d,'script','https://bzrcdn.openai.com/sdk/oaiq.min.js');
-    // Start denied. Only a confirmed U.S. request without GPC can enable this pixel.
-    // This is independent from the form's permission to contact the customer.
-    w.oaiq('consent', false);
-    w.oaiq('init', { pixelId: 'QEWL68vbdMGYqEuE22V49Y', debug: !!settings.verification });
     if (!privacyOptOut && typeof w.fetch === 'function') {
       var regionController = new AbortController();
       var regionTimeout = w.setTimeout(function () { regionController.abort(); }, 5000);
@@ -122,8 +117,11 @@
         .then(function (result) {
           openaiRegionResolved = true;
           openaiAllowed = result?.openaiMeasurementAllowed === true;
-          if (openaiAllowed) {
-            w.oaiq('consent', true);
+          if (openaiAllowed && w.navigator.globalPrivacyControl !== true) {
+            // Load only after eligibility is confirmed. Never reset consent on navigation:
+            // consent(false) deletes the SDK's attribution cookies.
+            !function(w,d,s,u){if(w.oaiq)return;var q=function(){q.q.push(arguments)};q.q=[];w.oaiq=q;var j=d.createElement(s);j.async=1;j.src=u;d.head.appendChild(j)}(w,d,'script','https://bzrcdn.openai.com/sdk/oaiq.min.js');
+            w.oaiq('init', { pixelId: 'QEWL68vbdMGYqEuE22V49Y', debug: !!settings.verification });
             pendingOpenai.forEach(function (id) { try { sendOpenai(id); } catch (_) {} });
           }
           pendingOpenai.clear();

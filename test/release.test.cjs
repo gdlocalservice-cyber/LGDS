@@ -83,10 +83,39 @@ test('denied sessionStorage preserves campaign params in internal links without 
 test('form_start requires user interaction, happens once, and is never a lead',()=>{const b=browser();const input=b.form.elements.name;input.dispatchEvent(new b.w.Event('input',{bubbles:true}));assert.equal(events(b,'form_start').length,0);for(const fn of b.inputHandlers){fn({target:input,isTrusted:true});fn({target:input,isTrusted:true});}assert.equal(events(b,'form_start').length,1);assert.equal(events(b,'generate_lead').length,0);b.close();});
 test('call links work before tracking loads; callback updates displayed and dialed numbers together',()=>{const b=browser();const links=[...b.w.document.querySelectorAll('[data-lgds-phone]')];assert.ok(links.length>=5);assert.ok(links.every(l=>l.getAttribute('href')==='tel:2674386494'));
  const config=b.w.dataLayer.find(e=>e[0]==='config'&&e[1]==='AW-17878825273/TxwGCJyr6-IcELnypM1C');config[2].phone_conversion_callback('(800) 555-0100','+18005550100');assert.ok(links.every(l=>l.href==='tel:+18005550100'));assert.ok([...b.w.document.querySelectorAll('[data-lgds-phone-text]')].every(n=>n.textContent==='(800) 555-0100'));b.close();});
-test('tracking bootstrap cannot be installed twice in one document',()=>{const b=browser();b.w.eval(measurement.replace('__LGDS_SETTINGS__',JSON.stringify({measurementEnabled:true})));assert.equal(b.w.document.querySelectorAll('script[src*="googletagmanager"]').length,1);assert.equal(b.w.document.querySelectorAll('script[src*="bzrcdn"]').length,1);b.close();});
-test('OpenAI starts denied and does not measure unconfirmed/non-US regions',async()=>{const b=browser({usRegion:false});assert.equal(b.w.oaiq.q[0][0],'consent');assert.equal(b.w.oaiq.q[0][1],false);fill(b);submit(b);await tick();assert.equal(b.requests.length,1);assert.equal(b.w.oaiq.q.filter(e=>e[0]==='measure').length,0);assert.equal(events(b,'generate_lead').length,1);b.close();});
-test('GPC blocks OpenAI measurement without stopping a service request',async()=>{const b=browser({gpc:true});fill(b);submit(b);await tick();assert.equal(b.requests.length,1);assert.equal(b.w.oaiq.q.filter(e=>e[0]==='measure').length,0);assert.equal(b.w.dataLayer[0][2].ad_storage,'denied');b.close();});
+test('tracking bootstrap cannot be installed twice in one document',async()=>{const b=browser();b.w.eval(measurement.replace('__LGDS_SETTINGS__',JSON.stringify({measurementEnabled:true})));assert.equal(b.w.document.querySelectorAll('script[src*="googletagmanager"]').length,1);await tick();assert.equal(b.w.document.querySelectorAll('script[src*="bzrcdn"]').length,1);b.close();});
+test('OpenAI is not loaded before region confirmation or for non-US regions',async()=>{const b=browser({usRegion:false});assert.equal(b.w.oaiq,undefined);fill(b);submit(b);await tick();assert.equal(b.requests.length,1);assert.equal(b.w.oaiq,undefined);assert.equal(b.w.document.querySelectorAll('script[src*="bzrcdn"]').length,0);assert.equal(events(b,'generate_lead').length,1);b.close();});
+test('GPC blocks OpenAI measurement without stopping a service request',async()=>{const b=browser({gpc:true});fill(b);submit(b);await tick();assert.equal(b.requests.length,1);assert.equal(b.w.oaiq,undefined);assert.equal(b.w.document.querySelectorAll('script[src*="bzrcdn"]').length,0);assert.equal(b.w.dataLayer[0][2].ad_storage,'denied');b.close();});
 test('region endpoint only enables a confirmed U.S. visitor and never caches',async()=>{const endpoint=(await import('../netlify/edge-functions/measurement-region.ts')).default;for(const country of ['US','GB','FR',undefined]){const r=endpoint(new Request('https://example.com/lgds-measurement-region'),{geo:{country:{code:country}}});assert.deepEqual(await r.json(),{openaiMeasurementAllowed:country==='US'});assert.match(r.headers.get('cache-control'),/no-store/);}});
 test('canonical redirects are idempotent, with no loop and no arbitrary 404 redirect',async()=>{const {canonicalPath}=await import('../site/routes.mjs');for(const route of ['/services/roller-repair.html','/services/roller-repair','/services/garage-door-repair','/ads/garage-door-repair','/index.html','/privacy.html']){const target=canonicalPath(route);assert.equal(canonicalPath(target),target);assert.ok(target.endsWith('/'));}assert.equal(canonicalPath('/unknown'),'/unknown');
  const edge=(await import('../netlify/edge-functions/canonical-path.ts')).default;const req=new Request('https://localgaragedoorsvc.com/services/roller-repair.html?gclid=TEST&x=a%2Bb&x=two');const r=edge(req,{next:()=>new Response('next')});assert.equal(r.status,301);assert.equal(r.headers.get('location'),'https://www.localgaragedoorsvc.com/services/garage-door-roller-hinge-repair/?gclid=TEST&x=a%2Bb&x=two');assert.equal(edge(new Request('https://www.localgaragedoorsvc.com/ads/garage-door-repair/'),{next:()=>new Response('next')}).status,200);
+});
+
+test('a new ad click replaces campaign A, removes stale fields, and survives internal navigation',async()=>{
+ const a=browser({url:'https://www.localgaragedoorsvc.com/?gclid=A&utm_campaign=campaignA&utm_term=old'});
+ const saved=w=>Object.fromEntries(Object.keys(w.sessionStorage).map(k=>[k,w.sessionStorage.getItem(k)]));
+ const b=browser({url:'https://www.localgaragedoorsvc.com/?gclid=B&utm_campaign=campaignB',storage:saved(a.w)});
+ const c=browser({url:'https://www.localgaragedoorsvc.com/services/',storage:saved(b.w)});
+ fill(c);submit(c);await tick();assert.equal(c.requests[0].fields.gclid,'B');assert.equal(c.requests[0].fields.utm_campaign,'campaignB');assert.equal(c.requests[0].fields.utm_term,'');
+ a.close();b.close();c.close();
+});
+test('phone validation rejects letters and invalid lengths, accepts ordinary formatting',async()=>{
+ for(const value of ['abc','abc2675550100','123456789','1234567890123456','267-555-0100','+1 (267) 555-0100','123456789012345']) {
+  const b=browser();fill(b);b.form.elements.phone.value=value;submit(b);await tick();
+  assert.equal(b.requests.length,/^[a-z]/.test(value)||value==='123456789'||value==='1234567890123456'?0:1,value);b.close();
+ }
+});
+test('OpenAI navigation keeps SDK attribution cookies and stable event IDs without consent resets',async()=>{
+ // SDK contract simulation, not evidence from the real OpenAI Monitoring account.
+ const a=browser({url:'https://www.localgaragedoorsvc.com/?oppref=OPENAI-A'});assert.equal(a.w.oaiq,undefined);await tick();
+ assert.equal(a.w.oaiq.q.some(e=>e[0]==='consent'),false);
+ const jar={};const measured=[];
+ function runSdk(b){for(const e of b.w.oaiq.q){if(e[0]==='consent'&&e[1]===false){delete jar.oppref;delete jar.obref;}if(e[0]==='init'){jar.oppref=new URL(b.w.location.href).searchParams.get('oppref')||jar.oppref;jar.obref=jar.obref||'browser-A';}if(e[0]==='measure')measured.push({oppref:jar.oppref,id:e[3].event_id});}}
+ runSdk(a);const storage=Object.fromEntries(Object.keys(a.w.sessionStorage).map(k=>[k,a.w.sessionStorage.getItem(k)]));a.close();
+ const b=browser({url:'https://www.localgaragedoorsvc.com/services/',storage});await tick();fill(b);submit(b);await tick();runSdk(b);
+ assert.equal(measured.length,1);assert.equal(measured[0].oppref,'OPENAI-A');assert.equal(measured[0].id,b.requests[0].fields.submission_id);b.close();
+});
+test('paid pages put the form before the hero image and keep Preferred Sources only on ordinary pages',()=>{
+ for(const p of campaigns){const $=cheerio.load(fs.readFileSync(base+'/ads/'+p.slug+'/index.html','utf8'));const children=$('.ads-hero').children().map((_,e)=>$(e).attr('class')).get();assert.ok(children.indexOf('ads-request')<children.indexOf('ads-photo'));assert.ok($('.ads-opening-review cite').text().includes(p.reviews[0]));assert.equal($('.lgds-preferred-source,[google-add-preferred-source-btn],script[src*="publisher.js"]').length,0);}
+ const $=cheerio.load(fs.readFileSync(base+'/blog/index.html','utf8'));assert.equal($('.lgds-preferred-source').length,1);assert.equal($('.lgds-preferred-guides').length,1);
 });

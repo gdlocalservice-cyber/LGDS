@@ -29,6 +29,7 @@
   if (d.readyState === 'loading') d.addEventListener('DOMContentLoaded', enableForms, { once: true }); else enableForms();
   d.addEventListener('input', function (e) {
     var form = e.target.closest('form.service-request-card');
+    if (form && e.target.name === 'phone') e.target.setCustomValidity('');
     if (!e.isTrusted || !form || !/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || e.target.type === 'hidden' || e.target.name === '_gotcha') return;
     var current = state(form);
     if (!current.started) {
@@ -42,6 +43,12 @@
     e.preventDefault(); e.stopImmediatePropagation();
     var current = state(form);
     if (current.busy || current.sent) return;
+    var phone = form.querySelector('[name="phone"]');
+    if (phone) {
+      var value = phone.value.trim();
+      var digits = value.replace(/[^0-9]/g, '');
+      phone.setCustomValidity(/^\+?[0-9().\s-]+$/.test(value) && /^\d{10,15}$/.test(digits) ? '' : 'Enter a phone number with 10–15 digits.');
+    }
     if (!form.reportValidity()) return;
     if (form.querySelector('[name="_gotcha"]')?.value) return;
     if (!submissionsEnabled(form)) {

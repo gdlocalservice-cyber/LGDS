@@ -4,6 +4,7 @@ const scriptUrl = 'https://news.google.com/swg/js/v1/publisher.js';
 const sourceUrl = 'https://www.google.com/preferences/source?q=localgaragedoorsvc.com';
 
 module.exports = function preferredSources($, {production,file}) {
+  if (file.startsWith('ads/')) return;
   // Google infers the site from the current origin. The review domain must
   // therefore use the documented deep link to the actual business instead.
   const button = theme => production

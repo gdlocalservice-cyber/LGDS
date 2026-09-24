@@ -1,5 +1,19 @@
 # LGDS review handoff — 2026-09-23
 
+## Review corrections — 2026-09-24 (supersedes earlier status)
+
+- OpenAI SDK now loads/initializes only after the US eligibility response and no GPC. Removed per-page consent(false); no forced consent(true), so a stored SDK denial is respected. Added event_id from submission ID. Official reference: https://developers.openai.com/ads/measurement-pixel (consent(false) deletes attribution cookies).
+- A fresh gclid/gbraid/wbraid/oppref replaces the complete stored campaign and stale fields; internal navigation preserves it.
+- Browser phone validation requires ordinary phone characters and 10–15 digits. Formspree-side validation remains to be configured/verified by the account owner; no receiving-service setting was changed.
+- Mobile DOM order is intro + short verified review, form, then hero image. Desktop grid retains its layout.
+- Preferred Sources removed from all three Ads pages, retained on ordinary pages/Guides.
+- Build and 25/25 tests passed. New cases cover attribution replacement, invalid/valid phones, OpenAI navigation cookie-contract simulation and Ads content/component placement. The cookie simulation is NOT a real SDK/Monitoring verification. Complete oppref landing → internal navigation → accepted test lead in OpenAI Monitoring after coordinated release.
+- Duplicate protection scope: in-flight/repeated submit prevention in the current document; session-level measurement flags by opaque submission ID; stable ID on a retry within that document. Formspree receipt idempotency is not guaranteed, including refresh or a lost acknowledgement. No server-side idempotency store was added. Do not call this exactly-once server delivery.
+- Itzik reports: 37 bookkeeping queries / 60 impressions / 0 clicks for Philadelphia in Aug 31–Sep 13; current code/live page clean. These account findings are supplied by Itzik, not independently retrieved here. Security Issues, Manual Actions, indexed URL inspection and deployment/access history remain open.
+- Agreed account direction: do not add Netlify hosts to cross-domain measurement; no administrator change now. Campaign Goals screenshot still required to verify actual active goals/no duplicate form conversion.
+- Preview only. No merge, production release, campaign URL or Google-account change authorized.
+
+
 Review branch only: `codex/lgds-measurement-landing-pages`, draft PR #15. No production release, merge, Ads final-URL update, or Google-account configuration change is authorized by this handoff.
 
 ## Completed in code
