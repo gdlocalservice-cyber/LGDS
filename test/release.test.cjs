@@ -35,9 +35,10 @@ test('each paid page matches the approved heading, choices, canonical, CTA and s
   assert.equal($('meta[name=robots]').attr('content'),'noindex, follow');assert.deepEqual($('select option').slice(1).map((_,e)=>$(e).text()).get(),p.problems);
   assert.equal($('form').length,1);assert.equal($('input[name=zip]').attr('pattern'),'[0-9]{5}');assert.equal($('form').attr('id'),'service-request');
   assert.equal($('header nav:not(.ads-local-nav),.breadcrumbs').length,0);
-  // The one-page design trial allows only working in-page navigation.
+  // The repair and spring design trials allow only working in-page navigation.
   const concept=p.slug==='garage-door-repair';
-  assert.equal($('header .ads-local-nav').length,concept?1:0);
+  assert.equal($('header .ads-local-nav').length,(concept||p.slug==='spring-cable-off-track-repair')?1:0);
+  assert.equal($('link[href^="/lgds-spring-concept.css"]').length,p.slug==='spring-cable-off-track-repair'?1:0);
   assert.equal($('link[href^="/lgds-repair-concept.css"]').length,concept?1:0);
   $('header .ads-local-nav a').each((_,e)=>{const href=$(e).attr('href');assert.ok(/^#[a-z-]+$/.test(href));assert.equal($(href).length,1);});
   assert.equal($('script#lgds-measurement').length,1);assert.equal($('script#lgds-forms').length,1);
