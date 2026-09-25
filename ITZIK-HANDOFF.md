@@ -34,7 +34,7 @@ The earlier “No recent conversions” status does not undo the verified conver
 
 ## Latest verification and implementation limits
 
-`npm run verify` passed for this follow-up: 26/26 tests; 62 generated pages, 55 forms, 4,654 links and 54 sitemap routes. The tests cover the generated pages, all three forms, simulated provider acknowledgements, attribution, consent, telephone-link updates, navigation, SEO and Preview isolation. The shared hero stylesheet is loaded only on Ads pages. Actual inbox delivery and provider dashboards are not simulated-test evidence.
+`npm run verify` passed for this follow-up: 26/26 tests; 62 generated pages, 55 forms, 4,654 links and 54 sitemap routes. The tests cover the generated pages, all three forms, simulated provider acknowledgements, attribution, consent, telephone-link updates, navigation, SEO and Preview isolation. The shared hero stylesheet is loaded only on Ads pages. Actual inbox delivery and provider dashboards are not simulated-test evidence. All three desktop/mobile layouts were inspected in the browser; additional 360px opener and 430px spring views were checked. The mobile Request action reaches the form without the fixed bar covering submit. A shared CSS specificity correction keeps mobile input text at 16px. These are browser-responsive checks, not new physical-device tests.
 
 Known limitations remain explicit:
 

@@ -17,8 +17,8 @@ Status: Preview only. Itzik's technical acceptance of `9d965ba` and recommendati
 ## Verification of this follow-up
 
 - [x] `npm run verify`: build and 26/26 tests passed for this follow-up; 62 pages, 55 forms, 4,654 links and 54 sitemap routes. All 59 ordinary-site HTML outputs matched the pre-rollout baseline after normalizing asset cache-version strings.
-- Inspect all three pages at desktop and smartphone widths: wrapping, contrast, local navigation, call/WhatsApp/form actions, form visibility and fixed-bar clearance. Browser-responsive checks do not substitute for physical hardware tests.
-- Confirm preview forms and advertising events remain disabled and ordinary-site output is unchanged by this design rollout.
+- [x] Inspected all three pages on desktop and in smartphone layout. Additional narrow (360px) opener and large-phone (430px) spring views checked. Confirmed readable openings, offers and in-page navigation; the mobile Request action reaches a form with its submit button clear of the fixed bar. Phone/WhatsApp destinations and form isolation remain covered by the existing tests; no real call or message was sent. Corrected the shared mobile input rule to retain 16px text. Browser-responsive checks are not physical hardware tests.
+- [x] Confirmed Preview isolation in the tests and no ordinary-site HTML changes in the baseline comparison.
 
 ## At the coordinated release — still open
 

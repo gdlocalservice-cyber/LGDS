@@ -78,5 +78,5 @@
   .ads-wide-hero .ads-offer .ads-actions .button { font-size:14px; }
   .ads-wide-hero .ads-request .service-request-card { padding:21px 18px; }
   .ads-wide-hero .ads-request .service-request-card label > span { font-size:12px; }
-  .ads-wide-hero .ads-request .service-request-card :is(input:not([type=checkbox]),select,textarea) { font-size:16px; }
+  .ads-wide-hero .ads-request .service-request-card :is(input:not([type=checkbox]):not(.honeypot),select,textarea) { font-size:16px; }
 }
