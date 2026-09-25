@@ -50,7 +50,7 @@ const call = '<a class="button button-gold" href="tel:2674386494">Call 267-438-6
 const actions = `<div class="ads-actions">${call}<a class="button button-outline" href="#service-request">Request Service</a></div>`;
 for (const page of campaigns) {
   const canonical=domain+'/ads/'+page.slug+'/';
-  const faq=page.extraFaq ? [...commonFaq,page.extraFaq] : commonFaq;
+  const faq=[...commonFaq,...(page.extraFaqs || [])];
   // Owner approved reuse of the main site's hero, including its mobile source.
   const image = home('main picture').first().toString();
   if (!image) throw new Error('Missing approved homepage hero');

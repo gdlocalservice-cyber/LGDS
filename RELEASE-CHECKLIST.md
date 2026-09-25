@@ -1,6 +1,20 @@
 # LGDS review and release sequence
 
-## Review corrections — 2026-09-24 (supersedes earlier status)
+## Current release gate — 2026-09-25
+
+- [x] Itzik received the campaign-goals screenshots, Search Console evidence and production rollback record for the earlier `9e63cf7` review.
+- [x] Complete the limited campaign-copy follow-up and mapping in `CAMPAIGN-MAPPING.md`; 26/26 automated tests pass.
+- [ ] Review the new commit/Preview. Earlier acceptance is not release approval.
+- [ ] Verify the existing `generate_lead` import against the correct GA4 property and web stream `G-TVGZZ0WFTH`. Do not add a conversion. A Google-hosted lead form is a separate source.
+- [ ] Coordinate Netlify 2FA and verification of the linked sign-in account's protection with the owner. Keep authentication/recovery material private.
+- [ ] Complete the owner-only Netlify/GitHub access/activity review for August 31–September 13, 2026. Record exactly which logs were reviewed, their date coverage and what is unavailable. Payment and old project-change entries are not a full login audit.
+- [x] Recheck current production through Netlify: `6a824bc28167ec00080355f2` / `125d6e27dc2067067450824da725755168f3eeeb` on September 25, 2026.
+- [ ] Recheck the production deploy and automatic-publication state immediately before release, record any new rollback target, and obtain explicit approval plus a coordinated time before merging to `main`.
+- [ ] Keep Google settings and campaign final URLs unchanged until separate approval.
+
+This checklist records prerequisites; it does not approve publication. Private account evidence belongs in the owner handoff, not in this public repository.
+
+## Review corrections — 2026-09-24 (historical record)
 
 - OpenAI SDK now loads/initializes only after the US eligibility response and no GPC. Removed per-page consent(false); no forced consent(true), so a stored SDK denial is respected. Added event_id from submission ID. Official reference: https://developers.openai.com/ads/measurement-pixel (consent(false) deletes attribution cookies).
 - A fresh gclid/gbraid/wbraid/oppref replaces the complete stored campaign and stale fields; internal navigation preserves it.
@@ -9,8 +23,8 @@
 - Preferred Sources removed from all three Ads pages, retained on ordinary pages/Guides.
 - Build and 25/25 tests passed. New cases cover attribution replacement, invalid/valid phones, OpenAI navigation cookie-contract simulation and Ads content/component placement. The cookie simulation is NOT a real SDK/Monitoring verification. Complete oppref landing → internal navigation → accepted test lead in OpenAI Monitoring after coordinated release.
 - Duplicate protection scope: in-flight/repeated submit prevention in the current document; session-level measurement flags by opaque submission ID; stable ID on a retry within that document. Formspree receipt idempotency is not guaranteed, including refresh or a lost acknowledgement. No server-side idempotency store was added. Do not call this exactly-once server delivery.
-- Itzik reports: 37 bookkeeping queries / 60 impressions / 0 clicks for Philadelphia in Aug 31–Sep 13; current code/live page clean. These account findings are supplied by Itzik, not independently retrieved here. Security Issues, Manual Actions, indexed URL inspection and deployment/access history remain open.
-- Agreed account direction: do not add Netlify hosts to cross-domain measurement; no administrator change now. Campaign Goals screenshot still required to verify actual active goals/no duplicate form conversion.
+- Itzik reports: 37 bookkeeping queries / 60 impressions / 0 clicks for Philadelphia in Aug 31–Sep 13; current code/live page clean. Search Console evidence was subsequently received; the cause and historical access remain unresolved.
+- Agreed account direction: do not add Netlify hosts to cross-domain measurement; no administrator change now. Campaign Goals screenshots were subsequently received; the linked GA4 property/stream still requires verification.
 - Preview only. No merge, production release, campaign URL or Google-account change authorized.
 
 
@@ -30,7 +44,7 @@ This branch is for review. It does not authorize merging or publishing the live 
 The owner requested these checks at the end, on the real website:
 
 - Submit a request clearly labelled TEST and confirm receipt in Formspree and the business inbox.
-- Confirm one lead per successful submission in GA4, Google Ads and OpenAI; rejected/duplicate submissions must not create extra leads.
+- Confirm one GA4 lead and one eligible OpenAI event for the accepted TEST request. Check Google Ads attribution through an eligible campaign path separately; a direct test is not proof of Ads attribution. Rejected or repeated submissions in the same document must not create extra lead events; server-wide idempotency is not guaranteed.
 - Check Google forwarding numbers and call links using the actual campaign path.
 - Check Google Preferred Sources on `localgaragedoorsvc.com`, including authenticated source selection and the standard button's return flow.
 - Complete iPhone/Android device checks and record real performance results with live integrations enabled.
@@ -64,7 +78,7 @@ These source-level improvements are not a Lighthouse score or a claim of complet
 Before publication, provide:
 1. Review the supplied Needs Attention screenshots with Itzik: additional Netlify domains and adding another administrator. Neither action has been approved or performed by this implementation.
 2. The supplied list already shows the GA4 generate_lead import as Primary, Count One, Active. Verify the actual linked stream/property and campaign goals in the account; do not create a duplicate import. No credentials are needed in chat.
-3. Search Console evidence for Philadelphia as listed above, plus the query export for the specified date range with an exact page filter. Preserve evidence before requesting recrawl.
+3. Retain the received Search Console evidence for Philadelphia. Complete the available access/activity history for the specified period and explain any unavailable records. Preserve evidence before requesting recrawl.
 4. Owner approvals received: Friday closes at 5 PM Eastern, reuse the homepage hero, and use supplied reviews. Image provenance has not been independently certified.
 5. Itzik's visual review of the three preview pages and explicit approval before production or Ads final-URL changes.
 

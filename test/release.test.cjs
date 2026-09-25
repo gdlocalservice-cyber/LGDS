@@ -9,8 +9,8 @@ const base=path.resolve(__dirname,'../dist');
 const measurement=fs.readFileSync(path.resolve(__dirname,'../site/measurement.js'),'utf8');
 const forms=fs.readFileSync(path.resolve(__dirname,'../site/forms.js'),'utf8');
 const tick=()=>new Promise(resolve=>setTimeout(resolve,5));
-function browser({url='https://www.localgaragedoorsvc.com/ads/garage-door-repair/',live=true,tracking=true,storage,denyStorage=false,response,usRegion=true,gpc=false}={}) {
-  const html=fs.readFileSync(base+'/ads/garage-door-repair/index.html','utf8');
+function browser({url='https://www.localgaragedoorsvc.com/ads/garage-door-repair/',page='ads/garage-door-repair/index.html',live=true,tracking=true,storage,denyStorage=false,response,usRegion=true,gpc=false}={}) {
+  const html=fs.readFileSync(path.join(base,page),'utf8');
   const dom=new JSDOM(html,{url,runScripts:'outside-only',pretendToBeVisual:true});
   const w=dom.window; const form=w.document.querySelector('form');
   Object.defineProperty(w.navigator,'globalPrivacyControl',{value:gpc});
@@ -35,6 +35,7 @@ test('each paid page matches the approved heading, choices, canonical, CTA and s
   assert.equal($('meta[name=robots]').attr('content'),'noindex, follow');assert.deepEqual($('select option').slice(1).map((_,e)=>$(e).text()).get(),p.problems);
   assert.equal($('form').length,1);assert.equal($('input[name=zip]').attr('pattern'),'[0-9]{5}');assert.equal($('form').attr('id'),'service-request');
   assert.equal($('header nav,.breadcrumbs').length,0);assert.equal($('script#lgds-measurement').length,1);assert.equal($('script#lgds-forms').length,1);
+  assert.equal($('header a.brand').attr('href'),'/');
   assert.equal($('a').filter((_,e)=>/Request/.test($(e).text())&&$(e).attr('href')!=='#service-request').length,0);
   assert.equal($('[type="application/ld+json"]').length,1);const schema=JSON.parse($('[type="application/ld+json"]').text());assert.equal(schema['@type'],'Service');assert.ok(!schema.aggregateRating&&!schema.review);
   assert.equal($('.ads-reviews blockquote').length,2);assert.ok(!/24\/7|Free Estimate|guaranteed arrival/i.test($('body').text()));
@@ -45,6 +46,7 @@ test('all 62 pages keep working local assets/links and exactly one measurement/f
  assert.equal(files.length,62);
  for(const p of files){const $=cheerio.load(fs.readFileSync(base+'/'+p,'utf8'));
   assert.equal($('script#lgds-measurement').length,1,p);assert.equal($('script[src^="/_next/"]').length,0,p);
+  if(!p.startsWith('ads/'))assert.equal($('header a[href^="/ads/"]').length,0,p);
   const ids=new Set();$('[id]').each((_,e)=>{const id=$(e).attr('id');assert.ok(!ids.has(id),p+' duplicate id '+id);ids.add(id);});
   const form=$('form.service-request-card');if(form.length){assert.equal(form.attr('id'),p.startsWith('ads/')?'service-request':'service-request-form');assert.equal($('a[href="/#service-request-form"]').length,0,p);}
   $('[src],link[href],a[href]').each((_,e)=>{const raw=$(e).attr('src')||$(e).attr('href');if(!raw?.startsWith('/')||raw.startsWith('//'))return;const u=new URL(raw,'https://local.test');const local=path.join(base,decodeURIComponent(u.pathname));assert.ok(fs.existsSync(local)||fs.existsSync(local+'.html'),p+' missing '+raw);if(u.hash&&u.pathname==='/'){/* homepage anchors separately covered */}});
@@ -118,4 +120,23 @@ test('OpenAI navigation keeps SDK attribution cookies and stable event IDs witho
 test('paid pages put the form before the hero image and keep Preferred Sources only on ordinary pages',()=>{
  for(const p of campaigns){const $=cheerio.load(fs.readFileSync(base+'/ads/'+p.slug+'/index.html','utf8'));const children=$('.ads-hero').children().map((_,e)=>$(e).attr('class')).get();assert.ok(children.indexOf('ads-request')<children.indexOf('ads-photo'));assert.ok($('.ads-opening-review cite').text().includes(p.reviews[0]));assert.equal($('.lgds-preferred-source,[google-add-preferred-source-btn],script[src*="publisher.js"]').length,0);}
  const $=cheerio.load(fs.readFileSync(base+'/blog/index.html','utf8'));assert.equal($('.lgds-preferred-source').length,1);assert.equal($('.lgds-preferred-guides').length,1);
+});
+
+test('all three paid forms retain landing page, service and campaign with one confirmed lead; preview stays isolated',async()=>{
+ for(const p of campaigns){
+  const url='https://www.localgaragedoorsvc.com/ads/'+p.slug+'/?gclid=TEST-'+p.slug+'&utm_source=google&utm_medium=cpc&utm_campaign='+p.slug+'&utm_content=repair-ad';
+  const page='ads/'+p.slug+'/index.html';
+  const b=browser({url,page});fill(b);submit(b);await tick();submit(b);await tick();
+  assert.equal(b.requests.length,1,p.slug);const fields=b.requests[0].fields;
+  assert.equal(fields.landing_page,url);assert.equal(fields.page_url,url);
+  assert.equal(fields.page_service,p.slug);assert.equal(fields.source,'ads_'+p.slug);assert.equal(fields.issue,p.problems[0]);
+  assert.equal(fields.gclid,'TEST-'+p.slug);assert.equal(fields.utm_source,'google');assert.equal(fields.utm_medium,'cpc');
+  assert.equal(fields.utm_campaign,p.slug);assert.equal(fields.utm_content,'repair-ad');assert.equal(fields.consent,'on');
+  const leads=events(b,'generate_lead');assert.equal(leads.length,1,p.slug);assert.equal(leads[0][2].service,p.slug);
+  const openai=b.w.oaiq.q.filter(e=>e[0]==='measure'&&e[1]==='lead_created');assert.equal(openai.length,1);assert.equal(openai[0][3].event_id,fields.submission_id);
+  b.close();
+  const preview=browser({url:'https://deploy-preview.example/ads/'+p.slug+'/',page,live:false});fill(preview);submit(preview);await tick();
+  assert.equal(preview.requests.length,0,p.slug);assert.equal(events(preview,'generate_lead').length,0);
+  assert.equal(preview.w.oaiq,undefined);assert.match(preview.form.textContent,/has not been sent/);preview.close();
+ }
 });

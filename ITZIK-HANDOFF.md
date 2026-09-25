@@ -1,6 +1,17 @@
 # LGDS review handoff — 2026-09-23
 
-## Review corrections — 2026-09-24 (supersedes earlier status)
+## Combined follow-up — 2026-09-25 (current status)
+
+- Preserved the three paid pages and filled the campaign-content gaps only: clearer service-specific openings/process descriptions and relevant FAQs. See `CAMPAIGN-MAPPING.md` for the ad-group mapping and conditional installation/replacement campaign gaps.
+- Build and 26/26 tests passed. The added functional case checks landing page, service and campaign attribution, one confirmed lead and preview isolation on all three actual paid-page forms. Measurement runtime and mobile/desktop layout code were not changed by this follow-up.
+- Itzik confirms receipt of the campaign-goals, Search Console and rollback evidence and found no further code blocker in the earlier `9e63cf7` version. This does not constitute approval of a new commit or a production release.
+- Campaign-goal screenshots show account-default form and phone goals. The existing GA4 `generate_lead` import must still be matched to the property/web stream `G-TVGZZ0WFTH`. The Google-hosted form action is separate and is not, by itself, a duplicate website form conversion. Do not create another conversion.
+- Search Console screenshots show no detected Security Issues or Manual Actions; Philadelphia is indexed with a matching Google-selected canonical and a September 13, 2026 crawl. These observations do not explain the unusual historical queries or clear historical access. The complete owner-only access/security review remains open.
+- Keep account-access evidence and authentication details in the private owner handoff, outside this public repository. Coordinate Netlify 2FA and linked-login protection with the owner; keep passwords, QR secrets and recovery codes private.
+- Current production deploy was rechecked through Netlify on September 25: `6a824bc28167ec00080355f2`, commit `125d6e27dc2067067450824da725755168f3eeeb`. Recheck immediately before an approved release. The supplied dashboard shows automatic publishing enabled; no merge to `main` is authorized.
+- After coordinated release, run one labelled TEST request for Formspree/email receipt, one GA4 event, one eligible OpenAI event and phone replacement. Verify Google Ads attribution separately through a suitable advertising path. Campaign URLs and Google settings require separate approval.
+
+## Review corrections — 2026-09-24 (historical record)
 
 - OpenAI SDK now loads/initializes only after the US eligibility response and no GPC. Removed per-page consent(false); no forced consent(true), so a stored SDK denial is respected. Added event_id from submission ID. Official reference: https://developers.openai.com/ads/measurement-pixel (consent(false) deletes attribution cookies).
 - A fresh gclid/gbraid/wbraid/oppref replaces the complete stored campaign and stale fields; internal navigation preserves it.
@@ -9,8 +20,8 @@
 - Preferred Sources removed from all three Ads pages, retained on ordinary pages/Guides.
 - Build and 25/25 tests passed. New cases cover attribution replacement, invalid/valid phones, OpenAI navigation cookie-contract simulation and Ads content/component placement. The cookie simulation is NOT a real SDK/Monitoring verification. Complete oppref landing → internal navigation → accepted test lead in OpenAI Monitoring after coordinated release.
 - Duplicate protection scope: in-flight/repeated submit prevention in the current document; session-level measurement flags by opaque submission ID; stable ID on a retry within that document. Formspree receipt idempotency is not guaranteed, including refresh or a lost acknowledgement. No server-side idempotency store was added. Do not call this exactly-once server delivery.
-- Itzik reports: 37 bookkeeping queries / 60 impressions / 0 clicks for Philadelphia in Aug 31–Sep 13; current code/live page clean. These account findings are supplied by Itzik, not independently retrieved here. Security Issues, Manual Actions, indexed URL inspection and deployment/access history remain open.
-- Agreed account direction: do not add Netlify hosts to cross-domain measurement; no administrator change now. Campaign Goals screenshot still required to verify actual active goals/no duplicate form conversion.
+- Itzik reports: 37 bookkeeping queries / 60 impressions / 0 clicks for Philadelphia in Aug 31–Sep 13; current code/live page clean. The later Search Console evidence is acknowledged above; historical access and the cause of the queries remain unresolved.
+- Agreed account direction: do not add Netlify hosts to cross-domain measurement; no administrator change now. Campaign Goals evidence was subsequently received; the linked GA4 property/stream still requires verification.
 - Preview only. No merge, production release, campaign URL or Google-account change authorized.
 
 
@@ -49,7 +60,7 @@ Tests simulate server acknowledgements and measurement; they do not prove inbox 
 
 1. Itzik reviews this branch/diff, campaign pages, content, image/review choices and campaign URL mapping. Do not infer readiness solely from green tests.
 2. Verify account conversion destinations, consent behavior and campaign goals; agree any Google changes explicitly with the owner.
-3. Investigate Philadelphia bookkeeping queries for Aug 31–Sep 13, 2026: Search Console Security Issues, Manual Actions, exact-page query export, indexed HTML/crawl date/Google canonical versus live inspection; compare templates, scripts, redirects, deployment/access history. No compromise or clean bill of health is established by a local string scan.
+3. Continue the Philadelphia investigation for Aug 31–Sep 13, 2026 using the received Search Console evidence and available Netlify/GitHub activity/access records. Explicitly identify the records reviewed and those unavailable. No compromise or clean bill of health is established by a local string scan or by payment/project-change logs.
 4. Check Netlify publication settings and record the actual current production deploy as rollback target immediately before release. Historical rollback IDs are not current-state proof.
 5. Complete visual and real-device review; performance with live integrations is still outstanding.
 
