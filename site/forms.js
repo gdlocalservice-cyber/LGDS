@@ -89,7 +89,7 @@
     } catch (_) {
       var node = status(form, 'We could not confirm that your request was received. Your details are still here. Please call ', true);
       var call = d.createElement('a'); call.href = 'tel:2674386494'; call.dataset.lgdsPhone = '';
-      var number = d.createElement('span'); number.dataset.lgdsPhoneText = ''; number.textContent = '267-438-6494'; call.appendChild(number);
+      var number = d.createElement('span'); number.dataset.lgdsPhoneText = ''; number.textContent = '(267) 438-6494'; call.appendChild(number);
       node.appendChild(call); node.appendChild(d.createTextNode(' or try again.'));
       try { w.lgdsMeasurement.applyPhoneNumber(); } catch (_) {}
       if (button) { button.disabled = false; button.innerHTML = originalLabel; }

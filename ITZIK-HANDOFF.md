@@ -1,4 +1,4 @@
-# PR #15 — current handoff, 2026-09-25
+# LGDS — release handoff, 2026-09-25
 
 ## Decision and scope
 
@@ -6,7 +6,7 @@ Itzik's supplied technical review of `9d965ba` accepted the full PR #15 package,
 
 Gal subsequently approved the wide navy-photo design on the spring/cable/off-track page and requested the same design on the other two paid pages. This follow-up applies that shared design to all three: original responsive technician background, graduated navy overlay, local Repairs/Reviews/FAQs navigation, wider alignment, smaller headings, compact gold offers and a white form card. Mobile keeps opening, offer/actions, short review and form in that order. The background image has no separate duplicate block; supporting service images remain. This rollout does not modify the ordinary site's design or behavior. Earlier ordinary-site changes remain in PR #15.
 
-All work remains in Preview. Technical acceptance and the owner's design approval are not permission to merge or publish. Itzik will separately approve a coordinated release time.
+PR #15 was published with the owner’s express authorization after he confirmed Itzik’s approval. Live merge: `01a7ad112e95f03997c9ee83caac406be796136c`; Netlify deploy: `6ab6e6b1b4781800080662e6`, published September 25 at 17:25:33 Eastern. The owner separately approved the site-wide `(267) 438-6494` display update and its publication at 18:16 Eastern. The display follow-up is being verified before publication; its final deploy and checks will be recorded in its PR. Google account and campaign changes remain outside that authorization.
 
 ## Completed evidence — do not repeat as open tasks
 
@@ -21,7 +21,7 @@ All work remains in Preview. Technical acceptance and the owner's design approva
 | Preferred Sources, performance and accessibility | Accepted within code/Preview scope. Official live Google component and performance with production integrations still require the post-release checks below. No claim of full WCAG conformance or a particular Lighthouse score. |
 | Security evidence status | Itzik accepted the description of the known state and evidence limits. No proof of compromise; the unusual query source remains unproven. The investigation is not reopened as a release prerequisite. |
 
-The earlier “No recent conversions” status does not undo the verified conversion mapping. Live delivery and measurement remain unproven until the agreed TEST.
+The earlier “No recent conversions” status does not undo the verified conversion mapping. The owner confirmed a phone TEST and inbox receipt around 17:40 Eastern. Supplied GA4 screenshots show one `generate_lead` with `page_location` equal to the general repair Ads URL. A separate controlled TEST produced one OpenAI `lead_created` at 17:58:44 Eastern via `pixel_sdk`, alongside a distinct initialization event. These are receipt evidence, not proof of paid-campaign attribution or exact ID correlation across those two tests.
 
 ## Security record and limits
 
@@ -44,16 +44,22 @@ Known limitations remain explicit:
 
 Existing Google tag identifiers remain `GT-NGJ3Z7QQ`, `G-TVGZZ0WFTH` and `AW-17878825273`; no GTM migration. Website call configuration remains `AW-17878825273/TxwGCJyr6-IcELnypM1C` for `267-438-6494`. No Google setting, conversion import, additional-domain suggestion or administrator change is part of this follow-up.
 
-## Only remaining release steps
+## Remaining coordinated checks
 
-1. Itzik reviews the current shared-design Preview and gives separate explicit merge/publication approval and a coordinated time.
-2. Immediately before that release, recheck current production and automatic publishing. Last recorded rollback: deploy `6a824bc28167ec00080355f2`, commit `125d6e27dc2067067450824da725755168f3eeeb`, checked September 25. If production changes, record the new target. Main was automatically published; do not merge ahead of approval.
-3. Only after approval, enable the existing production gate `LGDS_RELEASE_APPROVED=1` and carry out the agreed release. This handoff does not authorize changing that gate.
-4. Perform the post-release sequence in `RELEASE-CHECKLIST.md`. Campaign final URLs and any further Google-account changes remain separately coordinated with Itzik.
+1. Verify an eligible real Google forwarding number, actual call routing and qualified-call attribution. The supplied website-call action uses Primary / One and a 60-second threshold. The Google debugging panel successfully replaced all five general-page phone links with its dummy number before the display follow-up; this proves the callback path, not real routing or campaign attribution.
+2. Check Ads lead attribution and OpenAI campaign attribution through eligible campaign traffic. Do not create or import duplicate conversions. Review GA4 `form_start`, which appears as a key event in the owner’s screenshot, and confirm it is not used as a completed lead in Ads; its import was not established.
+3. Retain the limitations below and complete the remaining post-release items in `RELEASE-CHECKLIST.md`. Campaign final URLs and Google-account changes remain separately coordinated with Itzik.
+4. For the approved phone display follow-up, the immediately preceding production rollback is deploy `6ab6e6b1b4781800080662e6` / commit `01a7ad112e95f03997c9ee83caac406be796136c`. Recheck before publication. Automatic main publishing and the approved production build gate are active.
 
-## Preview links
+## Phone display follow-up
 
-- https://deploy-preview-15--local-garage-door-service.netlify.app/ads/garage-door-repair/
-- https://deploy-preview-15--local-garage-door-service.netlify.app/ads/garage-door-opener-repair/
-- https://deploy-preview-15--local-garage-door-service.netlify.app/ads/spring-cable-off-track-repair/
+The build now formats customer-facing text, accessibility labels, metadata and form-error fallback numbers as `(267) 438-6494`. Dialing/WhatsApp URLs, structured telephone fields, conversion IDs and Google account settings are preserved. Valid U.S. forwarding numbers use the same display format, while `tel:` receives Google's supplied dialable number. Repeated callbacks and late error messages remain synchronized.
+
+Pre-publication production build: 28/28 tests passed. Audited 62 HTML pages, 317 displayed numbers including JavaScript-disabled fallbacks, 55 forms and 6,061 links. After normalizing only the approved display changes and build cache versions, all 62 pages matched the preceding production build. All non-HTML production assets were byte-identical except the two intended form/measurement scripts. Browser and live follow-up results belong to this change’s PR release record.
+
+## Published pages
+
+- https://www.localgaragedoorsvc.com/ads/garage-door-repair/
+- https://www.localgaragedoorsvc.com/ads/garage-door-opener-repair/
+- https://www.localgaragedoorsvc.com/ads/spring-cable-off-track-repair/
 - Full PR: https://github.com/gdlocalservice-cyber/LGDS/pull/15

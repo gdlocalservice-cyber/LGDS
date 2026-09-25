@@ -50,14 +50,21 @@
     d.querySelectorAll('[data-lgds-phone]').forEach(function (link) {
       link.setAttribute('href', 'tel:' + forwarding.number);
       var label = link.getAttribute('aria-label');
-      if (label) link.setAttribute('aria-label', label.replace(/267[- ]?438[- ]?6494/g, forwarding.formatted));
+      if (label) {
+        var template = link.getAttribute('data-lgds-phone-label') || label;
+        link.setAttribute('data-lgds-phone-label', template);
+        link.setAttribute('aria-label', template.replace(/(?:\+?1[ .-]?)?\(?267\)?[ .-]?438[ .-]?6494/g, forwarding.formatted));
+      }
     });
     d.querySelectorAll('[data-lgds-phone-text]').forEach(function (node) { node.textContent = forwarding.formatted; });
   }
   function phoneCallback(formatted, number) {
     var digits = String(number || '').replace(/[^0-9+]/g, '');
     if (!/^\+?\d{10,15}$/.test(digits)) return;
-    forwarding = { formatted: String(formatted || number), number: digits };
+    var national = digits.replace(/^\+/, '');
+    if (national.length === 11 && national.charAt(0) === '1') national = national.slice(1);
+    var display = national.length === 10 ? '(' + national.slice(0,3) + ') ' + national.slice(3,6) + '-' + national.slice(6) : String(formatted || number);
+    forwarding = { formatted: display, number: digits };
     applyPhoneNumber();
   }
   function event(name, parameters) {
