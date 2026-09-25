@@ -110,6 +110,9 @@ form.service-request-card :is(input:not([type=checkbox]):not([type=hidden]):not(
 .ads-footer-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 24px; }
 .ads-footer p { margin: 7px 0; }
 .ads-footer .legal-links { justify-content: flex-start; flex-wrap: wrap; }
+/* Pair the pill colors explicitly on both light and dark footer themes. */
+footer .legal-links a,footer .legal-links a:visited { color:#102d49; background:#f7f8fa; }
+footer .legal-links a:hover { color:#102d49; background:#e6edf5; }
 .ads-preview-note { margin: 0; padding: 10px 20px; text-align: center; background: #fff1cc; color: #352e1e; font-size: 14px; }
 @media(max-width:760px) {
   .lgds-preferred-guides { width:calc(100% - 36px); flex-direction:column; align-items:flex-start; padding:24px; gap:20px; }
