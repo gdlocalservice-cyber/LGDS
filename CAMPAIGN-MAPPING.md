@@ -18,13 +18,12 @@ Production domain: `https://www.localgaragedoorsvc.com`.
 
 ## Preserved behavior
 
-- Three separately scoped visual examples are available for owner comparison. General repair retains the white-photo concept with local Repairs/Reviews/FAQs links. Opener repair retains its navy-photo concept. The latest owner request changes only `/ads/spring-cable-off-track-repair/`: navy photo background, the same three local header links, and a fluid wide layout with side gutters around 2.5% of viewport width, matching the homepage's use of the screen. The hero copy and form retain readable widths while the technician remains between them. Supporting sections use the same wider alignment. No other page design was extended or replaced. All three use a single responsive hero image as a background, preserving service-specific photos below.
-
+- At the owner's request, all three Ads pages now share the approved wide navy-photo design previously reviewed on the spring/cable/off-track page. Local Repairs/Reviews/FAQs links, fluid side gutters, readable copy/form widths, compact gold offers and the original technician background are consistent across the pages. Mobile uses a separate crop and stacked content. This rollout does not change the ordinary site's design or behavior. Earlier ordinary-site work remains part of PR #15.
 
 - Each paid repair page now displays the owner's requested 10% repair offer with its service name and existing call/request actions. A separate 7% offer for U.S. active-duty military members and veterans may be combined with it, matching the public homepage terms checked on 2026-09-25. Other website offers cannot be combined with the repair offer. No combined 17% claim, expiration date, new eligibility rule or savings cap is implied. The homepage's separate 15% spring-labor and 10% opener-installation offers are unchanged.
 
 - The owner requested new opening copy and a navy/gold hero using the original site typography. The owner-approved hero, service-specific supporting photos and exact owner-supplied Google review excerpts remain. No affiliation with the Overhead Door brand is claimed.
-- Mobile order is opening, offer/actions, short review and form. Each design trial uses the existing hero image as a background, with no separate duplicate photo block. The short approved review is also visible on desktop. The desktop two-column layout is retained. Supporting images are lazy; responsive hero priority is retained.
+- Mobile order is opening, offer/actions, short review and form. The shared design uses the existing hero image as a background, with no separate duplicate photo block. The short approved review is also visible on desktop. The desktop two-column layout is retained. Supporting images are lazy; responsive hero priority is retained.
 - Existing call destinations, local form anchors and confirmed operating hours remain. ZIP is a form field only; promotional copy no longer emphasizes it. No 24/7, guaranteed arrival or free-quote promise was added.
 - All three paid pages retain noindex/follow, a self-canonical URL, exclusion from the sitemap and ordinary main navigation, and AdsBot access. The logo links home. Preferred Sources remains outside paid pages.
 - No GEO code, duplicate city pages, measurement runtime changes or additional conversion action was introduced.
@@ -39,4 +38,6 @@ Simulated acknowledgements do not verify live Formspree/email delivery, the GA4-
 
 ## Approval boundary
 
-Itzik's acceptance of the earlier `9e63cf7` code/Preview is historical evidence. The content and test changes in this follow-up require review of the new Preview. Account verification, the owner-only security/access review and the coordinated release checklist remain required. No merge to main, production release, Google setting change or campaign final-URL change is authorized.
+Itzik's supplied technical review of `9d965ba` covers the PR #15 package, including the ordinary-site changes: 26/26 tests passed, campaign/content/offer/SEO checks were accepted, and remaining live checks were deferred until an approved release. The owner subsequently approved the wide spring-page design and requested this shared rollout. Account mapping and stream-URL verification are recorded as complete in `ITZIK-HANDOFF.md`; security evidence limits remain documented and are not a renewed release gate.
+
+This visual rollout and documentation update are delivered in Preview for final approval. Itzik's technical recommendation is not permission to merge or publish. Recheck rollback and automatic publishing near the separately coordinated release. Campaign final URLs and Google settings require separate authorization.

@@ -1,75 +1,59 @@
-# LGDS review handoff — 2026-09-23
+# PR #15 — current handoff, 2026-09-25
 
-## Combined follow-up — 2026-09-25 (current status)
+## Decision and scope
 
-- Preserved the three paid pages and filled the campaign-content gaps only: clearer service-specific openings/process descriptions and relevant FAQs. See `CAMPAIGN-MAPPING.md` for the ad-group mapping and conditional installation/replacement campaign gaps.
-- Build and 26/26 tests passed. The added functional case checks landing page, service and campaign attribution, one confirmed lead and preview isolation on all three actual paid-page forms. Measurement runtime and mobile/desktop layout code were not changed by this follow-up.
-- Itzik confirms receipt of the campaign-goals, Search Console and rollback evidence and found no further code blocker in the earlier `9e63cf7` version. This does not constitute approval of a new commit or a production release.
-- Campaign-goal screenshots show account-default form and phone goals. The existing GA4 `generate_lead` import must still be matched to the property/web stream `G-TVGZZ0WFTH`. The Google-hosted form action is separate and is not, by itself, a duplicate website form conversion. Do not create another conversion.
-- Search Console screenshots show no detected Security Issues or Manual Actions; Philadelphia is indexed with a matching Google-selected canonical and a September 13, 2026 crawl. These observations do not explain the unusual historical queries or clear historical access. The complete owner-only access/security review remains open.
-- Keep account-access evidence and authentication details in the private owner handoff, outside this public repository. Coordinate Netlify 2FA and linked-login protection with the owner; keep passwords, QR secrets and recovery codes private.
-- Current production deploy was rechecked through Netlify on September 25: `6a824bc28167ec00080355f2`, commit `125d6e27dc2067067450824da725755168f3eeeb`. Recheck immediately before an approved release. The supplied dashboard shows automatic publishing enabled; no merge to `main` is authorized.
-- After coordinated release, run one labelled TEST request for Formspree/email receipt, one GA4 event, one eligible OpenAI event and phone replacement. Verify Google Ads attribution separately through a suitable advertising path. Campaign URLs and Google settings require separate approval.
+Itzik's supplied technical review of `9d965ba` accepted the full PR #15 package, including the earlier ordinary-site changes, with 26/26 tests passing on repeat. No new code blocker was identified. The remaining documentation correction is incorporated below. This records the supplied account/owner evidence; it does not claim a new direct account audit by this implementation.
 
-## Review corrections — 2026-09-24 (historical record)
+Gal subsequently approved the wide navy-photo design on the spring/cable/off-track page and requested the same design on the other two paid pages. This follow-up applies that shared design to all three: original responsive technician background, graduated navy overlay, local Repairs/Reviews/FAQs navigation, wider alignment, smaller headings, compact gold offers and a white form card. Mobile keeps opening, offer/actions, short review and form in that order. The background image has no separate duplicate block; supporting service images remain. This rollout does not modify the ordinary site's design or behavior. Earlier ordinary-site changes remain in PR #15.
 
-- OpenAI SDK now loads/initializes only after the US eligibility response and no GPC. Removed per-page consent(false); no forced consent(true), so a stored SDK denial is respected. Added event_id from submission ID. Official reference: https://developers.openai.com/ads/measurement-pixel (consent(false) deletes attribution cookies).
-- A fresh gclid/gbraid/wbraid/oppref replaces the complete stored campaign and stale fields; internal navigation preserves it.
-- Browser phone validation requires ordinary phone characters and 10–15 digits. Formspree-side validation remains to be configured/verified by the account owner; no receiving-service setting was changed.
-- Mobile DOM order is intro + short verified review, form, then hero image. Desktop grid retains its layout.
-- Preferred Sources removed from all three Ads pages, retained on ordinary pages/Guides.
-- Build and 25/25 tests passed. New cases cover attribution replacement, invalid/valid phones, OpenAI navigation cookie-contract simulation and Ads content/component placement. The cookie simulation is NOT a real SDK/Monitoring verification. Complete oppref landing → internal navigation → accepted test lead in OpenAI Monitoring after coordinated release.
-- Duplicate protection scope: in-flight/repeated submit prevention in the current document; session-level measurement flags by opaque submission ID; stable ID on a retry within that document. Formspree receipt idempotency is not guaranteed, including refresh or a lost acknowledgement. No server-side idempotency store was added. Do not call this exactly-once server delivery.
-- Itzik reports: 37 bookkeeping queries / 60 impressions / 0 clicks for Philadelphia in Aug 31–Sep 13; current code/live page clean. The later Search Console evidence is acknowledged above; historical access and the cause of the queries remain unresolved.
-- Agreed account direction: do not add Netlify hosts to cross-domain measurement; no administrator change now. Campaign Goals evidence was subsequently received; the linked GA4 property/stream still requires verification.
-- Preview only. No merge, production release, campaign URL or Google-account change authorized.
+All work remains in Preview. Technical acceptance and the owner's design approval are not permission to merge or publish. Itzik will separately approve a coordinated release time.
 
+## Completed evidence — do not repeat as open tasks
 
-Review branch only: `codex/lgds-measurement-landing-pages`, draft PR #15. No production release, merge, Ads final-URL update, or Google-account configuration change is authorized by this handoff.
+| Item | Recorded result and evidence source |
+| --- | --- |
+| Campaign coverage | Accepted in Itzik's review: general/overhead repair, opener/motor/sensor/remote/keypad, and spring/cable/off-track. Overhead is descriptive, without brand affiliation. No further content request is open. |
+| Preview and ordinary-site usability | Itzik accepted desktop/mobile Preview, navigation, buttons and ordinary-site actions. Gal reported successful real-phone checks on the reviewed version. Responsive checks for this later shared visual rollout are separate; earlier physical-device confirmation is not relabelled as a new device test. |
+| Offers and business details | Approved 10% service-specific repair offer and separate 7% U.S. military/veterans offer retained, including the approved combination terms. No 17% claim. Existing ordinary-site promotions remain. Friday closes at 5 PM Eastern. |
+| Existing form conversion | Owner/Itzik report direct Ads/Analytics verification: “Local Garage Door Service (web) generate_lead” belongs to GA4 property `520175750` and Ads account `632-428-0974`; Primary, Count One. Search campaign uses default call/form goals. No new import or conversion is needed. Google-hosted lead forms are a separate source. |
+| Web stream | Stream `13308694835`, Measurement ID `G-TVGZZ0WFTH`, match the code. Owner's screenshot confirms Stream URL was updated to `https://www.localgaragedoorsvc.com/` within the same stream, retaining its IDs. The former Netlify URL was not proven to cause the conversion issue. |
+| SEO and existing-site work | Itzik accepted code checks for redirects, links, sitemap and Ads separation. Paid pages remain noindex/follow, self-canonical, outside sitemap/main navigation and accessible to AdsBot; logo links home. No special GEO code or duplicate city pages. |
+| Preferred Sources, performance and accessibility | Accepted within code/Preview scope. Official live Google component and performance with production integrations still require the post-release checks below. No claim of full WCAG conformance or a particular Lighthouse score. |
+| Security evidence status | Itzik accepted the description of the known state and evidence limits. No proof of compromise; the unusual query source remains unproven. The investigation is not reopened as a release prerequisite. |
 
-## Completed in code
+The earlier “No recent conversions” status does not undo the verified conversion mapping. Live delivery and measurement remain unproven until the agreed TEST.
 
-- Three campaign pages: general repair, opener/sensor repair, spring/cable/off-track repair. Each has its own service copy, choices, local form anchor, FAQs and service schema.
-- Reused the homepage responsive hero on all three pages, as approved by the owner. Selected exact excerpts from the supplied review screenshots: Brandon Munson, Kardia Rowe, Ralph DeJesus, Jatish Patel and Michael Crudup. Sources are owner-supplied screenshots; snippets and names live in site/approved-reviews.json. No new aggregate rating/count is claimed. Original spelling is preserved.
-- Shared form handling across 55 forms: validation, consent, error recovery, retained input, timeout, submission deduplication, and success only after a positive JSON acknowledgement from Formspree. Preview makes no real submission.
-- Attribution preservation for gclid, gbraid, wbraid and campaign parameters, including blocked-storage fallback.
-- One measurement owner; GA4 generate_lead only after accepted submission. No extra direct Google Ads form conversion added. Phone-number callback updates display and tel destination. OpenAI event gated by consent, confirmed US region and GPC; production debug off.
-- Production-host guards isolate preview measurement. Existing historical Netlify deployments were not modified.
-- Ads pages excluded from sitemap and ordinary navigation, with noindex/follow, self-canonical and AdsBot access retained. Canonical redirects preserve query parameters and do not convert arbitrary missing pages into homepage redirects.
-- Preferred Sources official production component in Guides, articles and footer; preview uses the business-domain deep link.
-- Removed 116 obsolete image preloads, preserved hero priority, made supporting images lazy and video user-controlled. Added focus/target and before-after accessibility improvements.
-- Editorial cleanup on 40 service/location pages, including 17 service-specific notes. This does not certify every existing sentence, photo or local project history.
-- Friday hours match owner approval: 7 AM–5 PM Eastern.
+## Security record and limits
 
-## Verification
+- The owner's Google screenshot shows 2-Step Verification enabled. Netlify uses the connected Google account. Separate Netlify 2FA was not shown enabled; this document neither claims otherwise nor introduces it as a new release gate.
+- Supplied Google activity screenshots show application grants; the owner reports Itzik authorized HYPD_AI. This does not establish that every other grant was reviewed.
+- A supplied GitHub Security log screenshot is filtered to August 31–September 13, 2026 and shows ChatGPT Codex Connector token-regeneration entries. A screenshot is not a complete forensic audit of all access.
+- The supplied Netlify team log shows payments and project changes. A complete historical sign-in log and coverage for that period were not established from the available records. This remains an explicit evidence limitation, not a claim that no access occurred.
+- Search Console evidence and the earlier rollback record were received. The source of the unusual Philadelphia queries is unresolved. No proof of a breach was established; no forensic clearance is asserted.
+- Keep credentials, QR codes, recovery codes and private account evidence outside this public repository.
 
-`npm run verify` passed on 2026-09-23: build plus 21/21 automated tests. Built 62 HTML pages, checked 4,654 links, 55 forms, 3 campaign pages, 54 sitemap routes. Tests exercise successful/error/invalid/duplicate form paths, preview isolation, attribution fallback, call-link behavior, OpenAI consent/region/GPC gating and redirects.
+## Latest verification and implementation limits
 
-Tests simulate server acknowledgements and measurement; they do not prove inbox delivery, account attribution, actual qualified calls or real-device performance. No new Lighthouse score or complete WCAG claim is made.
+`npm run verify` passed for this follow-up: 26/26 tests; 62 generated pages, 55 forms, 4,654 links and 54 sitemap routes. The tests cover the generated pages, all three forms, simulated provider acknowledgements, attribution, consent, telephone-link updates, navigation, SEO and Preview isolation. The shared hero stylesheet is loaded only on Ads pages. Actual inbox delivery and provider dashboards are not simulated-test evidence.
 
-## Google account evidence and decisions for Itzik
+Known limitations remain explicit:
 
-- Existing GA4 import: Local Garage Door Service (web) generate_lead, ID 7706703078, Primary, Count One, Active; GA4 source, 90-day click window. Verify property/stream and campaign-goal mapping; do not create another primary action for the same submission.
-- Website calls: Call (267-438-6494), ID 7723472284, Primary, Count One, 60-second threshold, 30-day click window. Supplied snippet AW-17878825273/TxwGCJyr6-IcELnypM1C matches code. Verify actual number replacement and call attribution after approval.
-- Google-hosted Lead form - Submit, Calls from ads and locked pay-per-lead actions are separate rows; do not delete or change them merely because names overlap.
-- Retain G-TVGZZ0WFTH, GT-NGJ3Z7QQ and AW-17878825273. No GTM migration.
-- Needs Attention screenshots show additional Netlify domains suggested for cross-domain configuration and a second-administrator recommendation. Do not automatically accept all deployment domains or change administrator access.
-- Monitored domains is distinct from cross-domain measurement. Screenshots show root localgaragedoorsvc.com added under My domains; www addition is not confirmed. Ignoring diagnostic domains does not itself stop data collection. No accept/ignore/admin changes are verified.
+1. Phone validation is browser-side (ordinary phone characters, 10–15 digits). Receiving-server/Formspree-side validation has not been implemented/configured and verified by this work.
+2. In-flight and repeated-submit protection applies within the current document, with a stable opaque submission ID for retries there and session-level measurement flags. No server-side idempotency store was added. A refresh or lost acknowledgement can still result in duplicate receipt. This is not exactly-once server delivery.
+3. Preview disables real submissions and advertising events. Automated tests cannot confirm live Formspree/email delivery, OpenAI dashboard receipt, number substitution, call attribution or production-network performance.
 
-## Before production: remaining review
+Existing Google tag identifiers remain `GT-NGJ3Z7QQ`, `G-TVGZZ0WFTH` and `AW-17878825273`; no GTM migration. Website call configuration remains `AW-17878825273/TxwGCJyr6-IcELnypM1C` for `267-438-6494`. No Google setting, conversion import, additional-domain suggestion or administrator change is part of this follow-up.
 
-1. Itzik reviews this branch/diff, campaign pages, content, image/review choices and campaign URL mapping. Do not infer readiness solely from green tests.
-2. Verify account conversion destinations, consent behavior and campaign goals; agree any Google changes explicitly with the owner.
-3. Continue the Philadelphia investigation for Aug 31–Sep 13, 2026 using the received Search Console evidence and available Netlify/GitHub activity/access records. Explicitly identify the records reviewed and those unavailable. No compromise or clean bill of health is established by a local string scan or by payment/project-change logs.
-4. Check Netlify publication settings and record the actual current production deploy as rollback target immediately before release. Historical rollback IDs are not current-state proof.
-5. Complete visual and real-device review; performance with live integrations is still outstanding.
+## Only remaining release steps
 
-## After coordinated release
+1. Itzik reviews the current shared-design Preview and gives separate explicit merge/publication approval and a coordinated time.
+2. Immediately before that release, recheck current production and automatic publishing. Last recorded rollback: deploy `6a824bc28167ec00080355f2`, commit `125d6e27dc2067067450824da725755168f3eeeb`, checked September 25. If production changes, record the new target. Main was automatically published; do not merge ahead of approval.
+3. Only after approval, enable the existing production gate `LGDS_RELEASE_APPROVED=1` and carry out the agreed release. This handoff does not authorize changing that gate.
+4. Perform the post-release sequence in `RELEASE-CHECKLIST.md`. Campaign final URLs and any further Google-account changes remain separately coordinated with Itzik.
 
-- Clearly labelled TEST submission: verify Formspree AND inbox receipt; one GA4 lead and eligible OpenAI event. Verify Ads attribution through an eligible campaign path; an ordinary direct test need not appear as an Ads conversion.
-- Verify forwarding numbers and displayed/tel values on header, hero, mobile bar and final CTA.
-- Verify Preferred Sources authenticated selection and return on desktop/mobile.
-- Check iPhone/Android interactions and record performance with production integrations.
-- Review sitemap/indexing in Search Console and campaign final URLs only with approval.
+## Preview links
 
-Production remains gated by LGDS_RELEASE_APPROVED=1. Do not set it until release authorization.
+- https://deploy-preview-15--local-garage-door-service.netlify.app/ads/garage-door-repair/
+- https://deploy-preview-15--local-garage-door-service.netlify.app/ads/garage-door-opener-repair/
+- https://deploy-preview-15--local-garage-door-service.netlify.app/ads/spring-cable-off-track-repair/
+- Full PR: https://github.com/gdlocalservice-cyber/LGDS/pull/15
