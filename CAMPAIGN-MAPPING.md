@@ -18,6 +18,8 @@ Production domain: `https://www.localgaragedoorsvc.com`.
 
 ## Preserved behavior
 
+- Each paid repair page now displays the owner's requested 10% repair offer with its service name and existing call/request actions. A separate 7% offer for U.S. active-duty military members and veterans may be combined with it, matching the public homepage terms checked on 2026-09-25. Other website offers cannot be combined with the repair offer. No combined 17% claim, expiration date, new eligibility rule or savings cap is implied. The homepage's separate 15% spring-labor and 10% opener-installation offers are unchanged.
+
 - The owner requested new opening copy and a navy/gold hero using the original site typography. The owner-approved hero, service-specific supporting photos and exact owner-supplied Google review excerpts remain. No affiliation with the Overhead Door brand is claimed.
 - Mobile order remains opening + short review, form, then hero photo. The short approved review is also visible on desktop. The desktop two-column layout is retained. Supporting images are lazy; responsive hero priority is retained.
 - Existing call destinations, local form anchors and confirmed operating hours remain. ZIP is a form field only; promotional copy no longer emphasizes it. No 24/7, guaranteed arrival or free-quote promise was added.

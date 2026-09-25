@@ -56,6 +56,28 @@ form.service-request-card :is(input:not([type=checkbox]):not([type=hidden]):not(
 .ads-intro .button-outline { color:#fff; border-color:#b3c4d5; background:transparent; }
 .ads-intro .button-outline:hover { background:#ffffff12; border-color:#fff; }
 .ads-intro .button-gold { box-shadow:0 8px 28px #0003; }
+.ads-offer { padding:22px; border:1px solid #ffce32; border-radius:14px; background:linear-gradient(120deg,#fff8df,#ffe6a0); color:#102d49; }
+.ads-offer-heading { display:flex; align-items:center; gap:20px; margin-bottom:18px; }
+.ads-offer-amount { flex:0 0 auto; margin:0; padding-right:20px; border-right:1px solid #b08b3960; text-align:center; line-height:1; }
+.ads-offer-amount strong { display:block; font-family:Oswald,'Arial Narrow',sans-serif; font-size:64px; font-weight:700; letter-spacing:-.04em; }
+.ads-offer-amount strong span { font-size:.62em; }
+.ads-offer-amount > span { display:block; margin-top:6px; font-size:13px; font-weight:800; letter-spacing:.16em; }
+.ads-offer-copy { min-width:0; }
+.ads-offer .ads-offer-kicker { margin:0 0 6px; color:#705117; font-size:10px; font-weight:750; letter-spacing:.08em; text-transform:uppercase; }
+.ads-offer-copy h2 { margin:0 0 7px; color:#102d49; font-size:20px; line-height:1.25; letter-spacing:-.025em; }
+.ads-offer-copy p:last-child { margin:0; color:#35475a; font-size:12px; line-height:1.6; }
+.ads-intro .ads-offer .button-gold { background:#102d49; border:1px solid #102d49; color:#fff; box-shadow:0 5px 16px #102d4918; }
+.ads-intro .ads-offer .button-gold:hover { background:#1d466b; border-color:#1d466b; }
+.ads-intro .ads-offer .button-outline { background:transparent; border-color:#102d49; color:#102d49; }
+.ads-intro .ads-offer .button-outline:hover { background:#fff7; }
+.ads-offer .ads-actions { gap:10px; }
+.ads-offer .ads-actions .button { flex:1 1 auto; justify-content:center; padding:12px 14px; font-size:14px; }
+.ads-military-offer { display:flex; align-items:flex-start; gap:12px; margin-top:18px; padding-top:16px; border-top:1px dashed #9c783c; }
+.ads-military-icon { display:flex; flex:0 0 36px; width:36px; height:40px; align-items:center; justify-content:center; color:#102d49; }
+.ads-military-offer p { margin:0; font-size:12px; line-height:1.65; color:#35475a; }
+.ads-military-offer p:first-child { display:flex; flex-wrap:wrap; gap:3px 8px; margin-bottom:3px; font-weight:650; color:#102d49; }
+.ads-military-offer strong { font-size:15px; font-weight:800; }
+.ads-offer .ads-offer-terms { margin:12px 0 0; font-size:11px; line-height:1.65; color:#4c4b3f; }
 .ads-trust { display:flex; flex-wrap:wrap; gap:8px 12px; color:#d3dfeb; font-size:11px; font-weight:650; margin:20px 0 0; line-height:1.8; }
 .ads-trust span { color:#7890a8; }
 .ads-photo { position:relative; grid-column:1; grid-row:2; margin:0; overflow:hidden; border-radius:12px; border:1px solid #ffffff25; }
@@ -155,6 +177,13 @@ footer .legal-links a:hover { color:#102d49; background:#e6edf5; }
   .ads-intro .ads-lead { font-size:15px; line-height:1.7; }
   .ads-highlights { gap:7px 14px; margin-bottom:20px; }
   .ads-highlights li { font-size:10px; }
+  .ads-offer { padding:18px 16px; }
+  .ads-offer-heading { gap:14px; }
+  .ads-offer-amount { padding-right:14px; }
+  .ads-offer-amount strong { font-size:54px; }
+  .ads-offer-copy h2 { font-size:17px; }
+  .ads-offer .ads-offer-kicker { font-size:9px; letter-spacing:.04em; }
+  .ads-offer .ads-actions .button { flex:1 1 100%; min-height:46px; }
   .ads-trust { font-size:10px; margin-top:16px; }
   .ads-photo img { height:auto; aspect-ratio:1.65; }
   .ads-photo figcaption { font-size:9px; padding:28px 12px 10px; }
