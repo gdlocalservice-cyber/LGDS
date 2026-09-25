@@ -1,6 +1,6 @@
-# PR #15 — release checklist, 2026-09-25
+# LGDS — release checklist, 2026-09-25
 
-Status: Preview only. Itzik's technical acceptance of `9d965ba` and recommendation to proceed after documentation correction are recorded; separate merge/publication approval and a coordinated time are still required. See `ITZIK-HANDOFF.md` for evidence sources and limitations. Do not reopen completed account/security checks as new release prerequisites.
+Status: PR #15 is published, with owner-confirmed Itzik approval and explicit owner authorization. Production merge `01a7ad112e95f03997c9ee83caac406be796136c`, deploy `6ab6e6b1b4781800080662e6`, September 25 at 17:25:33 Eastern. A separate site-wide phone-format change is expressly approved for publication after checks. See `ITZIK-HANDOFF.md`; do not reopen completed account/security checks.
 
 ## Completed
 
@@ -20,19 +20,28 @@ Status: Preview only. Itzik's technical acceptance of `9d965ba` and recommendati
 - [x] Inspected all three pages on desktop and in smartphone layout. Additional narrow (360px) opener and large-phone (430px) spring views checked. Confirmed readable openings, offers and in-page navigation; the mobile Request action reaches a form with its submit button clear of the fixed bar. Phone/WhatsApp destinations and form isolation remain covered by the existing tests; no real call or message was sent. Corrected the shared mobile input rule to retain 16px text. Browser-responsive checks are not physical hardware tests.
 - [x] Confirmed Preview isolation in the tests and no ordinary-site HTML changes in the baseline comparison.
 
-## At the coordinated release — still open
+## Completed publication and phone follow-up
 
-- [ ] Obtain Itzik's explicit approval of the current Preview and the merge/publication time. Technical recommendation alone is not authorization.
-- [ ] Recheck current production deploy, commit and automatic-publishing state immediately before release. Last recorded rollback (September 25): `6a824bc28167ec00080355f2` / `125d6e27dc2067067450824da725755168f3eeeb`. Replace the record if production has changed.
-- [ ] After that approval only, set the existing `LGDS_RELEASE_APPROVED=1` production gate and follow the agreed merge/deploy sequence. Do not merge early while automatic publishing is active.
-- [ ] Retain a usable rollback target and account for automatic publishing before restoring it, so a subsequent build cannot immediately replace the restoration.
+- [x] Owner confirmed Itzik’s approval and expressly authorized PR #15 merge/publication.
+- [x] Checked prior production and autopublishing immediately before release; enabled the approved production build gate and confirmed successful publication.
+- [x] Owner approved `(267) 438-6494` throughout the site and publication after regression checks.
+- [x] Phone update production build and 28/28 tests passed; 62 pages, 317 displayed numbers, 55 forms and 6,061 links audited. All 62 normalized pages match the previous build apart from phone formatting and asset cache versions. Other production assets remain byte-identical except the two intended form/measurement scripts.
+- [ ] Finish browser review, publish the phone-format follow-up and record its live commit/deploy and live checks in its PR. Recheck rollback `6ab6e6b1b4781800080662e6` / `01a7ad112e95f03997c9ee83caac406be796136c` immediately beforehand.
+
+## Verified live evidence from PR #15
+
+- [x] Owner reported actual mobile TEST submission and business inbox receipt around 17:40 Eastern.
+- [x] Supplied GA4 screenshots show one `generate_lead` for `/ads/garage-door-repair/`; submission ID and service/source parameter keys are present. Exact field/ID reconciliation with the inbox was not shown.
+- [x] Separate controlled TEST received in OpenAI Event Stream: one `lead_created` via `pixel_sdk` at 17:58:44 Eastern. Pixel initialization is a separate event, not a second lead.
+- [x] Google debugging panel exercised number replacement on the live general-repair page: displayed phone numbers and all five active call destinations changed to the supplied dummy number. The browser was returned to the regular page afterward. This is not a real forwarding-number or call-attribution test.
 
 ## After the approved release — owner and Itzik
 
-- [ ] Send one clearly marked TEST request. Confirm receipt in Formspree and the business inbox; compare landing page, service, issue and consent-appropriate campaign/source fields.
-- [ ] Verify one GA4 `generate_lead` and one eligible OpenAI `lead_created` for the accepted request, using the opaque submission/event ID where available. Invalid submissions or repeat submits within the same document must not create extra lead events. Honor regional consent, GPC and OpenAI U.S. eligibility; absence under an ineligible condition is not a failed event.
+- [ ] If full submission reconciliation is required, compare the existing TEST record in Formspree with inbox/source fields; inbox delivery is already owner-confirmed. Avoid redundant test leads.
+- [ ] Complete exact submission/event-ID correlation if required; the separate GA4 and OpenAI receipt evidence above is already recorded. Simulations cover invalid/repeated-submit behavior and consent gating.
 - [ ] Check page-view counts and conversion behavior with the live tags. Complete an eligible OpenAI `oppref` landing → internal navigation → accepted lead path and verify it in Monitoring. A simulated SDK check is not live attribution proof.
 - [ ] Check actual Google forwarding-number replacement and call routing through the appropriate campaign path, including displayed numbers and `tel:` destinations in header, hero, mobile bar and final CTA. Verify qualified-call attribution separately.
+- [ ] Check GA4 `form_start` key-event status and confirm it is not used in Ads as a completed lead; no such import has been established.
 - [ ] Check Ads form attribution through an eligible, coordinated campaign test. Do not infer Ads attribution from a direct visit. Do not create or re-import a form conversion to make a TEST appear.
 - [ ] Smoke-test the production site on iPhone/Android: readability, call/WhatsApp actions, local Request scrolling, validation, consent, submit visibility and no fixed-bar obstruction. Record performance with production integrations enabled.
 - [ ] Verify redirects and preservation of campaign query parameters, working links, canonical URLs, sitemap and Ads noindex/separation on production. Paid pages remain outside the sitemap/main navigation and accessible to AdsBot.

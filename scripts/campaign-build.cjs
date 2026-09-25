@@ -8,6 +8,7 @@ const campaignOffer = require('../site/campaign-offers.cjs');
 const preferredSources = require('../site/preferred-sources.cjs');
 const pageQuality = require('../site/page-quality.cjs');
 const editorial = require('../site/editorial.cjs');
+const phoneDisplay = require('../site/phone-display.cjs');
 const dir = path.resolve(process.argv[2] || 'dist');
 const domain = 'https://www.localgaragedoorsvc.com';
 const production = process.env.CONTEXT === 'production';
@@ -109,7 +110,6 @@ for(const file of files) {
     if(href!==old){a.attr('href',href);linksUpdated++;}
     if(/^tel:/.test(href)){
       a.attr('data-lgds-phone','');
-      a.contents().filter((_,n)=>n.type==='text'&&/267[- ]?438[- ]?6494/.test(n.data)).each((_,n)=>{ $(n).replaceWith(n.data.replace(/267[- ]?438[- ]?6494/g,'<span data-lgds-phone-text>267-438-6494</span>')); });
     }
   });
   if(!ads && form.length && file.startsWith('services/')) {
@@ -124,6 +124,7 @@ for(const file of files) {
   if(!production){$('meta[name=robots]').remove();$('head').append('<meta name="robots" content="noindex, follow">');}
   preferredSources($,{production,file});
   editorial($,file);
+  phoneDisplay($);
   removedPreloads+=pageQuality($).removedPreloads;
   fs.writeFileSync(p,$.html());
 }
@@ -135,7 +136,9 @@ fs.writeFileSync(path.join(dir,'_redirects'),'# Canonical paths and legacy redir
 if(!production) {
   fs.appendFileSync(path.join(dir,'_headers'),'\n/*\n  X-Robots-Tag: noindex, follow\n');
   fs.mkdirSync(path.join(dir,'__review__'),{recursive:true});
-  fs.copyFileSync('site/review.html',path.join(dir,'__review__/index.html'));
+  const extraPages = routeList.filter(route=>!['/','/blog/'].includes(route)&&!route.startsWith('/ads/')).concat('/404.html');
+  const review = fs.readFileSync('site/review.html','utf8').replace('<!-- additional review pages -->',extraPages.map(route=>`<option value="${esc(route)}">${esc(route)}</option>`).join(''));
+  fs.writeFileSync(path.join(dir,'__review__/index.html'),review);
 }
 fs.writeFileSync(path.join(dir,'lgds-build.json'),JSON.stringify({mode:production?'production':'preview',pages:files.length,forms:formsUpdated,normalizedLinks:linksUpdated,photoSelected:true,photoSource:'Existing LGDS project images, selected at owner request'},null,2));
 console.log(`[campaigns] Built ${campaigns.length} paid pages; updated ${formsUpdated} forms and ${linksUpdated} links; removed ${removedPreloads} unused/duplicate preloads. Mode: ${production?'production':'isolated preview'}.`);

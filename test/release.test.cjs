@@ -92,6 +92,41 @@ test('denied sessionStorage preserves campaign params in internal links without 
 test('form_start requires user interaction, happens once, and is never a lead',()=>{const b=browser();const input=b.form.elements.name;input.dispatchEvent(new b.w.Event('input',{bubbles:true}));assert.equal(events(b,'form_start').length,0);for(const fn of b.inputHandlers){fn({target:input,isTrusted:true});fn({target:input,isTrusted:true});}assert.equal(events(b,'form_start').length,1);assert.equal(events(b,'generate_lead').length,0);b.close();});
 test('call links work before tracking loads; callback updates displayed and dialed numbers together',()=>{const b=browser();const links=[...b.w.document.querySelectorAll('[data-lgds-phone]')];assert.ok(links.length>=5);assert.ok(links.every(l=>l.getAttribute('href')==='tel:2674386494'));
  const config=b.w.dataLayer.find(e=>e[0]==='config'&&e[1]==='AW-17878825273/TxwGCJyr6-IcELnypM1C');config[2].phone_conversion_callback('(800) 555-0100','+18005550100');assert.ok(links.every(l=>l.href==='tel:+18005550100'));assert.ok([...b.w.document.querySelectorAll('[data-lgds-phone-text]')].every(n=>n.textContent==='(800) 555-0100'));b.close();});
+test('all pages format customer-facing phone numbers and retain their original destinations',()=>{
+ const files=fs.readdirSync(base,{recursive:true}).filter(p=>p.endsWith('.html')&&!p.startsWith('__review__/'));
+ for(const p of files){
+  const $=cheerio.load(fs.readFileSync(base+'/'+p,'utf8'),{scriptingEnabled:false});
+  $('script,style').remove();
+  assert.doesNotMatch($('body').text(),/(?<!\d)(?:\+?1[ .-]?)?267[- .]?438[- .]?6494(?!\d)/,p);
+  assert.ok($('[data-lgds-phone-text]').length>0,p);
+  $('[data-lgds-phone-text]').each((_,e)=>assert.equal($(e).text(),'(267) 438-6494',p));
+  $('[aria-label],[title],[alt],[placeholder]').each((_,e)=>{for(const a of ['aria-label','title','alt','placeholder'])assert.doesNotMatch($(e).attr(a)||'',/267[- .]?438[- .]?6494/,p+' '+a);});
+  $('a[href^="tel:"]').each((_,e)=>{assert.equal($(e).attr('href'),'tel:2674386494',p);if(!$(e).parents('noscript').length)assert.notEqual($(e).attr('data-lgds-phone'),undefined,p);});
+ }
+});
+test('forwarding formats every page, repeated callbacks and a late form-error phone link',async()=>{
+ const files=fs.readdirSync(base,{recursive:true}).filter(p=>p.endsWith('.html')&&!p.startsWith('__review__/'));
+ for(const p of files){
+  const dom=new JSDOM(fs.readFileSync(base+'/'+p,'utf8'),{url:'https://www.localgaragedoorsvc.com/',runScripts:'outside-only'}),w=dom.window;
+  w.fetch=async()=>({ok:true,json:async()=>({openaiMeasurementAllowed:false})});
+  w.eval(measurement.replace('__LGDS_SETTINGS__',JSON.stringify({measurementEnabled:true,submissionsEnabled:true})));
+  const callback=w.dataLayer.find(e=>e[0]==='config'&&e[1]==='AW-17878825273/TxwGCJyr6-IcELnypM1C')[2].phone_conversion_callback;
+  const first=w.document.querySelector('[data-lgds-phone]');first.setAttribute('aria-label','Call (267) 438-6494');
+  for(const [digits,display] of [['+18005550100','(800) 555-0100'],['+18885550101','(888) 555-0101']]){
+   callback(digits,digits);
+   assert.ok([...w.document.querySelectorAll('[data-lgds-phone]')].every(e=>e.getAttribute('href')==='tel:'+digits),p);
+   assert.ok([...w.document.querySelectorAll('[data-lgds-phone-text]')].every(e=>e.textContent===display),p);
+   assert.equal(first.getAttribute('aria-label'),'Call '+display,p);
+  }
+  callback('invalid','no-number');assert.equal(first.getAttribute('href'),'tel:+18885550101',p);
+  await tick();dom.window.close();
+ }
+ const b=browser({response:async()=>{throw new Error('offline');}});fill(b);submit(b);await tick();
+ assert.equal(b.form.querySelector('[role=alert] [data-lgds-phone-text]').textContent,'(267) 438-6494');
+ b.w.dataLayer.find(e=>e[0]==='config'&&e[1]==='AW-17878825273/TxwGCJyr6-IcELnypM1C')[2].phone_conversion_callback('800-555-0100','+18005550100');
+ assert.equal(b.form.querySelector('[role=alert] a').getAttribute('href'),'tel:+18005550100');
+ assert.equal(b.form.querySelector('[role=alert] [data-lgds-phone-text]').textContent,'(800) 555-0100');b.close();
+});
 test('tracking bootstrap cannot be installed twice in one document',async()=>{const b=browser();b.w.eval(measurement.replace('__LGDS_SETTINGS__',JSON.stringify({measurementEnabled:true})));assert.equal(b.w.document.querySelectorAll('script[src*="googletagmanager"]').length,1);await tick();assert.equal(b.w.document.querySelectorAll('script[src*="bzrcdn"]').length,1);b.close();});
 test('OpenAI is not loaded before region confirmation or for non-US regions',async()=>{const b=browser({usRegion:false});assert.equal(b.w.oaiq,undefined);fill(b);submit(b);await tick();assert.equal(b.requests.length,1);assert.equal(b.w.oaiq,undefined);assert.equal(b.w.document.querySelectorAll('script[src*="bzrcdn"]').length,0);assert.equal(events(b,'generate_lead').length,1);b.close();});
 test('GPC blocks OpenAI measurement without stopping a service request',async()=>{const b=browser({gpc:true});fill(b);submit(b);await tick();assert.equal(b.requests.length,1);assert.equal(b.w.oaiq,undefined);assert.equal(b.w.document.querySelectorAll('script[src*="bzrcdn"]').length,0);assert.equal(b.w.dataLayer[0][2].ad_storage,'denied');b.close();});

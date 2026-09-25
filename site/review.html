@@ -8,14 +8,14 @@
 *{box-sizing:border-box}body{margin:0;background:#e8ecf0;font:14px system-ui;color:#172e45}header{padding:10px 16px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}select{font:inherit;padding:6px}iframe{display:block;background:white;border:0;margin:0 auto;width:390px;height:844px}p{margin:0}label{display:flex;align-items:center;gap:6px}
 </style>
 <header>
-<label>Page <select id="page"><option value="garage-door-repair">Garage door repair</option><option value="garage-door-opener-repair">Opener and sensor repair</option><option value="spring-cable-off-track-repair">Spring, cable and off-track</option><option value="home">Existing homepage</option><option value="guides">Guides and Preferred Sources</option></select></label>
-<label>Viewport <select id="width"><option value="390">Mobile · 390 × 844</option><option value="360">Small mobile · 360 × 844</option><option value="430">Large mobile · 430 × 844</option><option value="1200">Desktop · 1200 × 844</option><option value="1920">Wide desktop · 1920 × 1080</option></select></label>
+<label>Page <select id="page"><option value="garage-door-repair">Garage door repair</option><option value="garage-door-opener-repair">Opener and sensor repair</option><option value="spring-cable-off-track-repair">Spring, cable and off-track</option><option value="home">Existing homepage</option><option value="guides">Guides and Preferred Sources</option><!-- additional review pages --></select></label>
+<label>Viewport <select id="width"><option value="390">Mobile · 390 × 844</option><option value="320">Narrow mobile · 320 × 844</option><option value="360">Small mobile · 360 × 844</option><option value="430">Large mobile · 430 × 844</option><option value="1200">Desktop · 1200 × 844</option><option value="1920">Wide desktop · 1920 × 1080</option></select></label>
 <p>Responsive layout review. Real phone testing remains required.</p>
 </header>
 <iframe id="preview" title="LGDS responsive preview" src="/ads/garage-door-repair/"></iframe>
 <script>
 const page=document.querySelector('#page'),width=document.querySelector('#width'),preview=document.querySelector('#preview');
-page.addEventListener('change',()=>{preview.src=page.value==='home'?'/':page.value==='guides'?'/blog/':'/ads/'+page.value+'/';});
+page.addEventListener('change',()=>{preview.src=page.value.startsWith('/')?page.value:page.value==='home'?'/':page.value==='guides'?'/blog/':'/ads/'+page.value+'/';});
 width.addEventListener('change',()=>{preview.style.width=width.value+'px';preview.style.height=width.value==='1920'?'1080px':'844px';});
 </script>
 </html>
