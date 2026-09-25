@@ -34,7 +34,13 @@ test('each paid page matches the approved heading, choices, canonical, CTA and s
   assert.equal($('h1').text(),p.h1);assert.equal($('link[rel=canonical]').attr('href'),'https://www.localgaragedoorsvc.com/ads/'+p.slug+'/');
   assert.equal($('meta[name=robots]').attr('content'),'noindex, follow');assert.deepEqual($('select option').slice(1).map((_,e)=>$(e).text()).get(),p.problems);
   assert.equal($('form').length,1);assert.equal($('input[name=zip]').attr('pattern'),'[0-9]{5}');assert.equal($('form').attr('id'),'service-request');
-  assert.equal($('header nav,.breadcrumbs').length,0);assert.equal($('script#lgds-measurement').length,1);assert.equal($('script#lgds-forms').length,1);
+  assert.equal($('header nav:not(.ads-local-nav),.breadcrumbs').length,0);
+  // The one-page design trial allows only working in-page navigation.
+  const concept=p.slug==='garage-door-repair';
+  assert.equal($('header .ads-local-nav').length,concept?1:0);
+  assert.equal($('link[href^="/lgds-repair-concept.css"]').length,concept?1:0);
+  $('header .ads-local-nav a').each((_,e)=>{const href=$(e).attr('href');assert.ok(/^#[a-z-]+$/.test(href));assert.equal($(href).length,1);});
+  assert.equal($('script#lgds-measurement').length,1);assert.equal($('script#lgds-forms').length,1);
   assert.equal($('header a.brand').attr('href'),'/');
   assert.equal($('a').filter((_,e)=>/Request/.test($(e).text())&&$(e).attr('href')!=='#service-request').length,0);
   assert.equal($('[type="application/ld+json"]').length,1);const schema=JSON.parse($('[type="application/ld+json"]').text());assert.equal(schema['@type'],'Service');assert.ok(!schema.aggregateRating&&!schema.review);
