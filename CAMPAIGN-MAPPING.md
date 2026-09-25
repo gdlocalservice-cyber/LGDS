@@ -18,9 +18,9 @@ Production domain: `https://www.localgaragedoorsvc.com`.
 
 ## Preserved behavior
 
-- Existing headings, owner-approved hero, service-specific supporting photos and exact owner-supplied Google review excerpts remain. No affiliation with the Overhead Door brand is claimed.
-- Mobile order remains opening + short review, form, then hero photo. The desktop two-column layout is retained. Supporting images are lazy; responsive hero priority is retained.
-- Existing call destinations, local form anchors, confirmed operating hours and coverage-by-ZIP wording remain. No 24/7, guaranteed arrival or free-quote promise was added.
+- The owner requested new opening copy and a navy/gold hero using the original site typography. The owner-approved hero, service-specific supporting photos and exact owner-supplied Google review excerpts remain. No affiliation with the Overhead Door brand is claimed.
+- Mobile order remains opening + short review, form, then hero photo. The short approved review is also visible on desktop. The desktop two-column layout is retained. Supporting images are lazy; responsive hero priority is retained.
+- Existing call destinations, local form anchors and confirmed operating hours remain. ZIP is a form field only; promotional copy no longer emphasizes it. No 24/7, guaranteed arrival or free-quote promise was added.
 - All three paid pages retain noindex/follow, a self-canonical URL, exclusion from the sitemap and ordinary main navigation, and AdsBot access. The logo links home. Preferred Sources remains outside paid pages.
 - No GEO code, duplicate city pages, measurement runtime changes or additional conversion action was introduced.
 

@@ -15,9 +15,9 @@ const reasons = [
   ['pin', 'Service Across Selected Communities in Pennsylvania, New Jersey and Delaware']
 ];
 const steps = [
-  ['Send your request', 'Tell us the issue and ZIP code.'],
-  ['Confirm availability', 'We confirm the service area and appointment availability.'],
-  ['Review your options', 'The technician diagnoses the problem and explains the available options and pricing before approved work begins.']
+  ['Tell us what’s wrong', 'Call or send a request. You don’t need to know which part failed.'],
+  ['Arrange your visit', 'We follow up to confirm your service location and an available appointment.'],
+  ['Choose your repair', 'Your technician explains the diagnosis, repair options and price. Work begins with your approval.']
 ];
 
 module.exports = function campaignSections({page,workImage,snippets,brands,faq,actions}) {
@@ -35,7 +35,7 @@ module.exports = function campaignSections({page,workImage,snippets,brands,faq,a
     <p class="ads-kicker">The LGDS approach</p>
     <h2 id="assurance-heading">Why Homeowners Call Local Garage Door Service</h2>
     <ul class="ads-reasons">${reasons.map(([name,text])=>`<li><span class="ads-reason-icon">${icon(name)}</span><h3>${esc(text)}</h3></li>`).join('')}</ul>
-    <div class="ads-coverage-note"><p>Enter your ZIP code or call us to confirm service coverage and current availability.</p><a href="#service-request">Check my ZIP code <span aria-hidden="true">→</span></a></div>
+    <div class="ads-coverage-note"><p>Not sure what’s wrong? Describe what you see or hear. We’ll help you take the next step.</p><a href="#service-request">Request Service <span aria-hidden="true">→</span></a></div>
   </section>
   <section class="ads-section ads-how" aria-labelledby="process-heading">
     <p class="ads-kicker">From request to repair</p>
@@ -51,5 +51,5 @@ module.exports = function campaignSections({page,workImage,snippets,brands,faq,a
     <div><p class="ads-kicker">Before you schedule</p><h2 id="faq-heading">Frequently Asked Questions</h2></div>
     <div class="ads-faq-list">${faq.map(([q,a])=>`<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('')}</div>
   </section>
-  <section class="ads-section ads-final-cta"><div><p class="ads-kicker">Let’s take the next step</p><h2>Tell us what your door is doing.</h2><p>Call or request service to confirm coverage and availability.</p></div>${actions}</section>`;
+  <section class="ads-section ads-final-cta"><div><p class="ads-kicker">Let’s take care of your door</p><h2>A working door starts with a conversation.</h2><p>Tell us what’s happening. We’ll follow up to arrange your service visit.</p></div>${actions}</section>`;
 };
