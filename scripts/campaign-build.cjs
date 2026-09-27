@@ -25,7 +25,7 @@ for (const line of fs.readFileSync(path.join(dir,'_redirects'),'utf8').split('\n
 legacy['/services/roller-repair'] = '/services/garage-door-roller-hinge-repair/';
 legacy['/services/roller-repair/'] = '/services/garage-door-roller-hinge-repair/';
 const routeList = [...routes].sort();
-fs.writeFileSync('site/routes.mjs', `// Generated from the actual exported pages and legacy redirects.\nconst routes = new Set(${JSON.stringify(routeList)});\nconst legacy = ${JSON.stringify(legacy,null,2)};\nexport function canonicalPath(p) {\n  if (legacy[p]) return legacy[p];\n  if (p.endsWith('/index.html') && routes.has(p.slice(0,-10))) return p.slice(0,-10);\n  if (p.endsWith('.html') && routes.has(p.slice(0,-5)+'/')) return p.slice(0,-5)+'/';\n  if (!p.endsWith('/') && routes.has(p+'/')) return p+'/';\n  return p;\n}\n`);
+fs.writeFileSync('site/routes.mjs', `// Generated from the actual exported pages and legacy redirects.\nconst routes = new Set(${JSON.stringify(routeList)});\nconst legacy = ${JSON.stringify(legacy,null,2)};\nexport function canonicalPath(p) {\n  // Let Netlify resolve its reserved error document without a competing slash redirect.\n  if (['/404', '/404/', '/404.html', '/404/index.html'].includes(p)) return p;\n  if (legacy[p]) return legacy[p];\n  if (p.endsWith('/index.html') && routes.has(p.slice(0,-10))) return p.slice(0,-10);\n  if (p.endsWith('.html') && routes.has(p.slice(0,-5)+'/')) return p.slice(0,-5)+'/';\n  if (!p.endsWith('/') && routes.has(p+'/')) return p+'/';\n  return p;\n}\n`);
 function normalHref(href) {
   if (!href || href.startsWith('#')) return href;
   let u; try {u = new URL(href,domain);} catch {return href;}

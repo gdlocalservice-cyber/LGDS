@@ -182,3 +182,17 @@ test('all three paid forms retain landing page, service and campaign with one co
   assert.equal(preview.w.oaiq,undefined);assert.match(preview.form.textContent,/has not been sent/);preview.close();
  }
 });
+
+
+test('reserved 404 documents pass through without competing with Netlify redirects',async()=>{
+ const {canonicalPath}=await import('../site/routes.mjs');
+ const edge=(await import('../netlify/edge-functions/canonical-path.ts')).default;
+ for(const path of ['/404','/404/','/404.html','/404/index.html','/this-page-does-not-exist']) {
+  assert.equal(canonicalPath(path),path);
+  let calls=0;
+  const response=edge(new Request('https://www.localgaragedoorsvc.com'+path+'?utm_source=qa'),{next:()=>{calls++;return new Response('Not found',{status:404});}});
+  assert.equal(calls,1);assert.equal(response.status,404);assert.equal(response.headers.get('location'),null);
+ }
+ const response=edge(new Request('https://localgaragedoorsvc.com/404.html?utm_source=qa'),{next:()=>{throw new Error('unexpected');}});
+ assert.equal(response.status,301);assert.equal(response.headers.get('location'),'https://www.localgaragedoorsvc.com/404.html?utm_source=qa');
+});
