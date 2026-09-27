@@ -53,6 +53,8 @@ const legacy = {
   "/services/roller-repair/": "/services/garage-door-roller-hinge-repair/"
 };
 export function canonicalPath(p) {
+  // Let Netlify resolve its reserved error document without a competing slash redirect.
+  if (['/404', '/404/', '/404.html', '/404/index.html'].includes(p)) return p;
   if (legacy[p]) return legacy[p];
   if (p.endsWith('/index.html') && routes.has(p.slice(0,-10))) return p.slice(0,-10);
   if (p.endsWith('.html') && routes.has(p.slice(0,-5)+'/')) return p.slice(0,-5)+'/';
